@@ -1,0 +1,42 @@
+{% extends 'base.html' %}
+
+{% block title %}用户中心{% endblock %}
+{% block nav_home_active %}active{% endblock %}
+
+{% block home_content %}
+    <div class="home_content">
+        <div class="home_show"><h1>我的博客</h1></div>
+        <div class="motto_name">欢迎阅读评论，评论需注册登录</div>
+        <div class="motto_name">——If You Can Make It Here,You Can Make It Anywhere</div>
+    </div>
+{% endblock %}
+
+{% block content %}
+    <div class="containter">
+        <div class="row">
+            <div class="col-xs-10 col-md-8 col-xs-offset-1">
+
+                <div class="panel panel-default">
+                    {% if user.is_authenticated %}
+                        <div class="panel-heading" id="panel_heading">我的信息</div>
+                            <ul class="list-group">
+                             <div class="panel-body">
+                                 <h3>{{ user.username }}</h3>
+{#                                 <p><a href="#">修改昵称</a>  <a href="#">修改密码</a></p>#}
+                                 <p>注册邮箱：{% if user.email %}{{ user.email }}{% else %}未绑定 <a href="#">绑定邮箱</a>{% endif %}</p>
+                                 <p>上一次登录的时间：{{ user.last_login|date:"Y-m-d H:i:s" }}</p>
+
+                             </div>
+                    {% else %}
+                        <span>未登录，跳转到首页...</span>
+                        <script type="text/javascript">
+                            window.location.href = '/';
+                        </script>
+                    {% endif %}
+                </div>
+
+            </div>
+        </div>
+    </div>
+    <div class="box"></div>
+{% endblock %}

@@ -1,0 +1,41 @@
+{% extends 'base.html' %}
+{% load static from staticfiles %}
+
+{#页面标题#}
+{% block title %}关于我{% endblock title %}
+
+{#目录触发#}
+{% block nav_about_active %}active{% endblock %}
+
+{% block home_content %}
+    <div class="home_content">
+        <div class="home_show"><h1>关于我</h1></div>
+        <div class="motto_name">世界那么大，我只想做一只攻城狮</div>
+        <div class="motto_name">—诚朴恕毅</div>
+    </div>
+{% endblock %}
+
+{% block content %}
+    <div>
+        <div class="introduce_content" >
+            <div class="my_pic"><img src="{% static 'blog/media/my_pic.jpg' %}" alt="我的图片"></div>
+
+            <div class="introduce_content1">
+                <p>蒋振飞：应届毕业生</p>
+                <P>qq：1378482556</P>
+                <p>
+                    csdn博客帐号：<a href="https://blog.csdn.net/jack_970124">https://blog.csdn.net/jack_970124  </a>
+                </p>
+                <p>
+                    github帐号：<a href="https://github.com/XiaoFei-97">https://github.com/XiaoFei-97</a>
+                </p>
+                <p>邮箱地址：jack_970124@163.com</p>
+            </div>
+
+            <div class="walking"><img src="{% static 'blog/media/walking.png' %}"></div>
+
+            <div style="clear:both"></div>
+        </div>
+    </div>
+{% endblock %}
+
