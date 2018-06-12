@@ -1,0 +1,141 @@
+{% extends 'blog/blog.html' %}
+{% load comment_tags %}
+{% load likes_tags %}
+{% load staticfiles %}
+{% load highlight %}
+
+{#页面标题#}
+{% block title %}
+    搜索结果
+{% endblock title %}
+
+{% block body_color %}#FFFFCC{% endblock %}
+{% block header_extend %}
+    <link rel="stylesheet" href="{% static 'blog/css/blog.css' %}">
+{% endblock %}
+{% block nav_search_active %}active_tag{% endblock %}
+
+{% block content %}
+    {% if query %}
+        <div>
+            <div class="container">
+                <div class="row">
+                    <div class="col-xs-12 col-sm-5 col-md-6 col-lg-5 pull-right">
+                        <div class="panel panel-default">
+                            <div class="panel-heading" id="panel_heading"><h4>搜索到的文章</h4></div>
+
+                            {% for result in page.object_list %}
+                                <ul class="list-group">
+                                    <li class="list-group-item">
+                                        <a href="{% url 'blog:detail' result.object.id %}">
+                                            <h4>{{ forloop.counter }}、{% highlight result.object.title with query %}</h4>
+                                        </a>
+                                        分类：<a href="{% url 'blog:category' result.object.category.id %}"><span class="glyphicon glyphicon-file"></span>{{ result.object.category }}</a>
+                                        发表日期：<span class="glyphicon glyphicon-time"></span>{{ result.object.created_time|date:"Y-m-d H-:n:s" }}&nbsp;&nbsp;
+                                        <a href="{% url 'blog:detail' result.object.id %}"><span class="glyphicon glyphicon-eye-open"></span>&nbsp;{{ result.object.get_read_num }}</a>&nbsp;&nbsp;
+                                         <a href="{% url 'blog:detail' result.object.id %}"><span class="glyphicon glyphicon-comment"></span>&nbsp;{% get_comment_count result.object %}</a>&nbsp;&nbsp;
+                                         <a href="#"><span class="glyphicon glyphicon-thumbs-up"></span>&nbsp;{% get_like_count result.object %}</a>
+                                    </li>
+                                </ul>
+                            {% empty %}
+                                <div class="panel-body">
+                                    <p>没有搜索到相关文章，请重新搜索</p>
+                                </div>
+                            {% endfor %}
+                         </div>
+                    </div>
+{#                <div aria-label="Page navigation" class=" previous_next">#}
+{#                    {% if page.has_previous or page.has_next %}#}
+{#                <ul class="pagination">#}
+{##}
+{#                        {% if page.has_previous %}#}
+{#                            <li>#}
+{#                                <a href="?q={{ query }}&amp;page={{ page.previous_page_number }}" aria-label="Previous">#}
+{#                                    <span aria-hidden="true">上一页</span>#}
+{#                                </a>#}
+{#                            </li>#}
+{#                        {% else %}#}
+{#                             <li>#}
+{#                                 <span aria-hidden="true">没有上一页</span>#}
+{#                            </li>#}
+{#                        {% endif %}#}
+{#                        {% if page.has_next %}#}
+{#                            <li>#}
+{#                                <a href="?q={{ query }}&amp;page={{ page.next_page_number }}" aria-label="Next">#}
+{#                                    <span aria-hidden="true">下一页</span>#}
+{#                                </a>#}
+{#                            </li>#}
+{#                        {% else %}#}
+{#                           <li>#}
+{#                               <span>没有下一页</span>#}
+{#                            </li>#}
+{#                        {% endif %}#}
+{#                    {% endif %}#}
+{#                </ul>#}
+{#            </div>#}
+
+
+                    <div class="col-xs-12 col-sm-6 col-md-6 col-lg-7">
+                        <div class="panel panel-default">
+                            <div class="panel-heading" id="panel_heading"><h4>搜索到的内容</h4></div>
+                                {% for result in page.object_list %}
+                                    <ul class="list-group">
+                                        <li class="list-group-item">
+                                            <a href="{% url 'blog:detail' result.object.id %}">
+                                                <h4>{{ forloop.counter }}、{% highlight result.object.body with query %}</h4>
+                                            </a>
+                                            分类：<a href="{% url 'blog:category' result.object.category.id %}"><span class="glyphicon glyphicon-file"></span>{{ result.object.category }}</a>
+                                            发表日期：<span class="glyphicon glyphicon-time"></span>{{ result.object.created_time|date:"Y-m-d H-:n:s" }}&nbsp;&nbsp;
+                                            <a href="{% url 'blog:detail' result.object.id %}"><span class="glyphicon glyphicon-eye-open"></span>&nbsp;{{ result.object.get_read_num }}</a>&nbsp;&nbsp;
+                                            <a href="{% url 'blog:detail' result.object.id %}"><span class="glyphicon glyphicon-comment"></span>&nbsp;{% get_comment_count result.object %}</a>&nbsp;&nbsp;
+                                            <a href="#"><span class="glyphicon glyphicon-thumbs-up"></span>&nbsp;{% get_like_count result.object %}</a>
+                                        </li>
+                                    </ul>
+                                {% empty %}
+                                    <div class="panel-body">
+                                        <p>没有搜索到相关内容，请重新搜索</p>
+                                    </div>
+                                {% endfor %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+{#                 <div aria-label="Page navigation" class=" previous_next">#}
+{#                     {% if page.has_previous or page.has_next %}#}
+{#                <ul class="pagination">#}
+{#                        {% if page.has_previous %}#}
+{#                            <li>#}
+{#                                <a href="?q={{ query }}&amp;page={{ page.previous_page_number }}" aria-label="Previous">#}
+{#                                    <span aria-hidden="true">上一页</span>#}
+{#                                </a>#}
+{#                            </li>#}
+{#                        {% else %}#}
+{#                             <li>#}
+{#                                 <span aria-hidden="true">没有上一页</span>#}
+{#                            </li>#}
+{#                        {% endif %}#}
+{#                        {% if page.has_next %}#}
+{#                            <li>#}
+{#                                <a href="?q={{ query }}&amp;page={{ page.next_page_number }}" aria-label="Next">#}
+{#                                    <span aria-hidden="true">下一页</span>#}
+{#                                </a>#}
+{#                            </li>#}
+{#                        {% else %}#}
+{#                           <li>#}
+{#                               <span>没有下一页</span>#}
+{#                            </li>#}
+{#                        {% endif %}#}
+{#                    {% endif %}#}
+{#                </ul>#}
+{#            </div>#}
+
+
+
+
+
+
+
+    {% endif %}
+        <div class="box"></div>
+{% endblock %}
