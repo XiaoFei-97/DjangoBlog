@@ -1,0 +1,12 @@
+{% extends 'blog/blog.html' %}
+
+{#页面标题#}
+{% block title %}
+    {{ category_name }}
+{% endblock title %}
+
+{% block blog_list_title %}
+    <b>分类:{{ category_name }}</b>
+{% endblock %}
+
+

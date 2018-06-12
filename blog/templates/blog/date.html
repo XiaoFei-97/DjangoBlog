@@ -1,0 +1,10 @@
+{% extends 'blog/blog.html' %}
+
+{#页面标题#}
+{% block title %}
+{{ post_time }}
+{% endblock title %}
+
+{% block blog_list_title %}
+    <b>日期归档:{{ post_time }}</b>
+{% endblock %}

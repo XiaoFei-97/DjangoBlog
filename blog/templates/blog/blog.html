@@ -1,0 +1,181 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+{% load comment_tags %}
+{% load likes_tags %}
+{#页面标题#}
+{% block title %}
+    我的网站
+{% endblock title %}
+
+{% block nav_blog_active %}active{% endblock %}
+{% block header_extend %}
+    <link rel="stylesheet" href="{% static 'blog/css/blog.css' %}">
+{% endblock %}
+
+{% block home_content %}
+    <div class="home_content">
+        <div class="home_show"><h1>我的博客</h1></div>
+        <div class="motto_name">欢迎阅读评论，评论需注册登录</div>
+        <div class="motto_name">—If You Can Make It Here,You Can Make It Anywhere</div>
+    </div>
+{% endblock %}
+
+{#页面内容#}
+{% block content %}
+    <div class="container">
+        <div class="row">
+            <div class="col-xs-12 col-sm-8 col-md-8 col-lg-10">
+                <div class="panel panel-default">
+                    {# post_list|length是一种过滤器,过滤的结果为post_list的长度 #}
+                    <div class="panel-heading" id="panel_heading">{% block blog_list_title %}博客列表{% endblock %}</div>
+                    <div class="panel-body">
+                        {% for post in post_list %}
+                            <div class="blog">
+                                {# post.id把主键传递出去,在views中就可以找到该post的body,urls中也能规则匹配 #}{# 在反向解析中,注意格式{% url 'namespace:name' para %} #}
+                                <a href="{% url 'blog:detail' post.id %}">
+                                    <h4>{{ post.title }}</h4>
+                                </a>
+                                <div class="abstract"><a href="{% url 'blog:detail' post.id %}">{{ post.body|striptags|truncatechars:120 }}</a></div>
+                                <div class="blog-info">{#<span>中的是分类和时间logo样式#}
+                                    <div class="time-info">
+                                        分类:<a href="{% url 'blog:category' post.category.id %}">
+                                                <span class="glyphicon glyphicon-file"></span>{{ post.category }}
+                                            </a>&nbsp;&nbsp;
+                                        发表日期:<span class="glyphicon glyphicon-time"></span>{{ post.created_time|date:"Y-m-d H:n:s" }}&nbsp;&nbsp;
+                                        <a href="{% url 'blog:detail' post.id %}"><span class="glyphicon glyphicon-eye-open"></span>&nbsp;{{ post.get_read_num }}</a>
+                                        <a href="{% url 'blog:detail' post.id %}"><span class="glyphicon glyphicon-comment"></span>&nbsp;{% get_comment_count post %}</a>
+
+                                        <a onclick="likeChange(this, '{% get_content_type post %}', {{ post.id }})">
+                                            <span class="glyphicon glyphicon-thumbs-up {% get_like_status post %}"></span>
+                                            <span class="liked-num">{% get_like_count post %}</span>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        {% empty %}
+                            <div class="blog">
+                                <h3>--暂无博客,敬请期待</h3>
+                            </div>
+                        {% endfor %}
+                    </div>
+                </div>
+
+                <div class="paginator">
+                    <ul class="pagination">
+                        <li>
+                            {# 上一页 #}
+                            {% if page_of_list.has_previous %}
+                                <a href="?page={{ page_of_list.previous_page_number }}" aria-label="Previous">
+                                    <span aria-hidden="true">上一页</span>
+                                </a>
+                            {% else %}
+                                <span aria-hidden="true">&laquo;</span>
+                            {% endif %}
+                        </li>
+                        {# 全部页码 #}
+                        {# {% for page_num in page_of_list.paginator.page_range %}#}
+                        {# page_range在views中被处理成当前页数+-2的范围,目的是为了避免页码过于长#}
+                        {% for page_num in page_range %}
+                            {# 判断是否当前页 #}
+                            {% if page_num == page_of_list.number %}
+                                {# 如果是当前页就设置active高亮 #}
+                                <li class="active"><a href="?page={{ page_num }}">{{ page_num }}</a></li>
+                            {% else %}
+                                {% if page_num == '...' %}
+                                    <li><span>{{ page_num }}</span></li>
+                                {% else %}
+                                    <li><a href="?page={{ page_num }}">{{ page_num }}</a></li>
+                                {% endif %}
+                            {% endif %}
+                        {% endfor %}
+                                <li>
+                        {# 下一页 #}
+                        {% if page_of_list.has_next %}
+                            <a href="?page={{ page_of_list.next_page_number }}" aria-label="Previous">
+                                <span aria-hidden="true">下一页</span>
+                            </a>
+                        {% else %}
+                            <span aria-hidden="true">&raquo;</span>
+                                </li>
+                        {% endif %}
+                    </ul>
+                    <p>
+                        共有{{ page_of_list.paginator.count }}篇博客,
+                        当前第{{ page_of_list.number }}页, 共{{ page_of_list.paginator.num_pages }}页
+                    </p>
+                </div>
+            </div>
+
+            <div class="hidden-xs col-sm-4 col-md-3 col-lg-2">
+                <div class="panel panel-default">
+                     <div class="panel-heading" id="panel_heading">博客分类</div>
+                     <div class="panel-body">
+                         <ul class="blog-types">
+                             {% for category in category_list %}
+                                <li>
+                                    <a href="{% url 'blog:category' category.id %}">{{ category}}({{ category.post_count }})</a>
+                                </li>
+                             {% empty %}
+                                <li>暂无分类</li>
+                            {% endfor %}
+                         </ul>
+                     </div>
+                </div>
+                <div class="panel panel-default">
+                    <div class="panel-heading" id="panel_heading">日期归档</div>
+                    <div class="panel-body">
+                        <ul>
+                           {% for post_date,post_count in post_dates.items %}
+                               <li><a href="{% url 'blog:date' post_date.year post_date.month %}">{{ post_date|date:"Y年-m月" }}({{ post_count }})</a></li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endblock content %}
+
+{% block script_extends %}
+    <script type="text/javascript">
+        function likeChange(obj, content_type, object_id){
+            var is_like = obj.getElementsByClassName('active').length == 0
+            $.ajax({
+                url: "{% url 'likes:like_change' %}",
+                type: 'GET',
+                data: {
+                    content_type: content_type,
+                    object_id: object_id,
+                    is_like: is_like
+                },
+                cache: false,
+                success: function(data){
+                    console.log(data)
+                    if(data['status']=='SUCCESS'){
+                        // 更新点赞状态
+                        var element = $(obj.getElementsByClassName('glyphicon'));
+                        if(is_like){
+                            element.addClass('active');
+                        }else{
+                            element.removeClass('active');
+                        }
+                        // 更新点赞数量
+                        var liked_num = $(obj.getElementsByClassName('liked-num'));
+                        liked_num.text(data['liked_num']);
+                    }else{
+                        if(data['code']==400){
+                            window.location.href = '{% url 'user:login' %}';
+                        }
+                        else{
+                            alert(data['message']);
+                        }
+                    }
+                },
+                error: function(xhr){
+                    console.log(xhr)
+                }
+            });
+        }
+    </script>
+{% endblock %}

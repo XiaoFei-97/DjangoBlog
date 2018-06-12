@@ -1,0 +1,50 @@
+{% extends 'blog/blog.html' %}
+{% load post_tags %}
+
+{#页面标题#}
+{% block title %}
+    博客分类
+{% endblock title %}
+
+{% block nav_blog_active %}{% endblock %}
+{% block nav_category_active %}active{% endblock %}
+
+{% block home_content %}
+    <div class="home_content">
+        <div class="home_show"><h1>我的分类</h1></div>
+        <div class="motto_name">欢迎阅读评论，喜欢就点个赞吧</div>
+        <div class="motto_name">—一万年太久，只争朝夕</div>
+    </div>
+{% endblock %}
+
+{% block content %}
+    <div class="container">
+        <div class="row">
+            <div class="category_list">全部分类</div>
+            {% for category in category_list %}
+                {% get_category_post category as post_list %}
+                <div class="col-xs-12 col-sm-4 col-md-3 col-lg-2">
+                    <div class="panel panel-default category">
+
+                        <div class="panel-heading category_name" id="panel_heading">
+                            <a href="{% url 'blog:category' category.pk %}"><span class="glyphicon glyphicon-folder-open"></span>&nbsp;&nbsp;{{ category }}</a>
+                        </div>
+
+                        <div class="panel-body category_body">
+                            {% for post in post_list %}
+                                <p><a href="{% url 'blog:detail' post.id %}">{{ post }}</a></p>
+                            {% empty %}
+                                <h5>暂无博客</h5>
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
+            {% empty %}
+                <h3>暂无分类！</h3>
+            {% endfor %}
+        </div>
+    </div>
+
+
+    <div class="box"></div>
+{% endblock %}
