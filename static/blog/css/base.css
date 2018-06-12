@@ -1,0 +1,182 @@
+/*全局body页面样式*/
+body{
+    margin: 0;
+    padding: 0;
+    margin-top: 50px!important;
+    background-color: #4cae4c;
+    margin-bottom: 2em;
+    font-size: 2em;
+}
+
+ul{
+    list-style: none;
+}
+
+/*首页的标志栏*/
+.home_content{
+    background-color: #4F5893;
+    height: 230px;
+    text-align: center;
+    margin-bottom: 2em;
+}
+
+.home_content .home_show{
+    display: inline-block;
+    margin-top: 50px;
+    color: #fff;
+}
+
+.home_content .motto_name{
+    color: #B9BFE4;
+    font-size: 1.5em;
+}
+
+/*panel标题背景色*/
+#panel_heading{
+    background-color: #4F5893;
+    color: #fff;
+}
+
+/*登录页面响应式布局*/
+@media screen and (max-width: 800px) {
+    div .mobile_terminal{
+         width: 75%;
+         margin: 5% 12%;
+    }
+}
+
+/*关于本站等信息*/
+.footer{
+    overflow: hidden;
+    background-color: #e7e7e7;
+    padding-left: 10%;
+    clear:both;
+}
+
+
+.footer h4{
+    padding-bottom: 3px;
+    color: #424242;
+    font-weight: bold;
+    border-bottom: 1px solid #aaa;
+}
+
+.about, .response, .contact{
+    float: left;
+    margin-right: 10%;
+    margin-left: 2% ;
+    font-size: 0.75em;
+}
+
+.copyright{
+    text-align: center;
+    padding: 0.5em 0;
+    background: #4F5893;
+    color: #e7e7e7;
+}
+
+/*关于我*/
+.introduce_content{
+    width: 100%;
+    margin: 1em 0 3em 1em;
+    overflow: hidden;
+    display: inline-block;
+}
+
+.introduce_content1{
+    margin-top: 5em;
+    float: left;
+}
+
+.my_pic{
+    float: left;
+    /*margin-left: em;*/
+    margin-right: 5em;
+}
+
+.my_pic img{
+    width: 300px;
+    height: 300px;
+    border-radius: 50%;
+}
+
+/*人物走路*/
+.walking{
+    width: 120px;
+    height: 182px;
+    margin-top: 2em;
+    margin-left: 9em;
+    overflow: hidden;
+    position: relative;
+    display: inline-block;
+    float: left;
+    /*display: inline-block;*/
+}
+
+.walking img{
+    position: absolute;
+    left: 0px;
+    top: 0px;
+    animation: walking 2s steps(8) infinite;
+}
+
+@keyframes walking{
+    from{
+        left: 0px;
+    }
+    to{
+        left: -960px;
+    }
+}
+
+/*博客分类目录样式*/
+.category_list{
+    text-align: center;
+    font-size: 2em;
+}
+
+.category{
+    height: 25em;
+    margin-top: 2em;
+
+}
+
+.category_name{
+    text-align: center;
+}
+
+.category_name a{
+   color:#fff;
+}
+
+.category_body{
+    margin-left: 1em;
+    /*text-align: center;*/
+}
+
+.category li, .date li{
+    margin-top: 5px;
+}
+
+/*日期归档*/
+.date{
+    width: 13em;
+    height: 22em;
+    float: left;
+    display: block;
+    margin-left: 4em;
+    margin-right: 2em;
+    margin-top: 2em;
+    border-radius: 25%;
+    background-color: #e6e6e6;
+}
+
+.box{
+    width: 100%;
+    height: 10em;
+}
+
+/*搜索结果*/
+.previous_next{
+    text-align: center;
+}
