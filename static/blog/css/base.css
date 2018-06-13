@@ -47,7 +47,7 @@ ul{
     display: inline-block;
 }
 
-.like .active{
+.active{
     color: #f22;
 }
 
@@ -202,8 +202,6 @@ ul{
 
 .category{
     height: 25em;
-    margin-top: 1em;
-
 }
 
 .category_name{
@@ -217,10 +215,6 @@ ul{
 .category_body{
     margin-left: 1em;
     /*text-align: center;*/
-}
-
-.category li, .date li{
-    margin-top: 5px;
 }
 
 .box{

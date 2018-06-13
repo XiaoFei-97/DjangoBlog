@@ -30,7 +30,7 @@
 
                             <div class="panel-body category_body">
                                 {% for post in post_list %}
-                                    <p><a href="{% url 'blog:detail' post.id %}">{{ post }}</a></p>
+                                    <div><a href="{% url 'blog:detail' post.id %}">{{ post }}</a></div>
                                 {% empty %}
                                     <h5>暂无博客</h5>
                                 {% endfor %}
