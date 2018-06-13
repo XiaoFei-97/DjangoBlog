@@ -11,6 +11,9 @@ body{
 ul{
     list-style: none;
 }
+.nav_bar{
+    margin-right: 1em
+}
 
 /*首页的标志栏*/
 .home_content{
