@@ -15,6 +15,10 @@ ul{
     margin-right: 1em
 }
 
+.search_box{
+    display: inline-block;
+    width: 80%;
+}
 /*首页的标志栏*/
 .home_content{
     background-color: #4F5893;
