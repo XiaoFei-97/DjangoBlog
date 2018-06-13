@@ -21,7 +21,7 @@
         <div class="row">
 {#            10列的宽度#}
 {#            适应中等屏幕与大屏幕#}
-            <div class="div-col-xs-10 col-xs-offset-1">
+            <div class="col-xs-12 col-sm-8 col-md-8 col-lg-10 col-lg-offset-1">
                 <h3>{{ title }}</h3>
                 <ul class="blog-info-description">
                     <li>作者:{{ author }}</li>
@@ -57,10 +57,7 @@
                         {% endif %}
                     </p>
                 </div>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-xs-10 col-xs-offset-1">
+
                 <div class="comment-area">
                     <h3 class="comment-area-title">提交评论</h3>
                     {% if user.is_authenticated %}
@@ -91,7 +88,7 @@
                         <a class="btn btn-danger" href="{% url 'user:register' %}?from={{ request.path }}">注册</a>
                     {% endif %}
                 </div>
-               <div class="comment-area">
+                <div class="comment-area">
                     <h3 class="comment-area-title">评论列表</h3>
                     <div id="comment_list">
                         {% get_comment_list post as comments%}
@@ -107,8 +104,6 @@
                                     <span class="liked-num">{% get_like_count comment %}</span>
                                  </div>
                                 <a href="javascript:reply({{ comment.pk }});">回复</a>
-
-
                                 {% for reply in comment.root_comment.all %}
                                     <div class="reply">
                                         <span>{{ reply.user.username }}</span>
@@ -121,7 +116,7 @@
                                         <div class="like" onclick="likeChange(this, '{% get_content_type reply %}', {{ reply.pk }})">
                                             <span class="glyphicon glyphicon-thumbs-up {% get_like_status reply %}"></span>
                                             <span class="liked-num">{% get_like_count reply %}</span>
-</div>
+                                        </div>
                                         <a href="javascript:reply({{ reply.pk }});">回复</a>
                                     </div>
                                 {% endfor %}
