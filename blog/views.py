@@ -118,6 +118,9 @@ def detail(request, pk):
     # 接收了一个pk值,这个值是在url中传递的主键,利用该主键可以找到文章的对象
     # get_object_or_404的用法是(模型名,get方法)
     post = get_object_or_404(Post, pk=pk)
+    post_all_list = Post.objects.all()
+    # 使用公共的get_blog_list_common_data的方法
+    context = get_blog_list_common_data(request, post_all_list)
 
     # read_statistics_once_read是在read_statistics应用中的方法,表示计数+1
     read_cookie_key = read_statistics_once_read(request, post)
@@ -134,7 +137,7 @@ def detail(request, pk):
     # 因为博客是按照创建时间的先后来排序的:即先创建的靠后,那么上一篇博客创建时间早于当前博客
     next_post = Post.objects.filter(created_time__lt=post.created_time).first()
 
-    context = {'article': post.body, 'title': post.title,
+    context.update({'article': post.body, 'title': post.title,
                'author': post.author, 'created_time': post.created_time,
                'category': post.category, 'previous_post': previous_post,
                'next_post': next_post, 'read_num': post.get_read_num,
@@ -143,7 +146,7 @@ def detail(request, pk):
                # 'comments': comments.order_by('-comment_time'),
                # 'comment_form': CommentForm(initial={'content_type': post_content_type.model, 'object_id': pk, 'reply_comment_id': 0}),
                # 'comment_count':Comment.objects.filter(content_type=post_content_type, object_id=post.pk).count()
-               }
+               })
     response = render(request, 'blog/detail.html', context)
     # 第一个参数是键,键值,和过期时间
     response.set_cookie(read_cookie_key, 'true')  # 阅读cookie标记

@@ -62,7 +62,7 @@
                                 <a href="{% url 'user:login' %}?from={{ request.get_full_path }}">登录</a>
                             </li>
                             {# 注册 #}
-                            <li class="hidden-sm {% block nav_register_active %}{% endblock %}">
+                            <li class="hidden-sm hidden-md {% block nav_register_active %}{% endblock %}">
                                 <a href="{% url 'user:register' %}?from={{ request.get_full_path }}">注册</a>
                             </li>
                         {% else %}

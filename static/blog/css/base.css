@@ -19,6 +19,53 @@ ul{
     display: inline-block;
     width: 80%;
 }
+
+/*阅读文章的时候需要支撑一下*/
+.content_head{
+    margin-top: 2em;
+}
+
+.blog-content{
+    margin-left: 2em;
+}
+
+.blog-info-description{
+    list-style: none;
+    margin-left: 3em;
+}
+
+.blog-info-description li{
+    display: inline-block;
+    margin-right:1em;
+}
+
+.like{
+    color: #337ab7;
+    /*鼠标设置为箭头*/
+    cursor: pointer;
+    padding: 0.2em 1em;
+    display: inline-block;
+}
+
+.like .active{
+    color: #f22;
+}
+
+.post-more{
+    margin-top: 1em;
+    margin-left: 2em;
+}
+
+.comment-area{
+    margin-top: 2em;
+    margin-left: 3em;
+}
+
+.comment-area-title{
+   border-bottom: 1px solid #ccc;
+    padding-bottom: 0.4em;
+}
+
 /*首页的标志栏*/
 .home_content{
     background-color: #4F5893;
@@ -42,6 +89,14 @@ ul{
 #panel_heading{
     background-color: #4F5893;
     color: #fff;
+}
+
+#panel_heading a{
+   color: #f7e1b5;
+}
+
+#panel_heading .head_shine{
+    color: #f7e1b5
 }
 
 /*登录页面响应式布局*/
@@ -144,7 +199,7 @@ ul{
 
 .category{
     height: 25em;
-    margin-top: 2em;
+    margin-top: 1em;
 
 }
 
@@ -163,19 +218,6 @@ ul{
 
 .category li, .date li{
     margin-top: 5px;
-}
-
-/*日期归档*/
-.date{
-    width: 13em;
-    height: 22em;
-    float: left;
-    display: block;
-    margin-left: 4em;
-    margin-right: 2em;
-    margin-top: 2em;
-    border-radius: 25%;
-    background-color: #e6e6e6;
 }
 
 .box{

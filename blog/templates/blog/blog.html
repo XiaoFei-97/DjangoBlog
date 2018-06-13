@@ -125,8 +125,10 @@
                     <div class="panel-heading" id="panel_heading">日期归档</div>
                     <div class="panel-body">
                         <ul>
-                           {% for post_date,post_count in post_dates.items %}
+                            {% for post_date,post_count in post_dates.items %}
                                <li><a href="{% url 'blog:date' post_date.year post_date.month %}">{{ post_date|date:"Y年-m月" }}({{ post_count }})</a></li>
+                            {% empty %}
+                               暂无归档
                             {% endfor %}
                         </ul>
                     </div>
