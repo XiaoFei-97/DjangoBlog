@@ -128,3 +128,7 @@ def get_30_days_read_posts():
         .order_by('-read_num_sum')
     return posts[:7]
 
+def rank_all_read_num(content_type):
+    """获取总榜阅读数量"""
+    hot_posts = ReadNum.objects.filter(content_type=content_type).order_by('-read_num')
+    return hot_posts[:15]

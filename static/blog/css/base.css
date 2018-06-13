@@ -65,6 +65,9 @@ ul{
    border-bottom: 1px solid #ccc;
     padding-bottom: 0.4em;
 }
+.blog-types{
+    list-style: none;
+}
 
 /*首页的标志栏*/
 .home_content{

@@ -5,7 +5,7 @@ from django.core.paginator import *   # 导入分页功能
 from django.core.cache import cache  # 缓存数据
 from django.conf import settings   # 导入settings,可以使用其中自定义的全局变量
 from read_statistics.utils import read_statistics_once_read, get_seven_days_read_data, get_30_days_read_data,  get_today_hot_data,\
-    get_yesterday_hot_data, get_7_days_read_posts, get_30_days_read_posts  # 导入自定义工具包
+    get_yesterday_hot_data, get_7_days_read_posts, get_30_days_read_posts, rank_all_read_num # 导入自定义工具包
 from django.contrib.contenttypes.models import ContentType
 # contenttypes 是Django内置的一个应用，可以追踪项目中所有app和model的对应关系，并记录在ContentType表中
 # from comment.models import Comment
@@ -93,12 +93,17 @@ def get_blog_list_common_data(request, blogs_all_list):
         post_date_count = Post.objects.filter(created_time__year=post_date.year, created_time__month=post_date.month).count()
         post_date_dict[post_date] = post_date_count
 
+    # 获取阅读量最大的总榜博客
+    post_content_type = ContentType.objects.get_for_model(Post)
+    hot_posts = rank_all_read_num(post_content_type)
+
     # context用来渲染模板
     context = {'post_list': page_of_list.object_list,
                'page_of_list': page_of_list,
                'category_list': category_list,
                'page_range': page_range,
                'post_dates': post_date_dict,
+               'hot_posts': hot_posts,
                }
     return context
 

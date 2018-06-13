@@ -3,9 +3,7 @@ ul{
     padding: 0;
 }
 
-.blog-types{
-    list-style: none;
-}
+
 
 /*会出现最后一个元素多了一条黑边的情况,所以对最后一个元素不进行重置*/
 .blog:not(:last-child){
