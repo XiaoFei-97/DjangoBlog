@@ -11,9 +11,6 @@ body{
 ul{
     list-style: none;
 }
-.nav_bar{
-    margin-right: 1em
-}
 
 .search_box{
     display: inline-block;
@@ -21,12 +18,17 @@ ul{
 }
 
 /*阅读文章的时候需要支撑一下*/
-.content_head{
-    margin-top: 2em;
-}
+/*.content_head{*/
+    /*margin-top: 1em;*/
+/*}*/
 
 .blog-content{
     margin-left: 2em;
+}
+
+.blog-content p{
+    margin: 0;
+    padding: 0;
 }
 
 .blog-info-description{
@@ -202,6 +204,7 @@ ul{
 
 .category{
     height: 25em;
+    margin-top: 1em;
 }
 
 .category_name{

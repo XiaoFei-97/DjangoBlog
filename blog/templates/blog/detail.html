@@ -1,4 +1,4 @@
-{% extends 'base.html' %}
+{% extends 'blog/blog.html' %}
 {% load staticfiles %}
 {% load comment_tags %}
 {% load likes_tags %}
@@ -40,10 +40,10 @@
                     </div>
 
                     <div class="panel-body">
-                        <div>
+
                             {#使用safe可以关闭转义#}
                             <div class="blog-content">{{ article|safe }}</div>
-                        </div>
+
                     </div>
                 </div>
 

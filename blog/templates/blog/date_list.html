@@ -6,6 +6,8 @@
     日期归档
 {% endblock title %}
 
+{% block nav_date_active %}active{% endblock %}
+
 {% block home_content %}
     <div class="home_content">
         <div class="home_show"><h1>我的归档</h1></div>
@@ -18,7 +20,7 @@
 
     <div class="container">
         <div class="row">
-            <div class="category_list">全部分类</div>
+            <div class="category_list">全部归档</div>
                 {% for post_date in date_list %}
                     {% get_date_post post_date.year post_date.month as post_list %}
                     <div class="col-xs-12 col-sm-4 col-md-3 col-lg-2">
