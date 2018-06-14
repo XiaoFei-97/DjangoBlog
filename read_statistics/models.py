@@ -15,6 +15,7 @@ class ReadNum(models.Model):
     # 使用contenttypes模型类来找出关联blog
     content_object = GenericForeignKey('content_type', 'object_id')
 
+
     class Meta:
         verbose_name = '阅读计数'
         verbose_name_plural = '阅读计数'

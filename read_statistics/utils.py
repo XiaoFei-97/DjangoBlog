@@ -66,6 +66,7 @@ def read_statistics_once_read(request, obj):
 
 
 def get_seven_days_read_data(content_type):
+    """获取七天内的阅读记录"""
     today = timezone.now().date()
     dates = []
     read_nums = []
@@ -84,23 +85,27 @@ def get_30_days_read_data(content_type):
     # 获取每个月的阅读记录
     months = []
     read_nums = []
-    for month in range(1,13):
-        months.append(str(month) + '月')
-        read_month_data = ReadDetail.objects.filter(content_type=content_type, date__year=2018, date__month=month)
-        result = read_month_data.aggregate(read_num_sum=Sum('read_num'))
+    year = datetime.datetime.now().year
+    month = datetime.datetime.now().month
 
+    for month in range(1, month+1):
+        months.append(str(month) + '月')
+        read_month_data = ReadDetail.objects.filter(content_type=content_type, date__year=year, date__month=month)
+        result = read_month_data.aggregate(read_num_sum=Sum('read_num'))
         read_nums.append(result['read_num_sum'] or 0)
 
-    return months, read_nums
+    return months, read_nums, year
 
 
 def get_today_hot_data(content_type):
+    """获取今日博客排行榜"""
     today = timezone.now().date()
     read_detail = ReadDetail.objects.filter(content_type=content_type, date=today).order_by('-read_num')
     return read_detail[:7]  # 前七条
 
 
 def get_yesterday_hot_data(content_type):
+    """获取昨天博客额排行榜"""
     today = timezone.now().date()
     yesterday = today - datetime.timedelta(days=1)
     read_detail = ReadDetail.objects.filter(content_type=content_type, date=yesterday).order_by('-read_num')
@@ -108,6 +113,7 @@ def get_yesterday_hot_data(content_type):
 
 
 def get_7_days_read_posts():
+    """获取博客7天排行榜"""
     today = timezone.now().date()
     date = today - datetime.timedelta(days=7)
     posts = Post.objects \
@@ -119,6 +125,7 @@ def get_7_days_read_posts():
 
 
 def get_30_days_read_posts():
+    """获取博客30天排行榜"""
     today = timezone.now().date()
     date = today - datetime.timedelta(days=30)
     posts = Post.objects \
@@ -128,7 +135,13 @@ def get_30_days_read_posts():
         .order_by('-read_num_sum')
     return posts[:7]
 
-def rank_all_read_num(content_type):
-    """获取总榜阅读数量"""
-    hot_posts = ReadNum.objects.filter(content_type=content_type).order_by('-read_num')
-    return hot_posts[:15]
+def get_all_read_posts():
+    """获取博客排行总榜"""
+    today = timezone.now().date()
+    date = today - datetime.timedelta(days=30)
+    posts = Post.objects \
+        .filter(read_detail__date__lt=today, read_detail__date__gte=date) \
+        .values('id', 'title') \
+        .annotate(read_num_sum=Sum('read_detail__read_num')) \
+        .order_by('-read_num_sum')
+    return posts[:15]

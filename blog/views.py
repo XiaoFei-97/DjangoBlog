@@ -5,7 +5,7 @@ from django.core.paginator import *   # 导入分页功能
 from django.core.cache import cache  # 缓存数据
 from django.conf import settings   # 导入settings,可以使用其中自定义的全局变量
 from read_statistics.utils import read_statistics_once_read, get_seven_days_read_data, get_30_days_read_data,  get_today_hot_data,\
-    get_yesterday_hot_data, get_7_days_read_posts, get_30_days_read_posts, rank_all_read_num # 导入自定义工具包
+    get_yesterday_hot_data, get_7_days_read_posts, get_30_days_read_posts, get_all_read_posts # 导入自定义工具包
 from django.contrib.contenttypes.models import ContentType
 # contenttypes 是Django内置的一个应用，可以追踪项目中所有app和model的对应关系，并记录在ContentType表中
 # from comment.models import Comment
@@ -19,7 +19,7 @@ def home(request):
     post_content_type = ContentType.objects.get_for_model(Post)
     # 使用自定义的utils工具包get_seven_days_read_data,获取出post对应日期的和该日期阅读计数的总和
     seven_dates, seven_read_nums = get_seven_days_read_data(post_content_type)
-    thirty_dates, thirty_read_nums = get_30_days_read_data(post_content_type)
+    thirty_dates, thirty_read_nums, year = get_30_days_read_data(post_content_type)
     # 获取7天热门博客的缓存数据
     last_7_days_hot_data = cache.get('last_7_days_hot_data')
     if last_7_days_hot_data is None:
@@ -38,7 +38,7 @@ def home(request):
 
     context = {'seven_read_nums': seven_read_nums, 'seven_dates': seven_dates,
                'thirty_read_nums': thirty_read_nums, 'thirty_dates': thirty_dates,
-               'today_hot_data': today_hot_data,
+               'today_hot_data': today_hot_data, 'year': str(year),
                'yesterday_hot_data': yesterday_hot_data,
                'last_7_days_hot_data': last_7_days_hot_data,
                'last_30_days_hot_data': last_30_days_hot_data,
@@ -94,8 +94,8 @@ def get_blog_list_common_data(request, blogs_all_list):
         post_date_dict[post_date] = post_date_count
 
     # 获取阅读量最大的总榜博客
-    post_content_type = ContentType.objects.get_for_model(Post)
-    hot_posts = rank_all_read_num(post_content_type)
+    all_hot_posts = get_all_read_posts()
+
 
     # context用来渲染模板
     context = {'post_list': page_of_list.object_list,
@@ -103,7 +103,7 @@ def get_blog_list_common_data(request, blogs_all_list):
                'category_list': category_list,
                'page_range': page_range,
                'post_dates': post_date_dict,
-               'hot_posts': hot_posts,
+               'all_hot_posts': all_hot_posts,
                }
     return context
 
@@ -147,7 +147,7 @@ def detail(request, pk):
                'category': post.category, 'previous_post': previous_post,
                'next_post': next_post, 'read_num': post.get_read_num,
                'user': request.user, 'post_id': post.id, 'post': post,
-               'login_form': LoginForm()
+               'login_form': LoginForm(),
                # 'comments': comments.order_by('-comment_time'),
                # 'comment_form': CommentForm(initial={'content_type': post_content_type.model, 'object_id': pk, 'reply_comment_id': 0}),
                # 'comment_count':Comment.objects.filter(content_type=post_content_type, object_id=post.pk).count()

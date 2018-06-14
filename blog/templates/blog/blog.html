@@ -112,11 +112,11 @@
                      <div class="panel-heading" id="panel_heading">热门阅读总榜</div>
                      <div class="panel-body">
                          <ul class="blog-types">
-                             {% for hot_post in hot_posts %}
-                                <li>
-                                    <a href="{% url 'blog:detail' hot_post.object_id %}">{{ hot_post.content_object.title }}</a>({{ hot_post.read_num }})
-                                </li>
-                             {% empty %}
+                            {% for hot_data in all_hot_posts %}
+                                <div>
+                                    <a href="{% url 'blog:detail' hot_data.id %}">{{ hot_data.title }}</a>({{ hot_data.read_num_sum }})
+                                </div>
+                            {% empty %}
                                 <li>暂无内容</li>
                             {% endfor %}
                          </ul>
