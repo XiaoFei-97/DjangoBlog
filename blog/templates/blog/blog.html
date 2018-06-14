@@ -114,10 +114,10 @@
                          <ul class="blog-types">
                              {% for hot_post in hot_posts %}
                                 <li>
-                                    <a href="{% url 'blog:detail' hot_post.content_object.id %}">{{ hot_post.content_object.title }}</a>({{ hot_post.read_num }})
+                                    <a href="{% url 'blog:detail' hot_post.object_id %}">{{ hot_post.content_object.title }}</a>({{ hot_post.read_num }})
                                 </li>
                              {% empty %}
-                                <li>暂无分类</li>
+                                <li>暂无内容</li>
                             {% endfor %}
                          </ul>
                      </div>

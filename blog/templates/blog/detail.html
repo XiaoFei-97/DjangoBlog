@@ -146,7 +146,7 @@
                          <ul class="blog-types">
                              {% for post in hot_posts %}
                                 <li>
-                                    <a href="{% url 'blog:detail' post.content_object.id %}">{{ post.content_object.title }}({{ post.read_num }})</a>
+                                    <a href="{% url 'blog:detail' post.object_id %}">{{ post.content_object.title }}({{ post.read_num }})</a>
                                 </li>
                              {% empty %}
                                 <li>暂无分类</li>

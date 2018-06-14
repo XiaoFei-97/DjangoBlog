@@ -811,3 +811,140 @@ invalid request block size: 21573 (max 4096)...skip
 invalid request block size: 21573 (max 4096)...skip
 [pid: 2427|app: 0|req: 1/2] 192.168.43.206 () {40 vars in 660 bytes} [Tue Jun 12 14:19:42 2018] GET / => generated 15874 bytes in 247 msecs (HTTP/1.1 200) 3 headers in 102 bytes (1 switches on core 0)
 [pid: 2427|app: 0|req: 2/3] 192.168.43.206 () {40 vars in 660 bytes} [Tue Jun 12 15:54:03 2018] GET / => generated 15874 bytes in 265 msecs (HTTP/1.1 200) 3 headers in 102 bytes (1 switches on core 1)
+*** Starting uWSGI 2.0.17 (64bit) on [Thu Jun 14 00:20:04 2018] ***
+compiled with version: 5.4.0 20160609 on 11 June 2018 13:20:26
+os: Linux-4.13.0-45-generic #50~16.04.1-Ubuntu SMP Wed May 30 11:18:27 UTC 2018
+nodename: ubuntu
+machine: x86_64
+clock source: unix
+detected number of CPU cores: 4
+current working directory: /home/python/Desktop/my-blog-project
+writing pidfile to uwsgi.pid
+detected binary path: /usr/local/bin/uwsgi
+!!! no internal routing support, rebuild with pcre support !!!
+chdir() to /home/python/Desktop/my-blog-project
+your processes number limit is 22980
+your memory page size is 4096 bytes
+detected max file descriptor number: 1024
+lock engine: pthread robust mutexes
+thunder lock: disabled (you can enable it with --thunder-lock)
+uWSGI http bound on 127.0.0.1:8000 fd 4
+uwsgi socket 0 bound to TCP address 127.0.0.1:39239 (port auto-assigned) fd 3
+Python version: 3.5.2 (default, Nov 23 2017, 16:37:01)  [GCC 5.4.0 20160609]
+Python main interpreter initialized at 0x1e1f950
+python threads support enabled
+your server socket listen backlog is limited to 100 connections
+your mercy for graceful operations on workers is 60 seconds
+mapped 416720 bytes (406 KB) for 8 cores
+*** Operational MODE: preforking+threaded ***
+WSGI app 0 (mountpoint='') ready in 0 seconds on interpreter 0x1e1f950 pid: 11315 (default app)
+*** uWSGI is running in multiple interpreter mode ***
+spawned uWSGI master process (pid: 11315)
+spawned uWSGI worker 1 (pid: 11317, cores: 2)
+spawned uWSGI worker 2 (pid: 11318, cores: 2)
+spawned uWSGI worker 3 (pid: 11320, cores: 2)
+spawned uWSGI worker 4 (pid: 11322, cores: 2)
+spawned uWSGI http 1 (pid: 11325)
+[pid: 11317|app: 0|req: 1/1] 127.0.0.1 () {40 vars in 862 bytes} [Thu Jun 14 00:20:23 2018] GET /blog => generated 30313 bytes in 394 msecs (HTTP/1.1 200) 3 headers in 102 bytes (1 switches on core 0)
+Not Found: /static/blog/css/base.css
+[pid: 11317|app: 0|req: 2/2] 127.0.0.1 () {40 vars in 866 bytes} [Thu Jun 14 00:20:23 2018] GET /static/blog/css/base.css => generated 5183 bytes in 23 msecs (HTTP/1.1 404) 2 headers in 80 bytes (1 switches on core 1)
+Not Found: /static/blog/css/blog.css
+[pid: 11322|app: 0|req: 1/3] 127.0.0.1 () {40 vars in 866 bytes} [Thu Jun 14 00:20:23 2018] GET /static/blog/css/blog.css => generated 5183 bytes in 157 msecs (HTTP/1.1 404) 2 headers in 80 bytes (1 switches on core 0)
+Not Found: /favicon.ico
+[pid: 11320|app: 0|req: 1/4] 127.0.0.1 () {38 vars in 806 bytes} [Thu Jun 14 00:20:23 2018] GET /favicon.ico => generated 5144 bytes in 153 msecs (HTTP/1.1 404) 2 headers in 80 bytes (1 switches on core 0)
+[pid: 11317|app: 0|req: 3/5] 127.0.0.1 () {40 vars in 865 bytes} [Thu Jun 14 00:20:24 2018] GET / => generated 15606 bytes in 215 msecs (HTTP/1.1 200) 3 headers in 102 bytes (1 switches on core 0)
+Not Found: /static/blog/css/base.css
+Not Found: /static/blog/css/home.css
+[pid: 11317|app: 0|req: 5/6] 127.0.0.1 () {38 vars in 807 bytes} [Thu Jun 14 00:20:24 2018] GET /static/blog/css/base.css => generated 5183 bytes in 21 msecs (HTTP/1.1 404) 2 headers in 80 bytes (1 switches on core 1)
+[pid: 11317|app: 0|req: 5/7] 127.0.0.1 () {40 vars in 862 bytes} [Thu Jun 14 00:20:24 2018] GET /static/blog/css/home.css => generated 5183 bytes in 15 msecs (HTTP/1.1 404) 2 headers in 80 bytes (1 switches on core 0)
+[pid: 11317|app: 0|req: 6/8] 127.0.0.1 () {40 vars in 868 bytes} [Thu Jun 14 00:20:25 2018] GET /blog => generated 30313 bytes in 333 msecs (HTTP/1.1 200) 3 headers in 102 bytes (1 switches on core 1)
+Not Found: /static/blog/css/base.css
+[pid: 11317|app: 0|req: 7/9] 127.0.0.1 () {38 vars in 810 bytes} [Thu Jun 14 00:20:25 2018] GET /static/blog/css/base.css => generated 5183 bytes in 14 msecs (HTTP/1.1 404) 2 headers in 80 bytes (1 switches on core 0)
+Not Found: /static/blog/css/blog.css
+[pid: 11318|app: 0|req: 1/10] 127.0.0.1 () {38 vars in 810 bytes} [Thu Jun 14 00:20:25 2018] GET /static/blog/css/blog.css => generated 5183 bytes in 152 msecs (HTTP/1.1 404) 2 headers in 80 bytes (1 switches on core 0)
+[pid: 11317|app: 0|req: 8/11] 127.0.0.1 () {40 vars in 864 bytes} [Thu Jun 14 00:20:26 2018] GET / => generated 15606 bytes in 86 msecs (HTTP/1.1 200) 3 headers in 102 bytes (1 switches on core 1)
+Not Found: /static/blog/css/base.css
+Not Found: /static/blog/css/home.css
+[pid: 11317|app: 0|req: 10/12] 127.0.0.1 () {38 vars in 806 bytes} [Thu Jun 14 00:20:26 2018] GET /static/blog/css/base.css => generated 5183 bytes in 16 msecs (HTTP/1.1 404) 2 headers in 80 bytes (1 switches on core 0)
+[pid: 11317|app: 0|req: 10/13] 127.0.0.1 () {38 vars in 806 bytes} [Thu Jun 14 00:20:26 2018] GET /static/blog/css/home.css => generated 5183 bytes in 16 msecs (HTTP/1.1 404) 2 headers in 80 bytes (1 switches on core 1)
+[pid: 11317|app: 0|req: 11/14] 127.0.0.1 () {40 vars in 889 bytes} [Thu Jun 14 00:20:27 2018] GET /category_list/ => generated 16035 bytes in 59 msecs (HTTP/1.1 200) 3 headers in 102 bytes (1 switches on core 0)
+Not Found: /static/blog/css/base.css
+[pid: 11317|app: 0|req: 12/15] 127.0.0.1 () {38 vars in 821 bytes} [Thu Jun 14 00:20:28 2018] GET /static/blog/css/base.css => generated 5183 bytes in 13 msecs (HTTP/1.1 404) 2 headers in 80 bytes (1 switches on core 1)
+Not Found: /static/blog/css/blog.css
+[pid: 11320|app: 0|req: 2/16] 127.0.0.1 () {38 vars in 821 bytes} [Thu Jun 14 00:20:28 2018] GET /static/blog/css/blog.css => generated 5183 bytes in 13 msecs (HTTP/1.1 404) 2 headers in 80 bytes (1 switches on core 1)
+Not Found: /static/blog/css/blog.css
+[pid: 11317|app: 0|req: 13/17] 127.0.0.1 () {38 vars in 821 bytes} [Thu Jun 14 00:20:28 2018] GET /static/blog/css/blog.css => generated 5183 bytes in 7 msecs (HTTP/1.1 404) 2 headers in 80 bytes (1 switches on core 0)
+[pid: 11317|app: 0|req: 14/18] 127.0.0.1 () {40 vars in 895 bytes} [Thu Jun 14 00:20:28 2018] GET /date_list/ => generated 9480 bytes in 24 msecs (HTTP/1.1 200) 3 headers in 102 bytes (1 switches on core 1)
+Not Found: /static/blog/css/base.css
+[pid: 11317|app: 0|req: 15/19] 127.0.0.1 () {38 vars in 817 bytes} [Thu Jun 14 00:20:28 2018] GET /static/blog/css/base.css => generated 5183 bytes in 9 msecs (HTTP/1.1 404) 2 headers in 80 bytes (1 switches on core 0)
+[pid: 11318|app: 0|req: 2/20] 127.0.0.1 () {40 vars in 883 bytes} [Thu Jun 14 00:20:29 2018] GET /about/ => generated 5996 bytes in 44 msecs (HTTP/1.1 200) 3 headers in 102 bytes (1 switches on core 1)
+Not Found: /static/blog/media/my_pic.jpg
+Not Found: /static/blog/css/base.css
+[pid: 11320|app: 0|req: 4/21] 127.0.0.1 () {38 vars in 842 bytes} [Thu Jun 14 00:20:29 2018] GET /static/blog/media/my_pic.jpg => generated 5195 bytes in 12 msecs (HTTP/1.1 404) 2 headers in 80 bytes (1 switches on core 1)
+[pid: 11320|app: 0|req: 4/22] 127.0.0.1 () {38 vars in 813 bytes} [Thu Jun 14 00:20:29 2018] GET /static/blog/css/base.css => generated 5183 bytes in 16 msecs (HTTP/1.1 404) 2 headers in 80 bytes (1 switches on core 0)
+[pid: 11317|app: 0|req: 16/23] 127.0.0.1 () {40 vars in 895 bytes} [Thu Jun 14 00:20:30 2018] GET /category_list/ => generated 16035 bytes in 47 msecs (HTTP/1.1 200) 3 headers in 102 bytes (1 switches on core 1)
+Not Found: /static/blog/css/blog.css
+[pid: 11318|app: 0|req: 3/24] 127.0.0.1 () {38 vars in 821 bytes} [Thu Jun 14 00:20:30 2018] GET /static/blog/css/blog.css => generated 5183 bytes in 7 msecs (HTTP/1.1 404) 2 headers in 80 bytes (1 switches on core 0)
+Not Found: /static/blog/css/base.css
+[pid: 11317|app: 0|req: 17/25] 127.0.0.1 () {38 vars in 821 bytes} [Thu Jun 14 00:20:30 2018] GET /static/blog/css/base.css => generated 5183 bytes in 11 msecs (HTTP/1.1 404) 2 headers in 80 bytes (1 switches on core 0)
+Not Found: /static/blog/css/blog.css
+[pid: 11320|app: 0|req: 5/26] 127.0.0.1 () {38 vars in 821 bytes} [Thu Jun 14 00:20:30 2018] GET /static/blog/css/blog.css => generated 5183 bytes in 6 msecs (HTTP/1.1 404) 2 headers in 80 bytes (1 switches on core 1)
+[pid: 11317|app: 0|req: 18/27] 127.0.0.1 () {40 vars in 883 bytes} [Thu Jun 14 00:20:31 2018] GET /blog => generated 30313 bytes in 231 msecs (HTTP/1.1 200) 3 headers in 102 bytes (1 switches on core 1)
+Not Found: /static/blog/css/base.css
+Not Found: /static/blog/css/blog.css
+[pid: 11318|app: 0|req: 5/28] 127.0.0.1 () {38 vars in 811 bytes} [Thu Jun 14 00:20:31 2018] GET /static/blog/css/base.css => generated 5183 bytes in 21 msecs (HTTP/1.1 404) 2 headers in 80 bytes (1 switches on core 0)
+[pid: 11318|app: 0|req: 5/29] 127.0.0.1 () {38 vars in 811 bytes} [Thu Jun 14 00:20:31 2018] GET /static/blog/css/blog.css => generated 5183 bytes in 17 msecs (HTTP/1.1 404) 2 headers in 80 bytes (1 switches on core 1)
+[pid: 11317|app: 0|req: 19/30] 127.0.0.1 () {40 vars in 865 bytes} [Thu Jun 14 00:20:31 2018] GET / => generated 15606 bytes in 87 msecs (HTTP/1.1 200) 3 headers in 102 bytes (1 switches on core 0)
+Not Found: /static/blog/css/base.css
+[pid: 11320|app: 0|req: 6/31] 127.0.0.1 () {38 vars in 807 bytes} [Thu Jun 14 00:20:31 2018] GET /static/blog/css/base.css => generated 5183 bytes in 13 msecs (HTTP/1.1 404) 2 headers in 80 bytes (1 switches on core 0)
+Not Found: /static/blog/css/home.css
+[pid: 11322|app: 0|req: 2/32] 127.0.0.1 () {38 vars in 807 bytes} [Thu Jun 14 00:20:31 2018] GET /static/blog/css/home.css => generated 5183 bytes in 14 msecs (HTTP/1.1 404) 2 headers in 80 bytes (1 switches on core 1)
+gateway "uWSGI http 1" has been buried (pid: 11325)
+Gracefully killing worker 2 (pid: 11318)...
+Gracefully killing worker 1 (pid: 11317)...
+Gracefully killing worker 3 (pid: 11320)...
+...brutally killing workers...
+Gracefully killing worker 4 (pid: 11322)...
+worker 1 buried after 1 seconds
+worker 2 buried after 1 seconds
+worker 3 buried after 1 seconds
+worker 4 buried after 1 seconds
+binary reloading uWSGI...
+chdir() to /home/python/Desktop/my-blog-project
+closing all non-uwsgi socket fds > 2 (max_fd = 1024)...
+found fd 3 mapped to socket 0 (127.0.0.1:39239)
+running /usr/local/bin/uwsgi
+[uWSGI] getting INI configuration from uwsgi.ini
+*** Starting uWSGI 2.0.17 (64bit) on [Thu Jun 14 00:26:26 2018] ***
+compiled with version: 5.4.0 20160609 on 11 June 2018 13:20:26
+os: Linux-4.13.0-45-generic #50~16.04.1-Ubuntu SMP Wed May 30 11:18:27 UTC 2018
+nodename: ubuntu
+machine: x86_64
+clock source: unix
+detected number of CPU cores: 4
+current working directory: /home/python/Desktop/my-blog-project
+detected binary path: /usr/local/bin/uwsgi
+!!! no internal routing support, rebuild with pcre support !!!
+chdir() to /home/python/Desktop/my-blog-project
+your processes number limit is 22980
+your memory page size is 4096 bytes
+detected max file descriptor number: 1024
+lock engine: pthread robust mutexes
+thunder lock: disabled (you can enable it with --thunder-lock)
+uWSGI http bound on 127.0.0.1:8000 fd 5
+uwsgi socket 0 bound to TCP address 127.0.0.1:41383 (port auto-assigned) fd 4
+Python version: 3.5.2 (default, Nov 23 2017, 16:37:01)  [GCC 5.4.0 20160609]
+Python main interpreter initialized at 0x18b2730
+python threads support enabled
+your server socket listen backlog is limited to 100 connections
+your mercy for graceful operations on workers is 60 seconds
+mapped 416720 bytes (406 KB) for 8 cores
+*** Operational MODE: preforking+threaded ***
+WSGI app 0 (mountpoint='') ready in 0 seconds on interpreter 0x18b2730 pid: 11315 (default app)
+*** uWSGI is running in multiple interpreter mode ***
+gracefully (RE)spawned uWSGI master process (pid: 11315)
+spawned uWSGI worker 1 (pid: 11787, cores: 2)
+spawned uWSGI worker 2 (pid: 11788, cores: 2)
+spawned uWSGI worker 3 (pid: 11791, cores: 2)
+spawned uWSGI worker 4 (pid: 11792, cores: 2)
+spawned uWSGI http 1 (pid: 11794)
