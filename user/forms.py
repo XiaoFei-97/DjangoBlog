@@ -66,3 +66,5 @@ class RegForm(forms.Form):
         if password != password_again:
             raise forms.ValidationError('两次输入的密码不一致')
         return password
+
+

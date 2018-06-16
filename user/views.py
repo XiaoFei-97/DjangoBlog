@@ -3,11 +3,11 @@ from django.shortcuts import redirect, render
 # contenttypes 是Django内置的一个应用，可以追踪项目中所有app和model的对应关系，并记录在ContentType表中
 from django.contrib import auth  # auth模块是Django提供的标准权限管理系统,可以提供用户身份认证, 用户组和权限管理。
 from django.urls import reverse    # 反向解析
-from user.forms import RegForm
 from django.contrib.auth.models import User
 # from comment.models import Comment
 # from comment.forms import CommentForm
-from user.forms import LoginForm
+from .forms import LoginForm, RegForm
+# from .models import Profile
 from django.http import JsonResponse
 
 
@@ -125,6 +125,10 @@ def user_info(request):
     context = {}
     return render(request, 'user/user_info.html', context)
 
+
 def about(request):
     context = {}
     return render(request, 'user/about.html',context)
+
+
+
