@@ -144,4 +144,4 @@ def get_all_read_posts():
         .values('id', 'title') \
         .annotate(read_num_sum=Sum('read_detail__read_num')) \
         .order_by('-read_num_sum')
-    return posts[:15]
+    return posts[:20]

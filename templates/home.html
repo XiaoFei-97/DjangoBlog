@@ -32,7 +32,7 @@
                     {#    今日热门博客#}
                     <div class="panel panel-default">
                         <!-- Default panel contents -->
-                        <div class="panel-heading" id="panel_heading">今天热门博客</div>
+                        <div class="panel-heading" id="panel_heading">今日热门博客</div>
                             <!-- List group -->
                         <ul class="list-group">
                             {% for hot_data in today_hot_data %}
@@ -40,14 +40,14 @@
                                     <a href="{% url 'blog:detail' hot_data.content_object.id %}">{{ hot_data.content_object.title }}</a>({{ hot_data.read_num }})
                                 </li>
                             {% empty %}
-                                <li>今天暂时没有热门博客</li>
+                                <li>今日暂时没有热门博客</li>
                             {% endfor %}
                         </ul>
                     </div>
                      {#    昨日热门博客#}
                     <div class="panel panel-default">
                         <!-- Default panel contents -->
-                        <div class="panel-heading" id="panel_heading">昨天热门博客</div>
+                        <div class="panel-heading" id="panel_heading">昨日热门博客</div>
                         <!-- List group -->
                         <ul class="list-group">
                             {% for hot_data in yesterday_hot_data %}
@@ -55,7 +55,7 @@
                                     <a href="{% url 'blog:detail' hot_data.content_object.id %}">{{ hot_data.content_object.title }}</a>({{ hot_data.read_num }})
                                 </li>
                             {% empty %}
-                                <li>昨天暂时没有热门博客</li>
+                                <li>昨日暂时没有热门博客</li>
                             {% endfor %}
                         </ul>
                     </div>
@@ -75,7 +75,7 @@
                                     <a href="{% url 'blog:detail' hot_data.id %}">{{ hot_data.title }}</a>({{ hot_data.read_num_sum }})
                                 </li>
                             {% empty %}
-                                <li>七天暂时没有热门博客</li>
+                                <li>七天内暂时没有热门博客</li>
                             {% endfor %}
                         </ul>
                     </div>
@@ -89,7 +89,7 @@
                                     <a href="{% url 'blog:detail' hot_data.id %}">{{ hot_data.title }}</a>({{ hot_data.read_num_sum }})
                                 </li>
                             {% empty %}
-                                <li>三十天暂时没有热门博客</li>
+                                <li>三十天内暂时没有热门博客</li>
                             {% endfor %}
                         </ul>
                     </div>
