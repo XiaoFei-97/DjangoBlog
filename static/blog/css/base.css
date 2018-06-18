@@ -146,20 +146,22 @@ ul{
 /*关于我*/
 .introduce_content{
     width: 100%;
-    margin: 1em 0 3em 1em;
     overflow: hidden;
     display: inline-block;
+    margin-bottom: 1em;
 }
 
 .introduce_content1{
     margin-top: 5em;
     float: left;
+    margin-left: 3em;
 }
 
 .my_pic{
     float: left;
-    /*margin-left: em;*/
-    margin-right: 5em;
+    margin-left: 1em;
+    /*margin-right: 5em;*/
+    /*margin: 0 auto;*/
 }
 
 .my_pic img{
@@ -173,7 +175,7 @@ ul{
     width: 120px;
     height: 182px;
     margin-top: 2em;
-    margin-left: 9em;
+    margin-left: 6em;
     overflow: hidden;
     position: relative;
     display: inline-block;
