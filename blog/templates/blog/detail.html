@@ -40,10 +40,8 @@
                     </div>
 
                     <div class="panel-body">
-
-                            {#使用safe可以关闭转义#}
-                            <div class="blog-content">{{ article|safe }}</div>
-
+                        {#使用safe可以关闭转义#}
+                         <div class="blog-content">{{ article|safe }}</div>
                     </div>
                 </div>
 
@@ -140,11 +138,11 @@
             </div>
 
             <div class="hidden-xs col-sm-4 col-md-3 col-lg-2 content_head">
-                 <div class="panel panel-default">
-                     <div class="panel-heading" id="panel_heading">热门阅读总榜</div>
-                     <div class="panel-body">
-                         <ul class="blog-types">
-                             {% for hot_data in all_hot_posts %}
+                <div class="panel panel-default">
+                    <div class="panel-heading" id="panel_heading">热门阅读总榜</div>
+                    <div class="panel-body">
+                        <ul class="blog-types">
+                            {% for hot_data in all_hot_posts %}
                                 <div>
                                     <a href="{% url 'blog:detail' hot_data.id %}">{{ hot_data.title }}</a>({{ hot_data.read_num_sum }})
                                 </div>
@@ -169,6 +167,7 @@
                          </ul>
                      </div>
                 </div>
+
                 <div class="panel panel-default">
                     <div class="panel-heading" id="panel_heading">日期归档</div>
                     <div class="panel-body">
@@ -182,6 +181,7 @@
                     </div>
                 </div>
             </div>
+
         </div>
     </div>
      <!-- Modal -->

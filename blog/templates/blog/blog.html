@@ -35,7 +35,7 @@
                                 <a href="{% url 'blog:detail' post.id %}">
                                     <h4>{{ post.title }}</h4>
                                 </a>
-                                <div class="abstract"><a href="{% url 'blog:detail' post.id %}">{{ post.body|striptags|truncatechars:120 }}</a></div>
+                                <div class="abstract"><a href="{% url 'blog:detail' post.id %}">{{ post.body|striptags|truncatechars:120|safe }}</a></div>
                                 <div class="blog-info">{#<span>中的是分类和时间logo样式#}
                                     <div class="time-info">
                                         分类:<a href="{% url 'blog:category' post.category.id %}">
