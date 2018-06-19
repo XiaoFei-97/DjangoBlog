@@ -114,7 +114,7 @@
                          <ul class="blog-types">
                             {% for hot_data in all_hot_posts %}
                                 <div>
-                                    <a href="{% url 'blog:detail' hot_data.id %}">{{ hot_data.title }}</a>({{ hot_data.read_num_sum }})
+                                    <a href="{% url 'blog:detail' hot_data.id %}">{{ hot_data.title }}&nbsp;({{ hot_data.read_num_sum }})</a>
                                 </div>
                             {% empty %}
                                 <li>暂无内容</li>
@@ -129,7 +129,7 @@
                          <ul class="blog-types">
                              {% for category in category_list %}
                                 <li>
-                                    <a href="{% url 'blog:category' category.id %}">{{ category}}({{ category.post_count }})</a>
+                                    <a href="{% url 'blog:category' category.id %}">{{ category}}&nbsp;({{ category.post_count }})</a>
                                 </li>
                              {% empty %}
                                 <li>暂无分类</li>
@@ -142,7 +142,7 @@
                     <div class="panel-body">
                         <ul>
                             {% for post_date,post_count in post_dates.items %}
-                               <li><a href="{% url 'blog:date' post_date.year post_date.month %}">{{ post_date|date:"Y年-m月" }}({{ post_count }})</a></li>
+                               <li><a href="{% url 'blog:date' post_date.year post_date.month %}">{{ post_date|date:"Y年-m月" }}&nbsp;({{ post_count }})</a></li>
                             {% empty %}
                                暂无归档
                             {% endfor %}
