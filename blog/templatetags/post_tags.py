@@ -21,3 +21,11 @@ def get_date_post(year, month):
 def get_date_to_month(obj):
 
     return (str(obj.year) +'年' + str(obj.month) + '月')
+
+@register.simple_tag
+def get_category_to_post(obj):
+    return Post.objects.filter(category=obj).count()
+
+@register.simple_tag
+def get_date_to_post(year, month):
+    return Post.objects.filter(created_time__year=year, created_time__month=month).count()

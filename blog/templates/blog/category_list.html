@@ -18,16 +18,16 @@
 {% endblock %}
 
 {% block content %}
-    <div class="container">
+    <div class="container-fluid">
         <div class="row">
             <div class="category_list">全部分类</div>
             {% for category in category_list %}
                 {% get_category_post category as post_list %}
-                <div class="col-xs-12 col-sm-4 col-md-3 col-lg-2">
+                <div class="col-xs-8 col-xs-offset-2 col-sm-4 col-sm-offset-0 col-md-4 col-lg-2">
                     <div class="panel panel-default category">
 
                         <div class="panel-heading category_name" id="panel_heading">
-                            <a href="{% url 'blog:category' category.pk %}"><span class="glyphicon glyphicon-folder-open"></span>&nbsp;&nbsp;{{ category }}</a>
+                            <a href="{% url 'blog:category' category.pk %}"><span class="glyphicon glyphicon-folder-open"></span>&nbsp;&nbsp;{{ category }}&nbsp;({% get_category_to_post category %})</a>
                         </div>
 
                         <div class="panel-body category_body">
