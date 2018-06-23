@@ -17,7 +17,10 @@ ul{
 }
 
 .blog .blog-info{
+    margin-top: 1em;
     margin-bottom: 0;
+    font-size: 0.5em;
+
 }
 .time-info{
     text-indent: 1em;
@@ -32,10 +35,17 @@ ul{
     text-align: center;
 }
 
-
-
 .django-ckeditor-widget{
     width: 100%;
+}
+
+.hot_blog a{
+    display: block;
+    margin: 0.2em;
+}
+
+.hot_blog a:hover{
+    font-size: 1.2em;
 }
 
 .comment{
