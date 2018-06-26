@@ -4,49 +4,59 @@ ul{
 }
 
 
-
+/*博客列表*/
 /*会出现最后一个元素多了一条黑边的情况,所以对最后一个元素不进行重置*/
-.blog:not(:last-child){
-    margin-bottom: 2em;
-    padding-bottom: 1em;
-    border-bottom: 1px solid #eee;
+.blog-border{
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    margin-bottom: 1em;
+}
+.blog-item{
+    clear: both;
+    border-bottom: 1px solid #ddd;
+    padding: 1.5em 1em 0.8em 1.5em;
+    overflow: hidden;
 }
 
-.blog h4{
-    margin-top: 0.5em;
+.blog-title{
+    font-size: 1.2em;
+    font-weight: bold;
+    margin-bottom: 0.5em;
 }
 
-.blog .blog-info{
-    margin-top: 1em;
-    margin-bottom: 0;
+.blog-describe{
+    color: #777;
+    margin-bottom: 0.5em;
+}
+
+.blog-tags{
     font-size: 0.5em;
-
+    color: #777;
+    padding-top: 0.5em;
+    border-top: 1px solid #eee;
+    display: inline-block;
 }
-.time-info{
-    text-indent: 1em;
-}
 
-.blog .abstract{
-    text-indent: 1em;
-    margin-top: 0.5em;
+.list-type{
+    text-align: center;
+    color: #777;
 }
 
 .paginator{
     text-align: center;
 }
 
+
 .django-ckeditor-widget{
     width: 100%;
 }
 
-.hot_blog a{
-    display: block;
-    margin: 0.2em;
+.side-list h4{
+    padding-top: 0.8em;
+    padding-bottom: 0.5em;
+    border-bottom: 1px #ccc solid;
 }
 
-.hot_blog a:hover{
-    font-size: 1.2em;
-}
 
 .comment{
     border-bottom: 1px dashed #ccc;

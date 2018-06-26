@@ -7,32 +7,33 @@
 
 {% block home_content %}
     <div class="home_content">
-        <div class="home_show"><h1>我的分类</h1></div>
+        <div class="home_show">我的分类</div>
         <div class="motto_name">欢迎阅读评论，喜欢就点个赞吧</div>
         <div class="motto_name">—一万年太久，只争朝夕</div>
     </div>
 {% endblock %}
 
 {% block content %}
-    <div class="container-fluid">
+    <div class="container">
         <div class="row">
-            <div class="category_list">全部分类</div>
+            <div class="category_list">目前共计{{ category_list.count }}个分类</div>
             {% for category in category_list %}
                 {% get_category_post category as post_list %}
-                <div class="col-xs-10 col-xs-offset-1 col-sm-4 col-sm-offset-0 col-md-3 col-lg-2">
-                    <div class="panel panel-default category">
+                <div class="col-xs-12 col-sm-5 col-md-4 col-lg-3">
+                    <div class="category">
 
-                        <div class="panel-heading category_name" id="panel_heading">
-                            <a href="{% url 'blog:category' category.pk %}"><span class="glyphicon glyphicon-folder-open"></span>&nbsp;&nbsp;{{ category }}&nbsp;({% get_category_to_post category %})</a>
-                        </div>
+                        <h4>
+                            <a href="{% url 'blog:category' category.pk %}" style="color: #333; font-weight: bold"><span class="glyphicon glyphicon-file"></span>&nbsp;&nbsp;{{ category }}&nbsp;({% get_category_to_post category %})</a>
+                        </h4>
 
-                        <div class="panel-body category_body">
+                        <div>
                             {% for post in post_list %}
-                                <div><a href="{% url 'blog:detail' post.id %}">{{ post }}</a></div>
+                                <div class="light-blog"><a href="{% url 'blog:detail' post.id %}">{{ post.created_time|date:"Y-m-d" }}&nbsp;&nbsp;&nbsp;&nbsp;{{ post|truncatechars:12 }}</a></div>
                             {% empty %}
                                 <h5>暂无博客</h5>
                             {% endfor %}
                         </div>
+
                     </div>
                 </div>
             {% empty %}

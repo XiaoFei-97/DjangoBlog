@@ -1,5 +1,6 @@
 from django import template
 from blog.models import Post
+import random
 
 register = template.Library()
 
@@ -29,3 +30,16 @@ def get_category_to_post(obj):
 @register.simple_tag
 def get_date_to_post(year, month):
     return Post.objects.filter(created_time__year=year, created_time__month=month).count()
+
+@register.simple_tag
+def get_random_recomment():
+    random_posts = []
+    post_list = Post.objects.all()
+    for i in range(1, 16):
+        random_posts.append(random.choice(post_list))
+    return random_posts
+
+@register.simple_tag
+def get_category_count(category):
+    return Post.objects.filter(category=category).count()
+

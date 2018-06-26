@@ -1,4 +1,4 @@
-{% extends 'blog/blog.html' %}
+{% extends 'base.html' %}
 {% load staticfiles %}
 {% load comment_tags %}
 {% load likes_tags %}
@@ -18,23 +18,22 @@
 {#页面内容#}
 {% block content %}
 
-    <div class="container-fluid">
-        <div class="row">
+    <div class="container">
+        <div class="row blog-detail">
             {#适应中等屏幕与大屏幕#}
-            <div class="col-xs-12 col-sm-8 col-md-10">
-
+            <div class="col-xs-12 col-sm-8 col-md-9">
                 <div class="panel panel-default">
                     <!-- Default panel contents -->
-                    <div class="panel-heading" id="panel_heading">
-                        <h3>{{ title }}</h3>
+                    <div class="panel-heading">
+                        <h3 class="blog-name">{{ title }}</h3>
                         <ul class="blog-info-description">
                             <li>作者:{{ author }}</li>
                             <li>分类:
                                 <a href="{% url 'blog:category' category.id %}">{{ category }}</a>
                             </li>
-                            <li>发表时间:{{ created_time|date:"Y-m-d H:i:s" }}</li>
-                            <li class="head_shine">阅读({{ read_num }})</li>
-                            <li class="head_shine">评论({% get_comment_count post %})</li>
+                            <li>发布时间:{{ created_time|date:"Y-m-d H:i:s" }}</li>
+                            <li>阅读({{ read_num }})</li>
+                            <li>评论({% get_comment_count post %})</li>
                             {#<li>{% test 'string' %}</li>#}
                         </ul>
                     </div>
@@ -137,50 +136,48 @@
                 </div>
             </div>
 
-            <div class="hidden-xs col-sm-4 col-md-2">
-                <div class="panel panel-default">
-                    <div class="panel-heading" id="panel_heading">热门阅读总榜</div>
-                    <div class="panel-body">
-                        <ul class="blog-types">
-                            {% for hot_data in all_hot_posts %}
-                                <div class="hot_blog">
-                                    <a href="{% url 'blog:detail' hot_data.id %}">{{ hot_data.title }}&nbsp;({{ hot_data.read_num_sum }})</a>
-                                </div>
-                            {% empty %}
-                                <li>暂无内容</li>
-                            {% endfor %}
-                         </ul>
-                     </div>
-                </div>
+            <div class="hidden-xs col-sm-4 col-md-3 blog-border">
+                <div class="side-list">
+                    <h4><span class="glyphicon glyphicon-fire"></span>&nbsp;热门阅读总榜</h4>
+                    <ul>
+                        {% for hot_data in all_hot_posts %}
+                            <div class="light-item">
+                                <a href="{% url 'blog:detail' hot_data.id %}">{{ hot_data.title|striptags|truncatechars:30|safe }}&nbsp;({{ hot_data.read_num_sum }})</a>
+                            </div>
+                        {% empty %}
+                            <li>暂无内容</li>
+                        {% endfor %}
+                    </ul>
+                 </div>
+             </div>
 
-                <div class="panel panel-default">
-                     <div class="panel-heading" id="panel_heading">博客分类</div>
-                     <div class="panel-body">
-                         <ul class="blog-types">
-                             {% for category in category_list %}
-                                <li class="hot_blog">
-                                    <a href="{% url 'blog:category' category.id %}">{{ category}}&nbsp;({{ category.post_count }})</a>
-                                </li>
-                             {% empty %}
-                                <li>暂无分类</li>
-                            {% endfor %}
-                         </ul>
-                     </div>
+            <div class="hidden-xs col-sm-4 col-md-3 blog-border">
+                 <div class="side-list">
+                    <h4><span class="glyphicon glyphicon-file"></span>&nbsp;博客分类</h4>
+                    <ul class="blog-types">
+                        {% for category in category_list %}
+                            <li class="light-item">
+                                <a href="{% url 'blog:category' category.id %}">{{ category}}&nbsp;({{ category.post_count }})</a>
+                            </li>
+                        {% empty %}
+                            <li>暂无分类</li>
+                        {% endfor %}
+                    </ul>
                 </div>
+            </div>
 
-                <div class="panel panel-default">
-                    <div class="panel-heading" id="panel_heading">日期归档</div>
-                    <div class="panel-body">
-                        <ul>
-                            {% for post_date,post_count in post_dates.items %}
-                               <li class="hot_blog">
-                                   <a href="{% url 'blog:date' post_date.year post_date.month %}">{{ post_date|date:"Y年-m月" }}&nbsp;({{ post_count }})</a>
-                               </li>
-                            {% empty %}
-                               暂无归档
-                            {% endfor %}
-                        </ul>
-                    </div>
+            <div class="hidden-xs col-sm-4 col-md-3 blog-border">
+                <div class="side-list">
+                    <h4><span class="glyphicon glyphicon-book"></span>&nbsp;日期归档</h4>
+                    <ul>
+                        {% for post_date,post_count in post_dates.items %}
+                            <li class="light-item" >
+                                <a href="{% url 'blog:date' post_date.year post_date.month %}">{{ post_date|date:"Y年-m月" }}&nbsp;({{ post_count }})</a>
+                            </li>
+                        {% empty %}
+                            暂无归档
+                        {% endfor %}
+                    </ul>
                 </div>
             </div>
 
@@ -188,30 +185,30 @@
     </div>
      <!-- Modal -->
     <div class="modal fade" id="login_modal" tabindex="-1" role="dialog">
-            <div class="modal-dialog modal-sm" role="document">
-                <div class="modal-content">
-                    <form id="login_medal_form" action="" method="POST">
-                        <div class="modal-header">
-                            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                            <h4 class="modal-title">登录</h4>
-                        </div>
+        <div class="modal-dialog modal-sm" role="document">
+            <div class="modal-content">
+                <form id="login_medal_form" action="" method="POST">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <h4 class="modal-title">登录</h4>
+                    </div>
 
-                        <div class="modal-body">
-                            {% csrf_token %}
-                            {% for field in login_form %}
-                                <label for="{{ field.id_for_label }}">{{ field.label }}</label>
-                                {{ field }}
-                            {% endfor %}
-                            <span id="login_medal_tip" class="text-danger"></span>
-                        </div>
+                    <div class="modal-body">
+                        {% csrf_token %}
+                        {% for field in login_form %}
+                            <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+                            {{ field }}
+                        {% endfor %}
+                        <span id="login_medal_tip" class="text-danger"></span>
+                    </div>
 
-                        <div class="modal-footer">
-                            <button type="submit" class="btn btn-primary">登录</button>
-                            <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
-                        </div>
-                    </form>
-                </div>
+                    <div class="modal-footer">
+                        <button type="submit" class="btn btn-primary">登录</button>
+                        <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                    </div>
+                </form>
             </div>
+        </div>
         </div>
 
 

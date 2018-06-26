@@ -11,12 +11,20 @@ from django.contrib.contenttypes.models import ContentType
 # from comment.models import Comment
 # from comment.forms import CommentForm
 from user.forms import LoginForm
+import random
 
 
 def home(request):
     """网站的首页"""
     # 从django内置应用中获取Post的表结构
     post_content_type = ContentType.objects.get_for_model(Post)
+    category_list = Category.objects.all()
+    # 博客总数列表
+    post_list = Post.objects.all()
+    # 最新发表10篇
+    new_publish = Post.objects.all()[:15]
+    # 最新推荐10篇
+    new_recommend = get_yesterday_hot_data(post_content_type)
     # 使用自定义的utils工具包get_seven_days_read_data,获取出post对应日期的和该日期阅读计数的总和
     seven_dates, seven_read_nums = get_seven_days_read_data(post_content_type)
     thirty_dates, thirty_read_nums, year = get_30_days_read_data(post_content_type)
@@ -29,19 +37,22 @@ def home(request):
 
     # 今日热门博客数据
     today_hot_data = get_today_hot_data(post_content_type)
-    # 昨天热门博客
-    yesterday_hot_data = get_yesterday_hot_data(post_content_type)
+
     # 过去七天热门博客
     last_7_days_hot_data = get_7_days_read_posts()
     # 过去三十天热门博客
     last_30_days_hot_data = get_30_days_read_posts()
+    # 获取阅读量最大的总榜博客
+    all_hot_posts = get_all_read_posts()
 
     context = {'seven_read_nums': seven_read_nums, 'seven_dates': seven_dates,
                'thirty_read_nums': thirty_read_nums, 'thirty_dates': thirty_dates,
                'today_hot_data': today_hot_data, 'year': str(year),
-               'yesterday_hot_data': yesterday_hot_data,
+               'new_recommend': new_recommend,
                'last_7_days_hot_data': last_7_days_hot_data,
                'last_30_days_hot_data': last_30_days_hot_data,
+               'category_list': category_list, 'post_count': post_list.count,
+               'new_publish':new_publish, 'all_hot_posts': all_hot_posts,
                }
 
     return render(request, 'home.html', context)
@@ -163,7 +174,7 @@ def category_list(request):
     # 获得所有的分类
     category_list = Category.objects.all()
 
-    context = {'category_list':category_list}
+    context = {'category_list': category_list}
     return render(request, 'blog/category_list.html', context)
 
 
@@ -187,10 +198,12 @@ def date_list(request):
     """日期归档"""
     # date_list = []
     date_list = Post.objects.dates('created_time', 'month', order='DESC')
+    post_count = Post.objects.all().count()
     # for post_date in post_dates:
     #     date_list.append(str(post_date.year) +'年' + str(post_date.month) + '月')
 
-    context = {'date_list': date_list}
+    context = {'date_list': date_list,
+               'post_count': post_count,}
     return render(request, 'blog/date_list.html', context)
 
 def date(request, year, month):

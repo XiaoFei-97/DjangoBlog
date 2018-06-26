@@ -9,7 +9,7 @@
 
 {% block home_content %}
     <div class="home_content">
-        <div class="home_show"><h1>我的博客</h1></div>
+        <div class="home_show">我的博客</div>
         <div class="motto_name">欢迎阅读评论，评论需注册登录</div>
         <div class="motto_name">—If You Can Make It Here,You Can Make It Anywhere</div>
     </div>
@@ -19,34 +19,33 @@
 {% block content %}
     <div class="container">
         <div class="row">
-            <div class="col-xs-12 col-sm-5 col-lg-5 col-sm-offset-3">
-{#            col-xs-4 col-xs-offset-4 col-sm-8 col-md-8#}
-{#            col-xs-12 col-sm-8 col-md-8 col-lg-10#}
-                <div class="panel panel-default">
-                    <div class="panel-heading" id="panel_heading">
-                        <h3 class="panel-title">登录</h3>
-                    </div>
-                    <div class="panel-body">
-                         <form action="" method="POST">
-                             {% csrf_token %}
-                         {% for field in login_form %}
-{#                             label去冒号#}
-                             <label for="{{ field.id_for_label }}">{{ field.label }}</label>
-                             {{ field }}
-                             <p class="text-danger">{{ field.errors.as_text }}</p>
-                         {% endfor %}
+            <div class="col-xs-11 col-sm-5 col-lg-4 col-sm-offset-4 blog-border side-info">
+                <h4>用户登录</h4>
+
+                 <form action="" method="POST">
+                     {% csrf_token %}
+                     {% for field in login_form %}
+                         <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+                         {{ field }}
+                         <p class="text-danger">{{ field.errors.as_text }}</p>
+                     {% endfor %}
 {#                            错误信息标红#}
-                            <span class="pull-left text-danger">{{ login_form.non_field_errors }}</span>
+                        <span class="pull-left text-danger">{{ login_form.non_field_errors }}</span>
 {#                      <span>用户名：</span>#}
 {#                      <input type="text" name="username">#}
 {#                      <span>密码：</span>#}
 {#                      <input type="password" name="password">#}
-                        <input class="btn btn-primary pull-right" type="submit" value="登录">
-                        </form>
-                    </div>
-                </div>
+                        <input class="btn btn-primary pull-right" style="margin-bottom: 0.5em" type="submit" value="登录">
+                 </form>
+
+                {% if user.is_authenticated %}
+                    <script type="text/javascript">
+                        window.location.href = '/';
+                    </script>
+                {% else %}
+                {% endif %}
             </div>
         </div>
     </div>
-<div class="box"></div>
+    <div class="box"></div>
 {% endblock %}

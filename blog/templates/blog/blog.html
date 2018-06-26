@@ -14,7 +14,7 @@
 
 {% block home_content %}
     <div class="home_content">
-        <div class="home_show"><h1>我的博客</h1></div>
+        <div class="home_show">我的博客</div>
         <div class="motto_name">欢迎阅读评论，评论需注册登录</div>
         <div class="motto_name">—If You Can Make It Here,You Can Make It Anywhere</div>
     </div>
@@ -22,42 +22,49 @@
 
 {#页面内容#}
 {% block content %}
-    <div class="container-fluid">
+    <div class="container">
         <div class="row">
-            <div class="col-xs-12 col-sm-8 col-md-10">
-                <div class="panel panel-default">
-                    {# post_list|length是一种过滤器,过滤的结果为post_list的长度 #}
-                    <div class="panel-heading" id="panel_heading">{% block blog_list_title %}博客列表{% endblock %}</div>
-                    <div class="panel-body">
-                        {% for post in post_list %}
-                            <div class="blog">
-                                {# post.id把主键传递出去,在views中就可以找到该post的body,urls中也能规则匹配 #}{# 在反向解析中,注意格式{% url 'namespace:name' para %} #}
-                                <a href="{% url 'blog:detail' post.id %}">
-                                    <h4>{{ post.title }}</h4>
-                                </a>
-                                <div class="abstract"><a href="{% url 'blog:detail' post.id %}">{{ post.body|striptags|truncatechars:120|safe }}</a></div>
-                                <div class="blog-info">{#<span>中的是分类和时间logo样式#}
-                                    <div class="time-info">
-                                        分类:<a href="{% url 'blog:category' post.category.id %}">
-                                                <span class="glyphicon glyphicon-file"></span>{{ post.category }}
-                                            </a>&nbsp;&nbsp;
-                                        发表日期:<span class="glyphicon glyphicon-time"></span>{{ post.created_time|date:"Y-m-d H:n:s" }}&nbsp;&nbsp;
-                                        <a href="{% url 'blog:detail' post.id %}"><span class="glyphicon glyphicon-eye-open"></span>&nbsp;{{ post.get_read_num }}</a>
-                                        <a href="{% url 'blog:detail' post.id %}"><span class="glyphicon glyphicon-comment"></span>&nbsp;{% get_comment_count post %}</a>
+            <div class="col-xs-12 col-sm-8 col-md-9">
+                <div class="blog-border">
+                    <h3 class="list-type">{% block list-type%}博客列表{% endblock %}</h3>
+                </div>
 
-                                        <a onclick="likeChange(this, '{% get_content_type post %}', {{ post.id }})">
-                                            <span class="glyphicon glyphicon-thumbs-up {% get_like_status post %}"></span>
-                                            <span class="liked-num">{% get_like_count post %}</span>
-                                        </a>
-                                    </div>
+                <div class="blog-border">
+                    {# post_list|length是一种过滤器,过滤的结果为post_list的长度 #}
+                    {% for post in post_list %}
+                        <div class="blog-item">
+                            {# post.id把主键传递出去,在views中就可以找到该post的body,urls中也能规则匹配 #}{# 在反向解析中,注意格式{% url 'namespace:name' para %} #}
+                            <div class="blog-title">
+                                <a href="{% url 'blog:detail' post.id %}">{{ post.title }}</a>
+                            </div>
+
+                            <div class="blog-describe">{{ post.body|striptags|truncatechars:120|safe }}</div>
+
+                            <div>{#<span>中的是分类和时间logo样式#}
+                                <div class="blog-tags">
+
+                                    <a href="{% url 'blog:category' post.category.id %}">
+                                        <span class="glyphicon glyphicon-file"></span>{{ post.category }}
+                                    </a>&nbsp;&nbsp;&nbsp;&nbsp;
+
+                                    <span class="glyphicon glyphicon-time"></span>&nbsp;{{ post.created_time|date:"Y-m-d" }}&nbsp;&nbsp;&nbsp;
+
+                                    <a href="{% url 'blog:detail' post.id %}"><span class="glyphicon glyphicon-eye-open"></span>&nbsp;{{ post.get_read_num }}</a>&nbsp;&nbsp;&nbsp;
+
+                                    <a href="{% url 'blog:detail' post.id %}"><span class="glyphicon glyphicon-comment"></span>&nbsp;{% get_comment_count post %}</a>&nbsp;&nbsp;&nbsp;
+
+                                    <a onclick="likeChange(this, '{% get_content_type post %}', {{ post.id }})">
+                                        <span class="glyphicon glyphicon-thumbs-up {% get_like_status post %}"></span>
+                                        <span class="liked-num">{% get_like_count post %}</span>
+                                    </a>
                                 </div>
                             </div>
-                        {% empty %}
-                            <div class="blog">
-                                <h3>--暂无博客,敬请期待</h3>
-                            </div>
-                        {% endfor %}
-                    </div>
+                        </div>
+                    {% empty %}
+                        <div class="blog">
+                            <h3>--暂无博客,敬请期待</h3>
+                        </div>
+                    {% endfor %}
                 </div>
 
                 <div class="paginator">
@@ -106,52 +113,47 @@
                 </div>
             </div>
 
-            <div class="hidden-xs col-sm-4 col-md-2">
-
-                <div class="panel panel-default">
-                     <div class="panel-heading" id="panel_heading">热门阅读总榜</div>
-                     <div class="panel-body">
-                         <ul class="blog-types">
-                            {% for hot_data in all_hot_posts %}
-                                <div class="hot_blog">
-                                    <a href="{% url 'blog:detail' hot_data.id %}">{{ hot_data.title }}&nbsp;({{ hot_data.read_num_sum }})</a>
-                                </div>
-                            {% empty %}
-                                <li>暂无内容</li>
-                            {% endfor %}
-                         </ul>
-                     </div>
+            <div class="hidden-xs col-sm-4 col-md-3 blog-border">
+                <div class="side-list">
+                    <h4><span class="glyphicon glyphicon-fire"></span>&nbsp;热门阅读总榜</h4>
+                    <ul>
+                        {% for hot_data in all_hot_posts %}
+                            <div class="light-item">
+                                <a href="{% url 'blog:detail' hot_data.id %}">{{ hot_data.title|striptags|truncatechars:30|safe }}&nbsp;({{ hot_data.read_num_sum }})</a>
+                            </div>
+                        {% empty %}
+                            <li>暂无内容</li>
+                        {% endfor %}
+                    </ul>
                 </div>
 
-                <div class="panel panel-default">
-                     <div class="panel-heading" id="panel_heading">博客分类</div>
-                     <div class="panel-body">
-                         <ul class="blog-types">
-                             {% for category in category_list %}
-                                <li class="hot_blog">
-                                    <a href="{% url 'blog:category' category.id %}">{{ category}}&nbsp;({{ category.post_count }})</a>
-                                </li>
-                             {% empty %}
-                                <li>暂无分类</li>
-                            {% endfor %}
-                         </ul>
-                     </div>
+                <div class="side-list">
+                    <h4><span class="glyphicon glyphicon-file"></span>&nbsp;博客分类</h4>
+                    <ul>
+                        {% for category in category_list %}
+                            <li class="light-item">
+                                <a href="{% url 'blog:category' category.id %}">{{ category}}&nbsp;({{ category.post_count }})</a>
+                            </li>
+                        {% empty %}
+                            <li>暂无分类</li>
+                        {% endfor %}
+                    </ul>
                 </div>
-                <div class="panel panel-default">
-                    <div class="panel-heading" id="panel_heading">日期归档</div>
-                    <div class="panel-body">
-                        <ul>
-                            {% for post_date,post_count in post_dates.items %}
-                               <li class="hot_blog" >
-                                   <a href="{% url 'blog:date' post_date.year post_date.month %}">{{ post_date|date:"Y年-m月" }}&nbsp;({{ post_count }})</a>
-                               </li>
-                            {% empty %}
-                               暂无归档
-                            {% endfor %}
-                        </ul>
-                    </div>
+
+                <div class="side-list">
+                    <h4><span class="glyphicon glyphicon-book"></span>&nbsp;日期归档</h4>
+                    <ul>
+                        {% for post_date,post_count in post_dates.items %}
+                            <li class="light-item" >
+                                <a href="{% url 'blog:date' post_date.year post_date.month %}">{{ post_date|date:"Y年-m月" }}&nbsp;({{ post_count }})</a>
+                            </li>
+                        {% empty %}
+                            暂无归档
+                        {% endfor %}
+                    </ul>
                 </div>
             </div>
+
         </div>
     </div>
 
@@ -180,7 +182,7 @@
                         }else{
                             element.removeClass('active');
                         }
-                        // 更新点赞数量
+                         // 更新点赞数量
                         var liked_num = $(obj.getElementsByClassName('liked-num'));
                         liked_num.text(data['liked_num']);
                     }else{

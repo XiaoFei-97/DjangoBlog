@@ -9,30 +9,46 @@
 
 {% block home_content %}
     <div class="home_content">
-        <div class="home_show"><h1>关于我</h1></div>
+        <div class="home_show">关于我</div>
         <div class="motto_name">世界那么大，我只想做一只攻城狮</div>
         <div class="motto_name">—诚朴恕毅</div>
     </div>
 {% endblock %}
 
 {% block content %}
-    <div>
-        <div class="introduce_content" >
-            <div class="my_pic"><img src="{% static 'blog/media/my_pic.jpg' %}" alt="我的图片"></div>
+    <div class="container">
+        <div class="row">
 
-            <div class="introduce_content1">
-                <p>蒋振飞：应届毕业生</p>
-                <P>qq：1378482556</P>
+            <div class="col-sm-8 blog-border side-info">
+                <h4>ABOUT ME</h4>
                 <p>
-                    csdn博客帐号：<a href="https://blog.csdn.net/jack_970124">https://blog.csdn.net/jack_970124  </a>
+                    我是一个普通的男生，但不甘于平庸。我乐观、上进心强，朴实诚恳，能吃苦。我认为年轻人应刻苦追求，抛弃名利。现在，我即将毕业，面对新的人生选择和挑战，可是我有信心，做好这个选择；有勇气，面对这样的挑战！ 
                 </p>
                 <p>
-                    github帐号：<a href="https://github.com/XiaoFei-97">https://github.com/XiaoFei-97</a>
+                    在刚进大学校门的时候，当时的我以为大学除了学习之外还应注重发展人际关系，所以只要积极参加学院、社团等活动，我就是一个合格的大学生。所以有一段时间我一直在班级与社团之间忙碌。
                 </p>
-                <p>邮箱地址：jack_970124@163.com</p>
+                <p>
+                    后来，学校开了单片机的课程，自己也开始对自己的未来做了规划，兴趣使然，我就在网上先后买了几款开发板，在各方帮助和自身努力下，能利用C语言程序独立设计门铃，呼吸灯，万年历等程序，也做过点阵和OLED的显示。偶然一次在老师的项目中，我接触到了python这门语言，发现它的功能真的很强，相比C语言程序而言，可读性强了不少，从web开发到爬虫，人工智能，大数据，各个方向都有python的身影，于是我决定深入学习这门语言。
+                </p>
+                <p>
+                    于是在众多的方向，我坚持学习web开发一直到现在，从一开始的python语法基础，到python对象编程和网络编程，再到各种常用库以及第三方库。在网络编程中，我掌握了多进程及多线程的并发以及非堵塞式的单进程/线程，计算机网络协议，刚开始的时候各种协议之间相互联系而且抽象，但这并没有影响到我，随后逐步掌握了链路层到应用层的重要协议，如TCP、UDP、ARP、ICMP，HTTP等。后来，我又逐渐深入到数据库和不同的前端语言，数据库我选择了主流的MySQL作为入门。我还掌握了Django以及Tornado的主流框架，现在的我，深知作为一名程序员，光靠一门语言不足以解决所有遇到的问题，所以我正在逐步学习Java程序设计和C++程序设计。
+                </p>
             </div>
 
-            <div class="walking"><img src="{% static 'blog/media/walking.png' %}"></div>
+            <div class="col-sm-3 blog-border side-info">
+                <h4>个人信息</h4>
+                <ul class="introduce-info">
+                    <li>蒋振飞：应届毕业生</li>
+                    <li><img src="{% static 'blog/media/qq.ico' %}" alt="qq">：1378482556</li>
+                    <li><img src="{% static 'blog/media/csdn.ico' %}" alt="csdn">：<a href="https://blog.csdn.net/jack_970124">https://blog.csdn.net/jack_970124</a></li>
+                    <li><img src="{% static 'blog/media/github.ico' %}" alt="github">：<a href="https://github.com/XiaoFei-97">https://github.com/XiaoFei-97</a></li>
+                    <li><img src="{% static 'blog/media/email.ico' %}" alt="github">：jack_970124@163.com</li>
+                </ul>
+            </div>
+            <div class="col-sm-3 blog-border side-info">
+                <h4>扫一扫，惊喜等着你</h4>
+                <img src="{% static 'blog/media/wechat.jpg' %}" alt="微信二维码">
+            </div>
 
             <div style="clear:both"></div>
         </div>

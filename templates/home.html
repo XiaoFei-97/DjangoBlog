@@ -1,5 +1,6 @@
 {% extends 'base.html' %}
 {% load staticfiles %}
+{% load post_tags %}
 
 {% block title %}
     蒋振飞的博客|关注互联网IT技术
@@ -14,7 +15,7 @@
 
 {% block home_content %}
     <div class="home_content">
-        <div class="home_show"><h1>Jzf Blog</h1></div>
+        <div class="home_show">Jzf Blog</div>
         <div class="motto_name">坚持发表原创个人学习笔记</div>
         <div class="motto_name">蒋振飞的博客</div>
     </div>
@@ -22,80 +23,138 @@
 
 {% block content %}
 
-        <h3 class="home_welcome">欢迎注册评论</h3>
-        <!-- 图表容器 DOM -->
-        <div id="container"></div>
-        <div id="container2"></div>
-        <div class="today_yesterday">
-            <div class="row">
-                <div class="col-xs-12">
-                    {#    今日热门博客#}
-                    <div class="panel panel-default">
-                        <!-- Default panel contents -->
-                        <div class="panel-heading" id="panel_heading">今日热门博客</div>
-                            <!-- List group -->
-                        <ul class="list-group">
-                            {% for hot_data in today_hot_data %}
-                                <li  class="list-group-item">
-                                    <a href="{% url 'blog:detail' hot_data.content_object.id %}">{{ hot_data.content_object.title }}&nbsp;({{ hot_data.read_num }})</a>
-                                </li>
-                            {% empty %}
-                                <li>今日暂时没有热门博客</li>
-                            {% endfor %}
-                        </ul>
-                    </div>
-                     {#    昨日热门博客#}
-                    <div class="panel panel-default">
-                        <!-- Default panel contents -->
-                        <div class="panel-heading" id="panel_heading">昨日热门博客</div>
-                        <!-- List group -->
-                        <ul class="list-group">
-                            {% for hot_data in yesterday_hot_data %}
-                                <li class="list-group-item">
-                                    <a href="{% url 'blog:detail' hot_data.content_object.id %}">{{ hot_data.content_object.title }}&nbsp;({{ hot_data.read_num }})</a>
-                                </li>
-                            {% empty %}
-                                <li>昨日暂时没有热门博客</li>
-                            {% endfor %}
-                        </ul>
-                    </div>
+    <div class="container">
 
+        <div class="row">
+            <div class="col-sm-4">
+                <h3>
+                    <span class="glyphicon glyphicon-pencil"></span>
+                    <span>博客</span>
+                    <span class="content-item-more">
+                        共{{ post_count }}篇博客
+                        <a href="/blog/">更多<span class="glyphicon glyphicon-chevron-right"></span></a>
+                    </span>
+                </h3>
+                <div class="home-block">
+                    <h4 class="home-block-title">博客分类</h4>
+                    <ul class="list">
+                        {% for category in category_list %}
+                            <li class="light-item">
+                                <a href="{% url 'blog:category' category.id %}">{{ category }}</a>&nbsp;({% get_category_count category %})
+                            </li>
+                        {% empty %}
+                            暂无分类
+                        {% endfor %}
+                    </ul>
+                </div>
+            </div>
+            <div class="col-sm-8">
+                <h3 class="home_welcome">欢迎来访</h3>
+                <!-- 图表容器 DOM -->
+                <div id="container"></div>
+                <div id="container2"></div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-sm-4">
+               <div class="home-block">
+                    <h4 class="home-block-title">最新发表</h4>
+                    <ul class="list">
+                        {% for post in new_publish %}
+                            <li class="light-item">
+                                <a href="{% url 'blog:detail' post.id %}">{{ post }}</a>
+                            </li>
+                        {% empty %}
+                            暂无发表
+                        {% endfor %}
+                    </ul>
+                </div>
+            </div>
+            <div class="col-sm-4">
+               <div class="home-block">
+                    <h4 class="home-block-title">最新推荐</h4>
+                    <ul class="list">
+                        {% for post in new_recommend %}
+                            <li class="light-item">
+                                <a href="{% url 'blog:detail' post.content_object.id %}">{{ post.content_object.title }}</a>
+                            </li>
+                        {% empty %}
+                            暂无推荐
+                        {% endfor %}
+                    </ul>
+                </div>
+            </div>
+            <div class="col-sm-4">
+               <div class="home-block">
+                    <h4 class="home-block-title">随机推荐</h4>
+                    <ul class="list">
+                        {% get_random_recomment as random_list%}
+                        {% for post in random_list %}
+                            <li class="light-item">
+                                <a href="{% url 'blog:detail' post.id %}">{{ post }}</a>
+                            </li>
+                        {% empty %}
+                            暂无推荐
+                        {% endfor %}
+                    </ul>
                 </div>
             </div>
         </div>
-        <div class="week_month">
-            <div class="row">
-                <div class="col-xs-12">
-                    {#七天内热门博客#}
-                    <div class="panel panel-default">
-                        <div class="panel-heading" id="panel_heading">七日热门博客</div>
-                        <ul class="list-group">
-                            {% for hot_data in last_7_days_hot_data %}
-                                <li class="list-group-item">
-                                    <a href="{% url 'blog:detail' hot_data.id %}">{{ hot_data.title }}&nbsp;({{ hot_data.read_num_sum }})</a>
-                                </li>
-                            {% empty %}
-                                <li>七日内暂时没有热门博客</li>
-                            {% endfor %}
-                        </ul>
-                    </div>
-                    {#三十天内热门博客#}
-                    <div class="panel panel-default"><!-- Default panel contents -->
-                        <div class="panel-heading" id="panel_heading">三十日热门博客</div>
-                            <!-- List group -->
-                        <ul class="list-group">
-                            {% for hot_data in last_30_days_hot_data %}
-                                <li class="list-group-item">
-                                    <a href="{% url 'blog:detail' hot_data.id %}">{{ hot_data.title }}&nbsp;({{ hot_data.read_num_sum }})</a>
-                                </li>
-                            {% empty %}
-                                <li>三十日内暂时没有热门博客</li>
-                            {% endfor %}
-                        </ul>
-                    </div>
+
+        <h3 class="content-item-title">
+            <span class="glyphicon glyphicon-fire"></span>
+            <span>热读榜</span>
+        </h3>
+
+        <div class="row">
+            <div class="col-sm-4">
+               <div class="home-block">
+                    <h4 class="home-block-title">周榜</h4>
+                    <ul class="list">
+                        {% for post in last_7_days_hot_data %}
+                            <li class="light-item">
+                                <a href="{% url 'blog:detail' post.id %}">{{ post.title }}</a>
+                            </li>
+                        {% empty %}
+                            暂无周榜
+                        {% endfor %}
+                    </ul>
+                </div>
+            </div>
+            <div class="col-sm-4">
+               <div class="home-block">
+                    <h4 class="home-block-title">月榜</h4>
+                    <ul class="list">
+                        {% for post in last_30_days_hot_data %}
+                            <li class="light-item">
+                                <a href="{% url 'blog:detail' post.id %}">{{ post.title }}</a>
+                            </li>
+                        {% empty %}
+                            暂无月榜
+                        {% endfor %}
+                    </ul>
+                </div>
+            </div>
+            <div class="col-sm-4">
+               <div class="home-block">
+                    <h4 class="home-block-title">总榜</h4>
+                    <ul class="list">
+                        {% for post in all_hot_posts %}
+                            <li class="light-item">
+                                <a href="{% url 'blog:detail' post.id %}">{{ post.title }}</a>
+                            </li>
+                        {% empty %}
+                            暂无总榜
+                        {% endfor %}
+                    </ul>
                 </div>
             </div>
         </div>
+
+    </div>
+
+
 
 
     <script>

@@ -109,7 +109,7 @@ def get_yesterday_hot_data(content_type):
     today = timezone.now().date()
     yesterday = today - datetime.timedelta(days=1)
     read_detail = ReadDetail.objects.filter(content_type=content_type, date=yesterday).order_by('-read_num')
-    return read_detail[0:7]  # 前七条
+    return read_detail[0:15]  # 前七条
 
 
 def get_7_days_read_posts():
@@ -121,7 +121,7 @@ def get_7_days_read_posts():
         .values('id', 'title') \
         .annotate(read_num_sum=Sum('read_detail__read_num')) \
         .order_by('-read_num_sum')
-    return posts[:7]
+    return posts[:15]
 
 
 def get_30_days_read_posts():
@@ -133,7 +133,7 @@ def get_30_days_read_posts():
         .values('id', 'title') \
         .annotate(read_num_sum=Sum('read_detail__read_num')) \
         .order_by('-read_num_sum')
-    return posts[:7]
+    return posts[:15]
 
 def get_all_read_posts():
     """获取博客排行总榜"""
@@ -144,4 +144,4 @@ def get_all_read_posts():
         .values('id', 'title') \
         .annotate(read_num_sum=Sum('read_detail__read_num')) \
         .order_by('-read_num_sum')
-    return posts[:20]
+    return posts[:15]

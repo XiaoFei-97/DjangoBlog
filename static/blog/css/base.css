@@ -10,6 +10,8 @@ body{
 
 ul{
     list-style: none;
+    padding: 0;
+    margin: 0;
 }
 
 .search_box{
@@ -17,9 +19,13 @@ ul{
     width: 80%;
 }
 
+/*博客内容样式*/
+.blog-detail{
+    margin-top: 2em;
+}
 
-.blog-content{
-    /*margin-left: 1em;*/
+.blog-name{
+    color: #337ab7;
 }
 
 .blog-content p{
@@ -37,6 +43,10 @@ ul{
     margin-right:1em;
 }
 
+.blog-content{
+    margin-left: 1em;
+}
+
 .like{
     color: #337ab7;
     /*鼠标设置为箭头*/
@@ -46,7 +56,7 @@ ul{
 }
 
 .active{
-    color: #f22;
+    color: #c93756;
 }
 
 .post-more{
@@ -63,22 +73,21 @@ ul{
    border-bottom: 1px solid #ccc;
     padding-bottom: 0.4em;
 }
-.blog-types{
-    list-style: none;
-}
+
 
 /*首页的标志栏*/
 .home_content{
     background-color: #4F5893;
-    min-height: 230px;
+    min-height: 250px;
     text-align: center;
     margin-bottom: 2em;
     width: 100%;
 }
 
 .home_content .home_show{
+    font-size: 3em;
     display: inline-block;
-    margin-top: 50px;
+    margin-top: 1.5em;
     color: #fff;
 }
 
@@ -87,19 +96,6 @@ ul{
     font-size: 1.5em;
 }
 
-/*panel标题背景色*/
-#panel_heading{
-    background-color: #4F5893;
-    color: #fff;
-}
-
-#panel_heading a{
-   color: #f7e1b5;
-}
-
-#panel_heading .head_shine{
-    color: #f7e1b5
-}
 
 /*登录页面响应式布局*/
 @media screen and (max-width: 800px) {
@@ -115,7 +111,9 @@ ul{
     background-color: #e7e7e7;
     padding-left: 10%;
     clear:both;
-    margin-top: 4em;
+    /*height: 60px;  */
+    margin-top: -60px;
+    bottom: 0;
 }
 
 
@@ -141,91 +139,49 @@ ul{
 }
 
 /*关于我*/
-.introduce_content{
-    width: 100%;
-    overflow: hidden;
-    display: inline-block;
+.introduce-info li{
+    margin: 0.5em;
+}
+
+.blog-border{
+    border: 1px solid #ccc;
+    border-radius: 6px;
     margin-bottom: 1em;
 }
 
-.introduce_content1{
-    margin-top: 5em;
-    float: left;
-    margin-left: 3em;
-}
-
-.my_pic{
-    float: left;
+.side-info{
     margin-left: 1em;
-    /*margin-right: 5em;*/
-    /*margin: 0 auto;*/
+    margin-right: 1em;
 }
 
-.my_pic img{
-    width: 300px;
-    height: 300px;
-    border-radius: 50%;
+.side-info h4{
+    padding-top: 0.8em;
+    padding-bottom: 0.5em;
+    border-bottom: 1px #ccc solid;
 }
 
-/*人物走路*/
-.walking{
-    width: 120px;
-    height: 182px;
-    margin-top: 2em;
-    margin-left: 6em;
-    overflow: hidden;
-    position: relative;
-    display: inline-block;
-    float: left;
-    /*display: inline-block;*/
+.side-info p{
+    text-indent: 2em;
 }
 
-.walking img{
-    position: absolute;
-    left: 0px;
-    top: 0px;
-    animation: walking 2s steps(8) infinite;
-}
-
-@keyframes walking{
-    from{
-        left: 0px;
-    }
-    to{
-        left: -960px;
-    }
-}
 
 /*博客分类目录样式*/
 .category_list{
     text-align: center;
-    font-size: 2em;
+    font-size: 1.5em;
+    color: #777;
 }
 
 .category{
     height: 30em;
     margin-top: 1em;
+    /*border: 1px solid #ccc;*/
+    border-radius: 6px;
 }
 
-.category_name{
-    text-align: center;
-}
-
-.category_name a{
-   color:#fff;
-}
-
-.category_body{
-    margin-left: 1em;
-    /*text-align: center;*/
-}
-
-.category_body div{
-    margin: 0.2em;
-}
-
-.category_body div:hover{
-    font-size: 1.2em;
+.category h4{
+    padding-bottom: 0.5em;
+    border-bottom: 1px solid #ccc;
 }
 
 .box{
@@ -236,4 +192,20 @@ ul{
 /*搜索结果*/
 .previous_next{
     text-align: center;
+}
+
+.no-find{
+    margin-left: 2em;
+    font-size: 1.5em;
+
+}
+
+.light-blog a{
+    /*display: block;*/
+    margin: 0.2em;
+    color: #333;
+}
+
+.light-blog a:hover,.light-item a:hover{
+    font-size: 1.1em;
 }
