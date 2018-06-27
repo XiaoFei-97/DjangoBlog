@@ -111,8 +111,7 @@ ul{
     background-color: #e7e7e7;
     padding-left: 10%;
     clear:both;
-    /*height: 60px;  */
-    margin-top: -60px;
+    margin-top: 4em;
     bottom: 0;
 }
 
@@ -173,10 +172,11 @@ ul{
 }
 
 .category{
-    height: 30em;
-    margin-top: 1em;
+    /*height: 30em;*/
+    margin-top: 2em;
     /*border: 1px solid #ccc;*/
-    border-radius: 6px;
+    /*border-radius: 6px;*/
+    /*margin-bottom: 1em;*/
 }
 
 .category h4{

@@ -19,12 +19,15 @@
 {% block content %}
 
     <div class="container">
+
+        <div class="category_list">目前共计{{ post_count }}篇博文</div>
+
         <div class="row">
-            <div class="category_list">目前共计{{ post_count }}篇博文</div>
+
             {% for post_date in date_list %}
                 {% get_date_post post_date.year post_date.month as post_list %}
 
-                <div class="col-xs-12 col-sm-5 col-md-4 col-lg-3">
+                <div class="col-xs-12 col-sm-4">
                     <div class="category">
                         <h4>
                             <a href="{% url 'blog:date' post_date.year post_date.month %}" style="color: #333; font-weight: bold" >
@@ -46,6 +49,7 @@
             {% empty %}
                 <h3>暂无分类！</h3>
             {% endfor %}
+
         </div>
     </div>
 
