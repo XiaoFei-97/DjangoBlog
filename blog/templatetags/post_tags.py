@@ -39,7 +39,10 @@ def get_random_recomment():
         random_posts.append(random.choice(post_list))
     return random_posts
 
+
 @register.simple_tag
 def get_category_count(category):
     return Post.objects.filter(category=category).count()
+
+
 

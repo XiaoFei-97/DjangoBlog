@@ -68,7 +68,7 @@
                             <a href="{% url 'user:register' %}?from={{ request.get_full_path }}">注册</a>
                         </li>
                     {% else %}
-                        <li class="dropdown">
+                        <li class="dropdown hover">
                             <a href="#" class="hidden-md hidden-sm dropdown-toggle" data-toggle="dropdown" role="button"><span class="glyphicon glyphicon-user"></span>&nbsp;您好:&nbsp;{{ user.username }}<span class="caret"></span></a>
                             <ul class="dropdown-menu">
                                 <li><a href="{% url 'user:user_info' %}">用户中心</a></li>

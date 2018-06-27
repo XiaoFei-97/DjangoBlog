@@ -9,12 +9,12 @@ from read_statistics.models import ReadNumExpandMethod, ReadDetail
 
 class Category(models.Model):
     """
-    Django 要求模型必须继承 models.Model 类。
-    Category 只需要一个简单的分类名 name 就可以了。
-    CharField 指定了分类名 name 的数据类型，CharField 是字符型，
-    CharField 的 max_length 参数指定其最大长度，超过这个长度的分类名就不能被存入数据库。
+        Django 要求模型必须继承 models.Model 类。
+        Category 只需要一个简单的分类名 name 就可以了。
+        CharField 指定了分类名 name 的数据类型，CharField 是字符型，
+        CharField 的 max_length 参数指定其最大长度，超过这个长度的分类名就不能被存入数据库。
     """
-    name = models.CharField(u'分类', max_length=100)
+    name = models.CharField(u'分类', max_length=20)
 
     class Meta:
         verbose_name = '分类'
@@ -27,8 +27,8 @@ class Category(models.Model):
 
 class Tag(models.Model):
     """
-    标签 Tag 也比较简单，和 Category 一样。
-    再次强调一定要继承 models.Model 类！
+        标签 Tag 也比较简单，和 Category 一样。
+        再次强调一定要继承 models.Model 类！
     """
     name = models.CharField(u'标签', max_length=100)
 
@@ -41,7 +41,7 @@ class Tag(models.Model):
         return self.name
 
 
-class Post(models.Model, ReadNumExpandMethod):
+class Post(models.Model, ReadNumExpandMethod):  
     """
     文章的数据库表稍微复杂一点，主要是涉及的字段更多。
     """
@@ -63,7 +63,7 @@ class Post(models.Model, ReadNumExpandMethod):
     # 指定 CharField 的 blank=True 参数值后就可以允许空值了。
     excerpt = models.CharField(u'摘要', max_length=200, blank=True)
 
-    # 这是分类与标签，分类与标签的模型我们已经定义在上面。
+    # 这是分类与标签，分类与标签的模型已经定义在上面。
     # 这里把文章对应的数据库表和分类、标签对应的数据库表关联了起来，但是关联形式稍微有点不同。
     # 规定一篇文章只能对应一个分类，但是一个分类下可以有多篇文章，所以使用的是 ForeignKey，即一对多的关联关系。
     # 而对于标签来说，一篇文章可以有多个标签，同一个标签下也可能有多篇文章，所以使用 ManyToManyField，表明这是多对多的关联关系。

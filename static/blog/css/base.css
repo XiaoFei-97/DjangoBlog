@@ -43,9 +43,6 @@ ul{
     margin-right:1em;
 }
 
-.blog-content{
-    margin-left: 1em;
-}
 
 .like{
     color: #337ab7;
@@ -215,3 +212,4 @@ ul{
 .light-blog a:hover,.light-item a:hover{
     font-size: 1.1em;
 }
+
