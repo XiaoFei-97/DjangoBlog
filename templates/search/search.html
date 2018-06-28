@@ -55,7 +55,7 @@
                                 <div class="blog-item">
                                     <div class="blog-describe">
                                         <a href="{% url 'blog:detail' result.object.id %}">
-                                            <h4>{{ forloop.counter }}、{% highlight result.object.body with query %}</h4>
+                                            <div>{{ forloop.counter }}、{% highlight result.object.body with query %}</div>
                                         </a>
                                     </div>
 

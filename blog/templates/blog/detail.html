@@ -2,6 +2,7 @@
 {% load staticfiles %}
 {% load comment_tags %}
 {% load likes_tags %}
+{% load post_tags %}
 {#页面标题#}
 {% block title %}
     {{ title }}
@@ -137,6 +138,7 @@
             </div>
 
             <div class="hidden-xs col-sm-4 col-md-3 blog-border">
+
                 <div class="side-list">
                     <h4><span class="glyphicon glyphicon-fire"></span>&nbsp;热门阅读总榜</h4>
                     <ul>
@@ -149,38 +151,35 @@
                         {% endfor %}
                     </ul>
                  </div>
-             </div>
 
-            <div class="hidden-xs col-sm-4 col-md-3 blog-border">
-                 <div class="side-list">
-                    <h4><span class="glyphicon glyphicon-file"></span>&nbsp;博客分类</h4>
-                    <ul class="blog-types">
-                        {% for category in category_list %}
-                            <li class="light-item">
-                                <a href="{% url 'blog:category' category.id %}">{{ category}}&nbsp;({{ category.post_count }})</a>
-                            </li>
-                        {% empty %}
-                            <li>暂无分类</li>
-                        {% endfor %}
-                    </ul>
-                </div>
-            </div>
-
-            <div class="hidden-xs col-sm-4 col-md-3 blog-border">
                 <div class="side-list">
-                    <h4><span class="glyphicon glyphicon-book"></span>&nbsp;日期归档</h4>
+                    <h4><span class="glyphicon glyphicon-random"></span>&nbsp;&nbsp;随机推荐</h4>
                     <ul>
-                        {% for post_date,post_count in post_dates.items %}
-                            <li class="light-item" >
-                                <a href="{% url 'blog:date' post_date.year post_date.month %}">{{ post_date|date:"Y年-m月" }}&nbsp;({{ post_count }})</a>
+                       {% get_random_recomment as random_list%}
+                        {% for post in random_list %}
+                            <li class="light-item">
+                                <a href="{% url 'blog:detail' post.id %}">{{ post }}</a>
                             </li>
                         {% empty %}
-                            暂无归档
+                            暂无推荐
                         {% endfor %}
                     </ul>
                 </div>
-            </div>
 
+                <div class="side-list">
+                    <h4><span class="glyphicon glyphicon-time"></span>&nbsp;最新推荐</h4>
+                    <ul>
+                       {% for post in new_recommend %}
+                            <li class="light-item">
+                                <a href="{% url 'blog:detail' post.content_object.id %}">{{ post.content_object.title }}</a>
+                            </li>
+                        {% empty %}
+                            暂无推荐
+                        {% endfor %}
+                    </ul>
+                </div>
+
+            </div>
         </div>
     </div>
      <!-- Modal -->

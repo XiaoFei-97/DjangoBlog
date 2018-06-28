@@ -2,6 +2,7 @@
 {% load staticfiles %}
 {% load comment_tags %}
 {% load likes_tags %}
+{% load post_tags %}
 {#页面标题#}
 {% block title %}
     蒋振飞的博客
@@ -128,27 +129,28 @@
                 </div>
 
                 <div class="side-list">
-                    <h4><span class="glyphicon glyphicon-file"></span>&nbsp;博客分类</h4>
+                    <h4><span class="glyphicon glyphicon-random"></span>&nbsp;&nbsp;随机推荐</h4>
                     <ul>
-                        {% for category in category_list %}
+                       {% get_random_recomment as random_list%}
+                        {% for post in random_list %}
                             <li class="light-item">
-                                <a href="{% url 'blog:category' category.id %}">{{ category}}&nbsp;({{ category.post_count }})</a>
+                                <a href="{% url 'blog:detail' post.id %}">{{ post }}</a>
                             </li>
                         {% empty %}
-                            <li>暂无分类</li>
+                            暂无推荐
                         {% endfor %}
                     </ul>
                 </div>
 
                 <div class="side-list">
-                    <h4><span class="glyphicon glyphicon-book"></span>&nbsp;日期归档</h4>
+                    <h4><span class="glyphicon glyphicon-time"></span>&nbsp;最新推荐</h4>
                     <ul>
-                        {% for post_date,post_count in post_dates.items %}
-                            <li class="light-item" >
-                                <a href="{% url 'blog:date' post_date.year post_date.month %}">{{ post_date|date:"Y年-m月" }}&nbsp;({{ post_count }})</a>
+                       {% for post in new_recommend %}
+                            <li class="light-item">
+                                <a href="{% url 'blog:detail' post.content_object.id %}">{{ post.content_object.title }}</a>
                             </li>
                         {% empty %}
-                            暂无归档
+                            暂无推荐
                         {% endfor %}
                     </ul>
                 </div>
