@@ -17,6 +17,7 @@ ul{
 .search_box{
     display: inline-block;
     width: 80%;
+    margin-left: 5px;
 }
 
 /*博客内容样式*/
