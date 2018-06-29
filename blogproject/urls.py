@@ -20,7 +20,7 @@ from django.conf.urls.static import static
 
 
 urlpatterns = [
-    url(r'^jzfBlog/', admin.site.urls),
+    url(r'^code/', admin.site.urls),
     # 通过在根目录下的url加上namespace属性可以实现反向解析的功能
     # 注意:在根目录的url为namespace而项目的url是name
     url(r'^', include('blog.urls', namespace='blog')),    # 该地址就在ip根目录下

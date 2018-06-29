@@ -14,9 +14,13 @@ ul{
 }
 .blog-item{
     clear: both;
-    border-bottom: 1px solid #ddd;
+    /*border-bottom: 1px solid #ddd;*/
     padding: 1.5em 1em 0.8em 1.5em;
     overflow: hidden;
+}
+
+.blog-item:not(:last-child){
+    border-bottom: 1px solid #ddd;
 }
 
 .blog-title{

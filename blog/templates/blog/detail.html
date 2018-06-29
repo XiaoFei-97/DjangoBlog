@@ -153,6 +153,20 @@
                  </div>
 
                 <div class="side-list">
+                    <h4><span class="glyphicon glyphicon-heart"></span>&nbsp;&nbsp;猜你喜欢</h4>
+                    <ul>
+                       {% get_like_post post.category post.id as like_list%}
+                        {% for post in like_list %}
+                            <li class="light-item">
+                                <a href="{% url 'blog:detail' post.id %}">{{ post }}</a>
+                            </li>
+                        {% empty %}
+                            暂无推荐
+                        {% endfor %}
+                    </ul>
+                </div>
+
+                <div class="side-list">
                     <h4><span class="glyphicon glyphicon-random"></span>&nbsp;&nbsp;随机推荐</h4>
                     <ul>
                        {% get_random_recomment as random_list%}

@@ -39,7 +39,7 @@
                                 <a href="{% url 'blog:detail' post.id %}">{{ post.title }}</a>
                             </div>
 
-                            <div class="blog-describe">{{ post.body|striptags|truncatechars:120|safe }}</div>
+                            <div class="blog-describe">{{ post.body|striptags|truncatechars:120|cut:'&nbsp;'}}</div>
 
                             <div>{#<span>中的是分类和时间logo样式#}
                                 <div class="blog-tags">

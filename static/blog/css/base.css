@@ -127,6 +127,10 @@ ul{
     font-size: 0.75em;
 }
 
+.about p, .response p, .contact p{
+    margin-bottom: 0.2em;
+}
+
 .copyright{
     text-align: center;
     padding: 0.5em 0;

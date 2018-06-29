@@ -107,9 +107,9 @@ def get_blog_list_common_data(request, blogs_all_list):
     # 获取阅读量最大的总榜博客
     all_hot_posts = get_all_read_posts()
 
+    # 最新推荐
     post_content_type = ContentType.objects.get_for_model(Post)
     new_recommend = get_yesterday_hot_data(post_content_type)
-
 
     # context用来渲染模板
     context = {'post_list': page_of_list.object_list,
