@@ -109,7 +109,6 @@ ul{
     background-color: #e7e7e7;
     padding-left: 10%;
     clear:both;
-    margin-top: 4em;
     bottom: 0;
 }
 
@@ -133,6 +132,16 @@ ul{
     padding: 0.5em 0;
     background: #4F5893;
     color: #e7e7e7;
+    bottom: 10em;
+}
+
+.copyright a{
+    color: #fff;
+    margin-left: 1em;
+}
+
+.copyright a:hover{
+    color: cyan;
 }
 
 /*关于我*/
@@ -213,4 +222,6 @@ ul{
 .light-blog a:hover,.light-item a:hover{
     font-size: 1.1em;
 }
+
+
 
