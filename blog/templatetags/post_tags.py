@@ -39,6 +39,7 @@ def get_random_recomment():
     post_list = Post.objects.all()
     for i in range(1, 16):
         random_posts.append(random.choice(post_list))
+    random_posts = set(random_posts)
     return random_posts
 
 
