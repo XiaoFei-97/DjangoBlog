@@ -189,11 +189,12 @@ ul{
 
 .category{
     /*height: 30em;*/
-    margin-top: 2em;
+    margin-top: 1em;
     /*border: 1px solid #ccc;*/
     /*border-radius: 6px;*/
     /*margin-bottom: 1em;*/
     margin-left: 1em;
+    margin-bottom: 2em;
 }
 
 .category h4{
