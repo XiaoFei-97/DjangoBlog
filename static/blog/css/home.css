@@ -1,6 +1,8 @@
 .home_welcome{
     font-size: 2em;
     text-align: center;
+    font-family: 'monospace';
+    color: #2e6da4;
 }
 
 #container, #container2{
@@ -13,14 +15,22 @@
     font-size: 0.6em;
 }
 
+
+.home-nav{
+    float: left;
+    width: 42%;
+}
+
 .home-block{
     /*border: 1px #ccc solid;*/
     border-radius: 6px;
     padding: 16px 1em 5px 1.5em;
     margin-bottom: 1em;
+    margin-right: 2em;
 }
 
 .home-block-title {
+    width: 120%;
     border-bottom: 1px #ccc solid;
     padding-bottom: 10px;
     font-weight: bold;
@@ -29,4 +39,14 @@
 .list a{
     color: #333;
 }
+
+
+/* 清除浮动 */
+.clearfix:before,.clearfix:after{content:"";display:table}
+.clearfix:after{clear:both;}
+.clearfix{zoom:1}
+
+/* 浮动 */
+.fl{float:left}
+.fr{float:right}
 

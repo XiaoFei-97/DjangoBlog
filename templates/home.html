@@ -26,7 +26,8 @@
     <div class="container">
 
         <div class="row">
-            <div class="col-sm-4">
+            <div class="col-sm-5 col-md-4 clearfix">
+
                 <h3>
                     <span class="glyphicon glyphicon-pencil"></span>
                     <span>博客</span>
@@ -35,21 +36,43 @@
                         <a href="/blog/">更多<span class="glyphicon glyphicon-chevron-right"></span></a>
                     </span>
                 </h3>
-                <div class="home-block">
-                    <h4 class="home-block-title">博客分类</h4>
-                    <ul class="list">
-                        {% for category in category_list %}
-                            <li class="light-item">
-                                <a href="{% url 'blog:category' category.id %}">{{ category }}</a>&nbsp;({% get_category_count category %})
-                            </li>
-                        {% empty %}
+
+                <div>
+                    <div class="home-block home-nav">
+                        <h4 class="home-block-title">博客分类</h4>
+                        <ul class="list">
+                            {% for category in category_list %}
+                                <li class="light-item">
+                                    <a href="{% url 'blog:category' category.id %}">{{ category }}</a>&nbsp;({% get_category_count category %})
+                                </li>
+                            {% empty %}
                             暂无分类
-                        {% endfor %}
-                    </ul>
+                            {% endfor %}
+                        </ul>
+                    </div>
+
+                    <div class="home-block home-nav list light-blog">
+                        <h4 class="home-block-title">友情链接</h4>
+                        <ul>
+                            <li><a href="https://blog.wktadmin.com/">我的学长</a></li>
+                            <li><a href="https://www.liaoxuefeng.com/">廖雪峰老师</a></li>
+                            <li><a href="http://www.cnblogs.com/52-qq/p/8320303.html">Python全栈</a></li>
+                            <li><a href="https://www.cnblogs.com/">博客园</a></li>
+                            <li><a href="https://crossoverjie.top/">crossoverjie</a></li>
+                            <li><a href="http://blog.itcodai.com/">倪升武</a></li>
+                            <li><a href="https://hubojing.github.io/">胡博靖</a></li>
+                            <li><a href="http://www.ityouknow.com/">纯洁的微笑</a></li>
+                            <li><a href="http://www.ityouknow.com/">极客博客</a></li>
+                            <li><a href="http://www.tfss.me/">颓废书生</a></li>
+                         </ul>
+                    </div>
+
                 </div>
+
             </div>
-            <div class="col-sm-8">
-                <h3 class="home_welcome">欢迎来访</h3>
+
+            <div class="col-sm-7 col-md-8">
+                <h3 class="home_welcome">欢迎来访❣</h3>
                 <!-- 图表容器 DOM -->
                 <div id="container"></div>
                 <div id="container2"></div>
@@ -163,7 +186,8 @@
      <script>
         // 图表配置
         var options1 = {
-            chart: { type: 'line' },   //指定图表的类型，默认是折线图（line）
+            chart: {
+                type: 'line' },   //指定图表的类型，默认是折线图（line）
             title: { text: null },     // 标题
             xAxis: {
                 categories: {{ seven_dates|safe }},  // x 轴分类
@@ -174,7 +198,7 @@
             yAxis: {
                 title: { text: null }, // y 轴标题
                 labels:{ enabled:false },
-                gridLineDashStyle: 'Dash',  // 刻度线对齐方式
+                gridLineDashStyle: 'ShortDash',  // 刻度线对齐方式
             },
 
             series: [{                              // 数据列
@@ -185,7 +209,8 @@
             plotOptions:{
                 line:{
                     dataLabels: {
-                        enabled: true
+                        enabled: true,
+                        color:'darkblue',
                     }
                 }
             },
@@ -208,7 +233,7 @@
             yAxis: {
                 title: { text: null }, // y 轴标题
                 labels:{ enabled:false },
-                gridLineDashStyle: 'Dash',  // 刻度线对齐方式
+                gridLineDashStyle: 'ShortDash',  // 刻度线对齐方式
             },
 
             series: [{                              // 数据列
@@ -219,7 +244,8 @@
             plotOptions:{
                 line:{
                     dataLabels: {
-                        enabled: true
+                        enabled: true,
+                        color:'darkblue',
                     }
                 }
             },

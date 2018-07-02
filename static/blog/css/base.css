@@ -14,6 +14,7 @@ ul{
     margin: 0;
 }
 
+
 .search_box{
     display: inline-block;
     width: 80%;
@@ -76,16 +77,16 @@ ul{
 /*首页的标志栏*/
 .home_content{
     background-color: #4F5893;
-    min-height: 250px;
+    min-height: 300px;
     text-align: center;
     margin-bottom: 2em;
     width: 100%;
 }
 
 .home_content .home_show{
-    font-size: 3em;
+    font-size: 4em;
     display: inline-block;
-    margin-top: 1.5em;
+    margin-top: 1.4em;
     color: #fff;
 }
 
@@ -110,6 +111,7 @@ ul{
     padding-left: 10%;
     clear:both;
     bottom: 0;
+    margin-top: 2em;
 }
 
 
