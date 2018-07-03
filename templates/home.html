@@ -72,10 +72,82 @@
             </div>
 
             <div class="col-sm-7 col-md-8">
-                <h3 class="home_welcome">欢迎来访❣</h3>
-                <!-- 图表容器 DOM -->
-                <div id="container"></div>
-                <div id="container2"></div>
+
+                <h3 class="home_welcome">欢迎来访😋</h3>
+
+                <div id="read-nav">
+                    <ul class="nav nav-tabs">
+                        <li role="presentation" class="active" ><a href="#">公众号</a></li>
+                        <li role="presentation"><a href="#">七日阅读量</a></li>
+                        <li role="presentation"><a href="#">全年阅读量</a></li>
+                        <li role="presentation"><a href="#">书籍推荐</a></li>
+                    </ul>
+                </div>
+
+                <div class="contents" id="contents">
+
+                    <div id="read-item" class="cur clearfix">
+                        <img class="wechat fl" src="{% static 'blog/media/wechat.jpg' %}" alt="微信二维码">
+                        <div class="fl">
+                            <div class="read-item-name">代码打碟手</div>
+                            <div style="margin-left: 2em">关注互联网IT技术</div>
+                            <div class="read-item-content">
+                                <p>这里是蒋振飞个人公众号</p>
+                                <p>有时间会发一些个人随笔和近期学习笔记</p>
+                                <p>也欢迎大家找我聊天</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div id="read-item">
+                        <!-- 图表容器 DOM -->
+                        <div id="container"></div>
+                    </div>
+
+                    <div id="read-item">
+                        <div id="container2"></div>
+                    </div>
+
+                    <div id="read-item">
+                        <div class="col-sm-3">
+                            <h3>Python:</h3>
+                            <p>1.跟老齐学python(从入门到精通) 作者:齐伟</p>
+                            <p>2.python Cookbook中文版 作者：David Beazley</p>
+                            <p>3.学习Python─做个有能力的设计师 作者:包瑞清</p>
+                            <p>4.Django架站的16堂课 作者:何敦煌</p>
+                        </div>
+
+                        <div class="col-sm-3">
+                            <h3>数据库:</h3>
+                            <p>1.SQL基础教程 作者:MICK</p>
+                            <p>2.MySQL从入门到精通 作者:明日科技</p>
+                            <p>3.MongoDB大数据处理权威指南 作者:David Hows</p>
+                            <p>4.Redis开发与运维 作者:付磊,张益军</p>
+                        </div>
+
+                        <div class="col-sm-3">
+                            <h3>前端:</h3>
+                            <p>1.Html5实战 作者:Rob Crowther</p>
+                            <p>2.HTML+CSS网页设计 作者:田中雨,郭磊</p>
+                            <p>3.Web开发典藏大系：jQuery网页开发实例精解 作者：黄格力</p>
+{#                            <p></p>#}
+                        </div>
+
+                        <div class="col-sm-3">
+                            <h3>爬虫:</h3>
+                            <p>1.python网络爬虫实战 作者:胡松涛</p>
+                            <p>2.网络爬虫全解析 作者：罗刚</p>
+                            <h3>其他</h3>
+                            <p>1.现代软件工厂构建之法 作者：邹欣</p>
+{#                            <p></p>#}
+{#                            <p></p>#}
+                        </div>
+                    </div>
+
+                </div>
+
+
+
             </div>
         </div>
 
@@ -179,8 +251,6 @@
 
 
 
-
-
 {% endblock %}
 {% block script_extends %}
      <script>
@@ -255,5 +325,23 @@
         };
         // 图表初始化函数
         var chart = Highcharts.chart('container2', options2);
-    </script>
+
+        /*绑定切换排行榜页面*/
+         $('#read-nav li').click(function(){
+
+				$(this).blur(); //消除焦点
+				{#alert($(this).index());#}
+
+				$(this).addClass('active').siblings().removeClass('active');
+
+				// $(this).index() 获取所在层级索引值
+				// alert($(this).index());
+
+				$('#contents #read-item').eq($(this).index()).addClass('cur').siblings().removeClass('cur');
+			    $('html').animate({scrollTop: $('#read-nav').offset().top - 100}, 500);
+         });
+
+     </script>
+
+
 {% endblock %}
