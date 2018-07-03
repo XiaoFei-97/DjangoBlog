@@ -18,19 +18,26 @@
 
 .home-nav{
     float: left;
-    width: 42%;
+    width: 40%;
+    padding-top: 16px;
+    padding-left: 0.5em;
+    margin-right: 2em;
+    /*margin-right: 0.5em;*/
+}
+
+.home-nav h4{
+    width: 110%;
 }
 
 .home-block{
     /*border: 1px #ccc solid;*/
     border-radius: 6px;
     padding: 16px 1em 5px 1.5em;
-    margin-bottom: 1em;
+    /*margin-bottom: 1em;*/
     margin-right: 2em;
 }
 
 .home-block-title {
-    width: 120%;
     border-bottom: 1px #ccc solid;
     padding-bottom: 10px;
     font-weight: bold;
