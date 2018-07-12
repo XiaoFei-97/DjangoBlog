@@ -81,7 +81,7 @@ def get_seven_days_read_data(content_type):
     return dates, read_nums
 
 
-def get_30_days_read_data(content_type):
+def get_year_read_data(content_type):
     # 获取每个月的阅读记录
     months = []
     read_nums = []
@@ -104,7 +104,7 @@ def get_today_hot_data(content_type):
     return read_detail[:7]  # 前七条
 
 
-def get_yesterday_hot_data(content_type):
+def get_new_recommend_post(content_type):
     """获取昨天博客额排行榜"""
     today = timezone.now().date()
     yesterday = today - datetime.timedelta(days=1)

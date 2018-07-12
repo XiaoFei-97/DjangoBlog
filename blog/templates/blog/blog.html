@@ -39,22 +39,23 @@
                                 <a href="{% url 'blog:detail' post.id %}">{{ post.title }}</a>
                             </div>
 
-                            <div class="blog-describe">{{ post.body|striptags|truncatechars:120|cut:'&nbsp;'|safe}}</div>
+                            <div class="blog-describe">{{ post.body|striptags|truncatechars:150|cut:'&nbsp;'|safe}}</div>
 
                             <div>{#<span>中的是分类和时间logo样式#}
                                 <div class="blog-tags">
 
+
+
+                                    <span class="glyphicon glyphicon-time"></span>&nbsp;{{ post.created_time|date:"Y-m-d" }}&nbsp;&nbsp;&nbsp;
+
                                     <a href="{% url 'blog:category' post.category.id %}">
                                         <span class="glyphicon glyphicon-file"></span>{{ post.category }}
-                                    </a>&nbsp;&nbsp;
+                                    </a>&nbsp;&nbsp;&nbsp;
+                                    阅读：{{ post.get_read_num }}&nbsp;&nbsp;&nbsp;
 
-                                    <span class="glyphicon glyphicon-time"></span>&nbsp;{{ post.created_time|date:"Y-m-d" }}&nbsp;&nbsp;
+                                    评论：{% get_comment_count post %}&nbsp;&nbsp;&nbsp;
 
-                                    <a href="{% url 'blog:detail' post.id %}"><span class="glyphicon glyphicon-eye-open"></span>&nbsp;{{ post.get_read_num }}</a>&nbsp;&nbsp;
-
-                                    <a href="{% url 'blog:detail' post.id %}"><span class="glyphicon glyphicon-comment"></span>&nbsp;{% get_comment_count post %}</a>&nbsp;&nbsp;
-
-                                    <a onclick="likeChange(this, '{% get_content_type post %}', {{ post.id }})">
+                                    推荐：<a onclick="likeChange(this, '{% get_content_type post %}', {{ post.id }})">
                                         <span class="glyphicon glyphicon-thumbs-up {% get_like_status post %}"></span>
                                         <span class="liked-num">{% get_like_count post %}</span>
                                     </a>
@@ -120,7 +121,7 @@
                     <ul>
                         {% for hot_data in all_hot_posts %}
                             <div class="light-item">
-                                <a href="{% url 'blog:detail' hot_data.id %}">{{ hot_data.title|striptags|truncatechars:30|safe }}&nbsp;({{ hot_data.read_num_sum }})</a>
+                                <a href="{% url 'blog:detail' hot_data.id %}">{{ hot_data.title|striptags|truncatechars:30|safe }}</a>
                             </div>
                         {% empty %}
                             <li>暂无内容</li>
