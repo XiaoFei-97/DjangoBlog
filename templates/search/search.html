@@ -27,19 +27,24 @@
                                 <div class="blog-item">
                                     <div class="blog-title">
                                         <a href="{% url 'blog:detail' result.object.id %}">
-                                            <h4>{{ forloop.counter }}、{% highlight result.object.title with query %}</h4>
+                                            <h4>{% highlight result.object.title with query %}</h4>
                                         </a>
                                     </div>
 
                                     <div class="blog-tags">
-                                        <a href="{% url 'blog:category' result.object.category.id %}"><span class="glyphicon glyphicon-file"></span>{{ result.object.category }}</a>&nbsp;&nbsp;&nbsp;
-                                        <span class="glyphicon glyphicon-time"></span>{{ result.object.created_time|date:"Y-m-d" }}&nbsp;&nbsp;
-                                        <a href="{% url 'blog:detail' result.object.id %}"><span class="glyphicon glyphicon-eye-open"></span>&nbsp;{{ result.object.get_read_num }}</a>&nbsp;&nbsp;
-                                        <a href="{% url 'blog:detail' result.object.id %}"><span class="glyphicon glyphicon-comment"></span>&nbsp;{% get_comment_count result.object %}</a>&nbsp;&nbsp;
-                                        <a onclick="likeChange(this, '{% get_content_type result.object %}', {{ result.object.id }})">
-                                            <span class="glyphicon glyphicon-thumbs-up {% get_like_status result.object %}"></span>
-                                            <span class="liked-num">{% get_like_count result.object %}</span>
-                                        </a>
+                                        <span class="glyphicon glyphicon-time"></span>&nbsp;{{ result.object.created_time|date:"Y-m-d" }}&nbsp;&nbsp;&nbsp;
+
+                                        <a href="{% url 'blog:category' result.object.category.id %}">
+                                            <span class="glyphicon glyphicon-file"></span>{{ result.object.category }}
+                                        </a>&nbsp;&nbsp;&nbsp;
+                                        阅读：{{ result.object.get_read_num }}&nbsp;&nbsp;&nbsp;
+
+                                        评论：{% get_comment_count result.object %}&nbsp;&nbsp;&nbsp;
+
+                                        推荐：<a onclick="likeChange(this, '{% get_content_type result.object %}', {{ result.object.id }})">
+                                                <span class="glyphicon glyphicon-thumbs-up {% get_like_status result.object %}"></span>
+                                                <span class="liked-num">{% get_like_count result.object %}</span>
+                                            </a>
                                     </div>
                                 </div>
                             {% empty %}
@@ -55,19 +60,24 @@
                                 <div class="blog-item">
                                     <div class="blog-describe">
                                         <a href="{% url 'blog:detail' result.object.id %}">
-                                            <div>{{ forloop.counter }}、{% highlight result.object.body with query %}</div>
+                                            <div>{% highlight result.object.body with query %}</div>
                                         </a>
                                     </div>
 
                                     <div class="blog-tags">
-                                        <a href="{% url 'blog:category' result.object.category.id %}"><span class="glyphicon glyphicon-file"></span>{{ result.object.category }}</a> &nbsp;&nbsp;&nbsp;
-                                            <span class="glyphicon glyphicon-time"></span>{{ result.object.created_time|date:"Y-m-d" }}&nbsp;&nbsp;
-                                        <a href="{% url 'blog:detail' result.object.id %}"><span class="glyphicon glyphicon-eye-open"></span>&nbsp;{{ result.object.get_read_num }}</a>&nbsp;&nbsp;&nbsp;
-                                        <a href="{% url 'blog:detail' result.object.id %}"><span class="glyphicon glyphicon-comment"></span>&nbsp;{% get_comment_count result.object %}</a>&nbsp;&nbsp;  &nbsp;
-                                        <a onclick="likeChange(this, '{% get_content_type result.object %}', {{ result.object.id }})">
-                                            <span class="glyphicon glyphicon-thumbs-up {% get_like_status result.object %}"></span>
-                                            <span class="liked-num">{% get_like_count result.object %}</span>
-                                        </a>
+                                        <span class="glyphicon glyphicon-time"></span>&nbsp;{{ result.object.created_time|date:"Y-m-d" }}&nbsp;&nbsp;&nbsp;
+
+                                        <a href="{% url 'blog:category' result.object.category.id %}">
+                                            <span class="glyphicon glyphicon-file"></span>{{ result.object.category }}
+                                        </a>&nbsp;&nbsp;&nbsp;
+                                        阅读：{{ result.object.get_read_num }}&nbsp;&nbsp;&nbsp;
+
+                                        评论：{% get_comment_count result.object %}&nbsp;&nbsp;&nbsp;
+
+                                        推荐：<a onclick="likeChange(this, '{% get_content_type result.object %}', {{ result.object.id }})">
+                                                <span class="glyphicon glyphicon-thumbs-up {% get_like_status result.object %}"></span>
+                                                <span class="liked-num">{% get_like_count result.object %}</span>
+                                            </a>
                                     </div>
                                 </div>
                             {% empty %}

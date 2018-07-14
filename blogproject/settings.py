@@ -135,7 +135,7 @@ STATICFILES_DIRS = [
     os.path.join(BASE_DIR, 'static/')
 ]
 # nginx
-STATIC_ROOT='/home/jzf/sites/jzfblog.top/static/'
+STATIC_ROOT='/home/jzf/sites/jzfblog.com/static/'
 
 CKEDITOR_JQUERY_URL = 'https://apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js'
 
