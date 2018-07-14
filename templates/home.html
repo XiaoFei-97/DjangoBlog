@@ -210,7 +210,7 @@
                     <ul class="list">
                         {% for post in last_7_days_hot_data %}
                             <li class="light-item">
-                                <a href="{% url 'blog:detail' post.id %}">{{ post.title|truncatechars:21 }}</a>
+                                <a href="{% url 'blog:detail' post.id %}">{{ post.title }}</a>
                             </li>
                         {% empty %}
                             暂无周榜
@@ -224,7 +224,7 @@
                     <ul class="list">
                         {% for post in last_30_days_hot_data %}
                             <li class="light-item">
-                                <a href="{% url 'blog:detail' post.id %}">{{ post.title|truncatechars:21 }}</a>
+                                <a href="{% url 'blog:detail' post.id %}">{{ post.title }}</a>
                             </li>
                         {% empty %}
                             暂无月榜
@@ -238,7 +238,7 @@
                     <ul class="list">
                         {% for post in all_hot_posts %}
                             <li class="light-item">
-                                <a href="{% url 'blog:detail' post.id %}">{{ post.title|truncatechars:21 }}</a>
+                                <a href="{% url 'blog:detail' post.id %}">{{ post.title }}</a>
                             </li>
                         {% empty %}
                             暂无总榜

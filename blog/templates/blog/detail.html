@@ -144,7 +144,8 @@
                     <ul>
                         {% for hot_data in all_hot_posts %}
                             <div class="light-item">
-                                <a href="{% url 'blog:detail' hot_data.id %}">{{ hot_data.title|striptags|truncatechars:30|safe }}&nbsp;({{ hot_data.read_num_sum }})</a>
+                                <a href="{% url 'blog:detail' hot_data.id %}">{{ hot_data.title|striptags|truncatechars:30|safe }}</a>
+{#                                ({{ hot_data.read_num_sum }}) 表示该阅读记录次数#}
                             </div>
                         {% empty %}
                             <li>暂无内容</li>
