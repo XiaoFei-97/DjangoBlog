@@ -1,0 +1,350 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+{% load post_tags %}
+
+{% block title %}
+    蒋振飞的博客|关注互联网IT技术
+{% endblock %}
+
+{% block header_extend %}
+    <link rel="stylesheet" href="{% static 'blog/css/home.css' %}">
+    <script src="http://cdn.hcharts.cn/highcharts/highcharts.js"></script>
+{% endblock %}
+
+{% block nav_home_active %}active{% endblock %}
+
+{% block home_content %}
+    <div class="home_content">
+        <div class="home_show">Jzf Blog</div>
+        <div class="motto_name">坚持发表原创个人学习笔记</div>
+        <div class="motto_name">蒋振飞的博客</div>
+    </div>
+{% endblock %}
+
+{% block content %}
+
+    <div class="container">
+
+        <div class="row">
+            <div class="col-sm-5 col-md-4 clearfix">
+
+                <h3>
+                    <span class="glyphicon glyphicon-pencil"></span>
+                    <span>博客</span>
+                    <span class="content-item-more">
+                        共{{ post_count }}篇博客
+                        <a href="/blog/">更多<span class="glyphicon glyphicon-chevron-right"></span></a>
+                    </span>
+                </h3>
+
+                <div>
+                    <div class="home-nav">
+                        <h4 class="home-block-title">博客分类</h4>
+                        <ul class="list">
+                            {% for category in category_list %}
+                                <li class="light-item">
+                                    <a href="{% url 'blog:category' category.id %}">{{ category }}</a>&nbsp;({% get_category_count category %})
+                                </li>
+                            {% empty %}
+                            暂无分类
+                            {% endfor %}
+                        </ul>
+                    </div>
+
+                    <div class="home-nav list light-blog">
+                        <h4 class="home-block-title">友情链接</h4>
+                        <ul>
+                            <li><a href="https://blog.wktadmin.com/">我的学长</a></li>
+                            <li><a href="http://www.jloongking.cn/tp50/public/blog/index/review?viewname=index">jloongking</a></li>
+                            <li><a href="https://www.liaoxuefeng.com/">廖雪峰老师</a></li>
+                            <li><a href="http://www.aaron-zhao.com/">Aaron Zhao</a></li>
+                            <li><a href="http://www.cnblogs.com/52-qq/p/8320303.html">Python全栈</a></li>
+                            <li><a href="https://crossoverjie.top/">crossoverjie</a></li>
+                            <li><a href="http://blog.itcodai.com/">倪升武</a></li>
+                            <li><a href="https://hubojing.github.io/">胡博靖</a></li>
+                            <li><a href="http://www.ityouknow.com/">纯洁的微笑</a></li>
+                            <li><a href="http://www.ityouknow.com/">极客博客</a></li>
+                            <li><a href="http://www.tfss.me/">颓废书生</a></li>
+                         </ul>
+                    </div>
+
+                </div>
+
+            </div>
+
+            <div class="col-sm-7 col-md-8">
+
+                <h3 class="home_welcome">欢迎来访😋</h3>
+
+                <div id="read-nav">
+                    <ul class="nav nav-tabs">
+                        <li role="presentation" class="active" ><a href="#">公众号</a></li>
+                        <li role="presentation"><a href="#">七日阅读量</a></li>
+                        <li role="presentation"><a href="#">全年阅读量</a></li>
+                        <li role="presentation"><a href="#">书籍推荐</a></li>
+                    </ul>
+                </div>
+
+                <div class="contents" id="contents">
+
+                    <div id="read-item" class="cur clearfix">
+                        <img class="wechat fl" src="{% static 'blog/media/wechat.jpg' %}" alt="微信二维码">
+                        <div class="fl">
+                            <div class="read-item-name">代码打碟手</div>
+                            <div style="margin-left: 2em">关注互联网IT技术</div>
+                            <div class="read-item-content">
+                                <p>这里是蒋振飞个人公众号</p>
+                                <p>有时间会发一些个人随笔和近期学习笔记</p>
+                                <p>也欢迎大家找我聊天</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div id="read-item">
+                        <!-- 图表容器 DOM -->
+                        <div id="container"></div>
+                    </div>
+
+                    <div id="read-item">
+                        <div id="container2"></div>
+                    </div>
+
+                    <div id="read-item">
+                        <div class="col-sm-3">
+                            <h3>Python:</h3>
+                            <p>1.跟老齐学python(从入门到精通) 作者:齐伟</p>
+                            <p>2.python Cookbook中文版 作者：David Beazley</p>
+                            <p>3.学习Python─做个有能力的设计师 作者:包瑞清</p>
+                            <p>4.Django架站的16堂课 作者:何敦煌</p>
+                        </div>
+
+                        <div class="col-sm-3">
+                            <h3>数据库:</h3>
+                            <p>1.SQL基础教程 作者:MICK</p>
+                            <p>2.MySQL从入门到精通 作者:明日科技</p>
+                            <p>3.MongoDB大数据处理权威指南 作者:David Hows</p>
+                            <p>4.Redis开发与运维 作者:付磊,张益军</p>
+                        </div>
+
+                        <div class="col-sm-3">
+                            <h3>前端:</h3>
+                            <p>1.Html5实战 作者:Rob Crowther</p>
+                            <p>2.HTML+CSS网页设计 作者:田中雨,郭磊</p>
+                            <p>3.Web开发典藏大系：jQuery网页开发实例精解 作者：黄格力</p>
+{#                            <p></p>#}
+                        </div>
+
+                        <div class="col-sm-3">
+                            <h3>爬虫:</h3>
+                            <p>1.python网络爬虫实战 作者:胡松涛</p>
+                            <p>2.网络爬虫全解析 作者：罗刚</p>
+                            <h3>其他</h3>
+                            <p>1.现代软件工厂构建之法 作者：邹欣</p>
+{#                            <p></p>#}
+{#                            <p></p>#}
+                        </div>
+                    </div>
+
+                </div>
+
+
+
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-sm-4">
+               <div class="home-block">
+                    <h4 class="home-block-title">最新发表</h4>
+                    <ul class="list">
+                        {% for post in new_publish %}
+                            <li class="light-item">
+                                <a href="{% url 'blog:detail' post.id %}">{{ post|truncatechars:21 }}</a>
+                            </li>
+                        {% empty %}
+                            暂无发表
+                        {% endfor %}
+                    </ul>
+                </div>
+            </div>
+            <div class="col-sm-4">
+               <div class="home-block">
+                    <h4 class="home-block-title">最新推荐</h4>
+                    <ul class="list">
+                        {% for post in new_recommend %}
+                            <li class="light-item">
+                                <a href="{% url 'blog:detail' post.content_object.id %}">{{ post.content_object.title }}</a>
+                            </li>
+                        {% empty %}
+                            暂无推荐
+                        {% endfor %}
+                    </ul>
+                </div>
+            </div>
+            <div class="col-sm-4">
+               <div class="home-block">
+                    <h4 class="home-block-title">随机推荐</h4>
+                    <ul class="list">
+                        {% get_random_recomment as random_list%}
+                        {% for post in random_list %}
+                            <li class="light-item">
+                                <a href="{% url 'blog:detail' post.id %}">{{ post }}</a>
+                            </li>
+                        {% empty %}
+                            暂无推荐
+                        {% endfor %}
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <h3 class="content-item-title">
+            <span class="glyphicon glyphicon-fire"></span>
+            <span>热读榜</span>
+        </h3>
+
+        <div class="row">
+            <div class="col-sm-4">
+               <div class="home-block">
+                    <h4 class="home-block-title">周榜</h4>
+                    <ul class="list">
+                        {% for post in last_7_days_hot_data %}
+                            <li class="light-item">
+                                <a href="{% url 'blog:detail' post.id %}">{{ post.title }}</a>
+                            </li>
+                        {% empty %}
+                            暂无周榜
+                        {% endfor %}
+                    </ul>
+                </div>
+            </div>
+            <div class="col-sm-4">
+               <div class="home-block">
+                    <h4 class="home-block-title">月榜</h4>
+                    <ul class="list">
+                        {% for post in last_30_days_hot_data %}
+                            <li class="light-item">
+                                <a href="{% url 'blog:detail' post.id %}">{{ post.title }}</a>
+                            </li>
+                        {% empty %}
+                            暂无月榜
+                        {% endfor %}
+                    </ul>
+                </div>
+            </div>
+            <div class="col-sm-4">
+               <div class="home-block">
+                    <h4 class="home-block-title">总榜</h4>
+                    <ul class="list">
+                        {% for post in all_hot_posts %}
+                            <li class="light-item">
+                                <a href="{% url 'blog:detail' post.id %}">{{ post.title }}</a>
+                            </li>
+                        {% empty %}
+                            暂无总榜
+                        {% endfor %}
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+
+
+{% endblock %}
+{% block script_extends %}
+     <script>
+        // 图表配置
+        var options1 = {
+            chart: {
+                type: 'line' },   //指定图表的类型，默认是折线图（line）
+            title: { text: null },     // 标题
+            xAxis: {
+                categories: {{ seven_dates|safe }},  // x 轴分类
+                tickmarkPlacement: 'on',
+                title: { text: '过去七日阅读量变化' }
+            },
+
+            yAxis: {
+                title: { text: null }, // y 轴标题
+                labels:{ enabled:false },
+                gridLineDashStyle: 'ShortDash',  // 刻度线对齐方式
+            },
+
+            series: [{                              // 数据列
+                name: '阅读量',                        // 数据列名
+                data: {{ seven_read_nums }}                     // 数据
+            }],
+
+            plotOptions:{
+                line:{
+                    dataLabels: {
+                        enabled: true,
+                        color:'darkblue',
+                    }
+                }
+            },
+
+            legend:{ enabled: false },     //消除图例
+            credits: { enabled:false },     //消去版权信息
+        };
+        // 图表初始化函数
+        var chart = Highcharts.chart('container', options1);
+
+        var options2 = {
+            chart: { type: 'line' },   //指定图表的类型，默认是折线图（line）
+            title: { text: null },     // 标题
+            xAxis: {
+                categories: {{ thirty_dates|safe }},  // x 轴分类
+                tickmarkPlacement: 'on',
+                title: { text: {{ year }}+'年阅读量变化'}
+            },
+
+            yAxis: {
+                title: { text: null }, // y 轴标题
+                labels:{ enabled:false },
+                gridLineDashStyle: 'ShortDash',  // 刻度线对齐方式
+            },
+
+            series: [{                              // 数据列
+                name: '阅读量',                        // 数据列名
+                data: {{ thirty_read_nums }}                     // 数据
+            }],
+
+            plotOptions:{
+                line:{
+                    dataLabels: {
+                        enabled: true,
+                        color:'darkblue',
+                    }
+                }
+            },
+
+            legend:{ enabled: false },     //消除图例
+            credits: { enabled:false },     //消去版权信息
+        };
+        // 图表初始化函数
+        var chart = Highcharts.chart('container2', options2);
+
+        /*绑定切换排行榜页面*/
+         $('#read-nav li').click(function(){
+
+             $(this).blur(); //消除焦点
+            {#alert($(this).index());#}
+
+             $(this).addClass('active').siblings().removeClass('active');
+
+             // $(this).index() 获取所在层级索引值
+             // alert($(this).index());
+
+             $('#contents #read-item').eq($(this).index()).addClass('cur').siblings().removeClass('cur');
+             $('html').animate({scrollTop: $('#read-nav').offset().top - 100}, 500, function () {
+                 $('#read-nav').focus()
+             });
+         });
+
+     </script>
+
+
+{% endblock %}

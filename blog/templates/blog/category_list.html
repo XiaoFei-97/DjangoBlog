@@ -1,0 +1,51 @@
+{% extends 'blog/blog.html' %}
+{% load post_tags %}
+
+{#页面标题#}
+{% block nav_blog_active %}{% endblock %}
+{% block nav_category_active %}active{% endblock %}
+
+{% block home_content %}
+    <div class="home_content">
+        <div class="home_show">我的分类</div>
+        <div class="motto_name">欢迎阅读评论，喜欢就点个赞吧</div>
+        <div class="motto_name">—一万年太久，只争朝夕</div>
+    </div>
+{% endblock %}
+
+{% block content %}
+    <div class="container">
+
+        <div class="category_list">目前共计{{ category_list.count }}个分类</div>
+
+        <div class="row">
+            {% for category in category_list %}
+                {% get_category_post category as post_list %}
+                <div class="col-sm-4">
+                    <div class="category">
+
+                        <h4>
+                            <a href="{% url 'blog:category' category.pk %}" style="color: #333; font-weight: bold"><span class="glyphicon glyphicon-file"></span>&nbsp;&nbsp;{{ category }}&nbsp;({% get_category_count category %})</a>
+                        </h4>
+
+                        <div>
+                            {% for post in post_list %}
+                                <div class="light-blog"><a href="{% url 'blog:detail' post.id %}">{{ post }}</a></div>
+                            {% empty %}
+                                <h5>暂无博客</h5>
+                            {% endfor %}
+                        </div>
+
+                    </div>
+                </div>
+            {% empty %}
+                <h3>暂无分类！</h3>
+            {% endfor %}
+
+        </div>
+
+    </div>
+
+
+{#    <div class="box"></div>#}
+{% endblock %}

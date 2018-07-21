@@ -1,0 +1,56 @@
+{% extends 'base.html' %}
+{% load post_tags %}
+
+{#页面标题#}
+{% block title %}
+    蒋振飞的博客
+{% endblock title %}
+
+{% block nav_date_active %}active{% endblock %}
+
+{% block home_content %}
+    <div class="home_content">
+        <div class="home_show">我的归档</div>
+        <div class="motto_name">欢迎阅读评论，交个朋友吧</div>
+        <div class="motto_name">—勿谓寸阴短，既过难再获</div>
+    </div>
+{% endblock %}
+
+{% block content %}
+
+    <div class="container">
+
+        <div class="category_list">目前共计{{ post_count }}篇博文</div>
+
+        <div class="row">
+
+{% for post_date in date_list %}
+    {% get_date_post post_date.year post_date.month as post_list %}
+
+    <div class="col-xs-12 col-sm-4">
+        <div class="category">
+            <h4>
+                <a href="{% url 'blog:date' post_date.year post_date.month %}" style="color: #333; font-weight: bold" >
+                    <span class="glyphicon glyphicon-book"></span>&nbsp;&nbsp;{% get_date_to_month post_date %}&nbsp;({% get_date_count post_date.year post_date.month %})
+                </a>
+            </h4>
+
+            <div>
+                {% for post in post_list %}
+                    <div class="light-blog">
+                        <a href="{% url 'blog:detail' post.id %}">{{ post }}</a>
+                    </div>
+                {% empty %}
+                    <h5>暂无博客</h5>
+                {% endfor %}
+        </div>
+    </div>
+</div>
+{% empty %}
+    <h3>暂无分类！</h3>
+{% endfor %}
+
+        </div>
+    </div>
+
+{% endblock %}

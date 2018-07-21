@@ -1,0 +1,143 @@
+{% extends 'blog/blog.html' %}
+{% load comment_tags %}
+{% load likes_tags %}
+{% load staticfiles %}
+{% load highlight %}
+{% load post_tags %}
+{#页面标题#}
+{% block title %}
+    搜索结果
+{% endblock title %}
+
+{% block body_color %}#FFFFCC{% endblock %}
+{% block header_extend %}
+    <link rel="stylesheet" href="{% static 'blog/css/blog.css' %}">
+{% endblock %}
+{% block nav_search_active %}active_tag{% endblock %}
+
+{% block content %}
+    {% if query %}
+            <div class="container">
+                <div class="row">
+                    <div class="col-xs-12 col-sm-8 col-md-9">
+                        <h4 style="font-weight: bold">搜索到的博客</h4>
+                        <div class="blog-border">
+
+                            {% for result in page.object_list %}
+                                <div class="blog-item">
+                                    <div class="blog-title">
+                                        <a href="{% url 'blog:detail' result.object.id %}">
+                                            <h4>{% highlight result.object.title with query %}</h4>
+                                        </a>
+                                    </div>
+
+                                    <div class="blog-tags">
+                                        <span class="glyphicon glyphicon-time"></span>&nbsp;{{ result.object.created_time|date:"Y-m-d" }}&nbsp;&nbsp;&nbsp;
+
+                                        <a href="{% url 'blog:category' result.object.category.id %}">
+                                            <span class="glyphicon glyphicon-file"></span>{{ result.object.category }}
+                                        </a>&nbsp;&nbsp;&nbsp;
+                                        阅读：{{ result.object.get_read_num }}&nbsp;&nbsp;&nbsp;
+
+                                        评论：{% get_comment_count result.object %}&nbsp;&nbsp;&nbsp;
+
+                                        推荐：<a onclick="likeChange(this, '{% get_content_type result.object %}', {{ result.object.id }})">
+                                                <span class="glyphicon glyphicon-thumbs-up {% get_like_status result.object %}"></span>
+                                                <span class="liked-num">{% get_like_count result.object %}</span>
+                                            </a>
+                                    </div>
+                                </div>
+                            {% empty %}
+                                <div class="no-find">
+                                  您要找的博客好像不存在，换一个试试吧
+                                </div>
+                            {% endfor %}
+                        </div>
+
+                        <h4 style="font-weight: bold">搜索到的内容</h4>
+                        <div class="blog-border">
+                             {% for result in page.object_list %}
+                                <div class="blog-item">
+                                    <div class="blog-describe">
+                                        <a href="{% url 'blog:detail' result.object.id %}">
+                                            <div>{% highlight result.object.body with query %}</div>
+                                        </a>
+                                    </div>
+
+                                    <div class="blog-tags">
+                                        <span class="glyphicon glyphicon-time"></span>&nbsp;{{ result.object.created_time|date:"Y-m-d" }}&nbsp;&nbsp;&nbsp;
+
+                                        <a href="{% url 'blog:category' result.object.category.id %}">
+                                            <span class="glyphicon glyphicon-file"></span>{{ result.object.category }}
+                                        </a>&nbsp;&nbsp;&nbsp;
+                                        阅读：{{ result.object.get_read_num }}&nbsp;&nbsp;&nbsp;
+
+                                        评论：{% get_comment_count result.object %}&nbsp;&nbsp;&nbsp;
+
+                                        推荐：<a onclick="likeChange(this, '{% get_content_type result.object %}', {{ result.object.id }})">
+                                                <span class="glyphicon glyphicon-thumbs-up {% get_like_status result.object %}"></span>
+                                                <span class="liked-num">{% get_like_count result.object %}</span>
+                                            </a>
+                                    </div>
+                                </div>
+                            {% empty %}
+                                <div class="no-find">
+                                         您要找的内容好像不存在，换一个试试吧
+                                </div>
+                            {% endfor %}
+                        </div>
+
+                    </div>
+
+{#                    <div class="hidden-xs col-sm-4 col-md-3 blog-border pull-right">#}
+{#                        <div class="side-list">#}
+{#                            <h4><span class="glyphicon glyphicon-fire"></span>&nbsp;热门阅读总榜</h4>#}
+{#                            <ul>#}
+{#                                {% for hot_data in all_hot_posts %}#}
+{#                                    <div class="light-blog">#}
+{#                                        <a href="{% url 'blog:detail' hot_data.id %}">{{ hot_data.title|striptags|truncatechars:30|safe }}&nbsp;({{ hot_data.read_num_sum }})</a>#}
+{#                                    </div>#}
+{#                                {% empty %}#}
+{#                                    <li>暂无内容</li>#}
+{#                                {% endfor %}#}
+{#                            </ul>#}
+{#                        </div>#}
+{#                    </div>#}
+{##}
+{#                    <div class="hidden-xs col-sm-4 col-md-3 blog-border pull-right">#}
+{#                        <div class="side-list">#}
+{#                            <h4><span class="glyphicon glyphicon-file"></span>&nbsp;博客分类</h4>#}
+{#                            <ul class="blog-types">#}
+{#                                {% for category in category_list %}#}
+{#                                    <li class="light-blog">#}
+{#                                        <a href="{% url 'blog:category' category.id %}">{{ category}}&nbsp;({{ category.post_count }})</a>#}
+{#                                    </li>#}
+{#                                {% empty %}#}
+{#                                    <li>暂无分类</li>#}
+{#                                {% endfor %}#}
+{#                            </ul>#}
+{#                        </div>#}
+{#                    </div>#}
+{##}
+{#                    <div class="hidden-xs col-sm-4 col-md-3 blog-border pull-right">#}
+{#                        <div class="side-list">#}
+{#                            <h4><span class="glyphicon glyphicon-book"></span>&nbsp;日期归档</h4>#}
+{#                            <ul>#}
+{#                                {% for post_date,post_count in post_dates.items %}#}
+{#                                    <li class="light-blog" >#}
+{#                                        <a href="{% url 'blog:date' post_date.year post_date.month %}">{{ post_date|date:"Y年-m月" }}&nbsp;({{ post_count }})</a>#}
+{#                                    </li>#}
+{#                                {% empty %}#}
+{#                                    暂无归档#}
+{#                                {% endfor %}#}
+{#                             </ul>#}
+{#                        </div>#}
+{#                    </div>#}
+{#               #}
+                </div>
+            </div>
+
+    {% endif %}
+        <div class="box1"></div>
+{% endblock %}
+

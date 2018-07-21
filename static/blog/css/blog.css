@@ -1,0 +1,89 @@
+ul{
+    margin: 0;
+    padding: 0;
+}
+
+
+/*博客列表*/
+/*会出现最后一个元素多了一条黑边的情况,所以对最后一个元素不进行重置*/
+.blog-border{
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    /*margin-bottom: 1em;*/
+    padding-bottom: 1em;
+}
+.blog-item{
+    clear: both;
+    /*border-bottom: 1px solid #ddd;*/
+    padding: 1.5em 1em 0.8em 1.5em;
+    overflow: hidden;
+}
+
+.blog-item:not(:last-child){
+    border-bottom: 1px solid #ddd;
+}
+
+.blog-title{
+    font-size: 1.2em;
+    font-weight: bold;
+    margin-bottom: 0.5em;
+}
+
+.blog-describe{
+    color: #777;
+    margin-bottom: 0.5em;
+}
+
+.blog-tags{
+    font-size: 0.7em;
+    color: #777;
+    padding-top: 0.5em;
+    border-top: 1px solid #eee;
+    display: inline-block;
+}
+
+.list-type{
+    text-align: center;
+    color: #777;
+}
+
+.paginator{
+    text-align: center;
+}
+
+
+.django-ckeditor-widget{
+    width: 100%;
+}
+
+.side-list h4{
+    /*padding-top: 0.8em;*/
+    padding-bottom: 0.5em;
+    border-bottom: 1px #ccc solid;
+
+}
+
+.comment{
+    border-bottom: 1px dashed #ccc;
+    margin-bottom: 0.5em;
+    padding-bottom: 0.5em;
+}
+
+.reply{
+    margin-left: 2em;
+}
+
+#reply_content_container{
+    display: block;
+    border: 1px solid #d1d1d1;
+    border-bottom: none;
+    background-color: #f8f8f8;
+    overflow: hidden;
+    padding: 1em 1em 0.5em;
+}
+
+#reply_title{
+    border-bottom: 1px dashed #ccc;
+    padding-bottom: 0.5em;
+}
+
