@@ -102,7 +102,7 @@
                     <div id="comment_list">
                         {% get_comment_list post as comments%}
                         {% for comment in comments %}
-                            <div id="root_{{ comment.pk }}" class="comment">
+                            <div id="root_{{ comment.pk }}" class="comment-info">
                                 <span>{{ comment.user.username }}</span>
                                 <span>({{ comment.comment_time|date:"Y-m-d H:i:s" }})：</span>
                                 <div id="comment_{{ comment.pk }}">
