@@ -41,8 +41,9 @@
 
                     <div class="panel-body">
                         {#使用safe可以关闭转义#}
-                         <div>{{ article|safe }}</div>
+                         <div id="post-body">{{ article|safe }}</div>
                     </div>
+
                 </div>
 
                 <div class="like" onclick="likeChange(this, '{% get_content_type post %}', {{ post_id }})">
@@ -65,6 +66,11 @@
                         没有了
                         {% endif %}
                     </p>
+                </div>
+
+                <div class="share">
+                    <p>(原创博文，转载请注明来自 <a href="http://jzfblog.com/">蒋振飞的博客</a>！本文链接：<a id="share_addr" onclick=clickHandler()>点击我获取我的链接</a>)</p>
+                    <p style="margin-top: 1em">若对你有帮助，不妨扫一扫右侧的二维码打赏我一下吧 ^_^</p>
                 </div>
 
                 <div class="comment-area">
@@ -240,7 +246,17 @@
                 var str = str.replace(new RegExp('\\{'+ i +'\\}', 'g'), arguments[i])
             };
             return str;
-        }
+        };
+
+        var clickHandler = function(){
+            $('#share_addr').html(window.location.href);
+
+        };
+
+        // 关闭右键模式
+        $('#post-body').contextmenu(function(event) {
+                event.preventDefault();
+            });
 
         function reply(reply_comment_id){
             // 设置值
