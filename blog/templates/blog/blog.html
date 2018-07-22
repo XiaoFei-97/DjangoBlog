@@ -36,7 +36,7 @@
                         <div class="blog-item">
                             {# post.id把主键传递出去,在views中就可以找到该post的body,urls中也能规则匹配 #}{# 在反向解析中,注意格式{% url 'namespace:name' para %} #}
                             <div class="blog-title">
-                                <a href="{% url 'blog:detail' post.id %}">{{ post.title }}</a>
+                                <a href="{% url 'blog:detail' post.id %} " target="_Blank">{{ post.title }}</a>
                             </div>
 
                             <div class="blog-describe">{{ post.body|cut:'&nbsp;'|striptags|truncatechars:150|safe}}</div>
@@ -119,7 +119,7 @@
                     <ul>
                         {% for hot_data in all_hot_posts %}
                             <div class="light-item">
-                                <a href="{% url 'blog:detail' hot_data.id %}">{{ hot_data.title|striptags|truncatechars:30|safe }}</a>
+                                <a href="{% url 'blog:detail' hot_data.id %}" target="_Blank">{{ hot_data.title|striptags|truncatechars:30|safe }}</a>
                             </div>
                         {% empty %}
                             <li>暂无内容</li>
@@ -133,7 +133,7 @@
                        {% get_random_recomment as random_list%}
                         {% for post in random_list %}
                             <li class="light-item">
-                                <a href="{% url 'blog:detail' post.id %}">{{ post }}</a>
+                                <a href="{% url 'blog:detail' post.id %}" target="_Blank">{{ post }}</a>
                             </li>
                         {% empty %}
                             暂无推荐
@@ -146,7 +146,7 @@
                     <ul>
                        {% for post in new_recommend %}
                             <li class="light-item">
-                                <a href="{% url 'blog:detail' post.content_object.id %}">{{ post.content_object.title }}</a>
+                                <a href="{% url 'blog:detail' post.content_object.id %}" target="_Blank">{{ post.content_object.title }}</a>
                             </li>
                         {% empty %}
                             暂无推荐

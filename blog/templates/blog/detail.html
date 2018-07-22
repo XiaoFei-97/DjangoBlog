@@ -144,7 +144,7 @@
                     <ul>
                         {% for hot_data in all_hot_posts %}
                             <div class="light-item">
-                                <a href="{% url 'blog:detail' hot_data.id %}">{{ hot_data.title|striptags|truncatechars:30|safe }}</a>
+                                <a href="{% url 'blog:detail' hot_data.id %}" target="_Blank">{{ hot_data.title|striptags|truncatechars:30|safe }}</a>
 {#                                ({{ hot_data.read_num_sum }}) 表示该阅读记录次数#}
                             </div>
                         {% empty %}
@@ -159,7 +159,7 @@
                        {% get_like_post post.category post.id as like_list%}
                         {% for post in like_list %}
                             <li class="light-item">
-                                <a href="{% url 'blog:detail' post.id %}">{{ post }}</a>
+                                <a href="{% url 'blog:detail' post.id %}" target="_Blank">{{ post }}</a>
                             </li>
                         {% empty %}
                             <h4>暂无推荐!</h4>
@@ -173,7 +173,7 @@
                        {% get_random_recomment as random_list%}
                         {% for post in random_list %}
                             <li class="light-item">
-                                <a href="{% url 'blog:detail' post.id %}">{{ post }}</a>
+                                <a href="{% url 'blog:detail' post.id %}" target="_Blank">{{ post }}</a>
                             </li>
                         {% empty %}
                             暂无推荐
@@ -186,7 +186,7 @@
                     <ul>
                        {% for post in new_recommend %}
                             <li class="light-item">
-                                <a href="{% url 'blog:detail' post.content_object.id %}">{{ post.content_object.title }}</a>
+                                <a href="{% url 'blog:detail' post.content_object.id %}" target="_Blank">{{ post.content_object.title }}</a>
                             </li>
                         {% empty %}
                             暂无推荐

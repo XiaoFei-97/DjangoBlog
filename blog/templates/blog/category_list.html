@@ -30,7 +30,7 @@
 
                         <div>
                             {% for post in post_list %}
-                                <div class="light-blog"><a href="{% url 'blog:detail' post.id %}">{{ post }}</a></div>
+                                <div class="light-blog"><a href="{% url 'blog:detail' post.id %}" target="_Blank">{{ post }}</a></div>
                             {% empty %}
                                 <h5>暂无博客</h5>
                             {% endfor %}

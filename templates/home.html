@@ -16,7 +16,7 @@
 {% block home_content %}
     <div class="home_content">
         <div class="home_show">Jzf Blog</div>
-        <div class="motto_name">坚持发表原创个人学习笔记</div>
+        <div class="motto_name">坚持发表个人原创学习笔记</div>
         <div class="motto_name">蒋振飞的博客</div>
     </div>
 {% endblock %}
@@ -54,17 +54,17 @@
                     <div class="home-nav list light-blog">
                         <h4 class="home-block-title">友情链接</h4>
                         <ul>
-                            <li><a href="https://blog.wktadmin.com/">我的学长</a></li>
-                            <li><a href="http://www.jloongking.cn/tp50/public/blog/index/review?viewname=index">jloongking</a></li>
-                            <li><a href="https://www.liaoxuefeng.com/">廖雪峰老师</a></li>
-                            <li><a href="http://www.aaron-zhao.com/">Aaron Zhao</a></li>
-                            <li><a href="http://www.cnblogs.com/52-qq/p/8320303.html">Python全栈</a></li>
-                            <li><a href="https://crossoverjie.top/">crossoverjie</a></li>
-                            <li><a href="http://blog.itcodai.com/">倪升武</a></li>
-                            <li><a href="https://hubojing.github.io/">胡博靖</a></li>
-                            <li><a href="http://www.ityouknow.com/">纯洁的微笑</a></li>
-                            <li><a href="http://www.ityouknow.com/">极客博客</a></li>
-                            <li><a href="http://www.tfss.me/">颓废书生</a></li>
+                            <li><a href="https://blog.wktadmin.com/" target="_Blank">我的学长</a></li>
+                            <li><a href="http://www.jloongking.cn/tp50/public/blog/index/review?viewname=index" target="_Blank">jloongking</a></li>
+                            <li><a href="https://www.liaoxuefeng.com/" target="_Blank">廖雪峰老师</a></li>
+                            <li><a href="http://www.aaron-zhao.com/" target="_Blank">Aaron Zhao</a></li>
+                            <li><a href="http://www.cnblogs.com/52-qq/p/8320303.html" target="_Blank">Python全栈</a></li>
+                            <li><a href="https://crossoverjie.top/" target="_Blank">crossoverjie</a></li>
+                            <li><a href="http://blog.itcodai.com/" target="_Blank">倪升武</a></li>
+                            <li><a href="https://hubojing.github.io/" target="_Blank">胡博靖</a></li>
+                            <li><a href="http://www.ityouknow.com/" target="_Blank">纯洁的微笑</a></li>
+                            <li><a href="http://www.ityouknow.com/" target="_Blank">极客博客</a></li>
+                            <li><a href="http://www.tfss.me/" target="_Blank">颓废书生</a></li>
                          </ul>
                     </div>
 
@@ -159,7 +159,7 @@
                     <ul class="list">
                         {% for post in new_publish %}
                             <li class="light-item">
-                                <a href="{% url 'blog:detail' post.id %}">{{ post|truncatechars:21 }}</a>
+                                <a href="{% url 'blog:detail' post.id %}" target="_Blank">{{ post }}</a>
                             </li>
                         {% empty %}
                             暂无发表
@@ -173,7 +173,7 @@
                     <ul class="list">
                         {% for post in new_recommend %}
                             <li class="light-item">
-                                <a href="{% url 'blog:detail' post.content_object.id %}">{{ post.content_object.title }}</a>
+                                <a href="{% url 'blog:detail' post.content_object.id %}" target="_Blank">{{ post.content_object.title }}</a>
                             </li>
                         {% empty %}
                             暂无推荐
@@ -188,7 +188,7 @@
                         {% get_random_recomment as random_list%}
                         {% for post in random_list %}
                             <li class="light-item">
-                                <a href="{% url 'blog:detail' post.id %}">{{ post }}</a>
+                                <a href="{% url 'blog:detail' post.id %}" target="_Blank">{{ post }}</a>
                             </li>
                         {% empty %}
                             暂无推荐
@@ -210,7 +210,7 @@
                     <ul class="list">
                         {% for post in last_7_days_hot_data %}
                             <li class="light-item">
-                                <a href="{% url 'blog:detail' post.id %}">{{ post.title }}</a>
+                                <a href="{% url 'blog:detail' post.id %}" target="_Blank">{{ post.title }}</a>
                             </li>
                         {% empty %}
                             暂无周榜
@@ -224,7 +224,7 @@
                     <ul class="list">
                         {% for post in last_30_days_hot_data %}
                             <li class="light-item">
-                                <a href="{% url 'blog:detail' post.id %}">{{ post.title }}</a>
+                                <a href="{% url 'blog:detail' post.id %}" target="_Blank">{{ post.title }}</a>
                             </li>
                         {% empty %}
                             暂无月榜
@@ -238,7 +238,7 @@
                     <ul class="list">
                         {% for post in all_hot_posts %}
                             <li class="light-item">
-                                <a href="{% url 'blog:detail' post.id %}">{{ post.title }}</a>
+                                <a href="{% url 'blog:detail' post.id %}" target="_Blank">{{ post.title }}</a>
                             </li>
                         {% empty %}
                             暂无总榜
