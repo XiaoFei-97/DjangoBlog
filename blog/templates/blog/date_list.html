@@ -1,5 +1,6 @@
 {% extends 'base.html' %}
 {% load post_tags %}
+{% load staticfiles %}
 
 {#页面标题#}
 {% block title %}
@@ -9,16 +10,51 @@
 {% block nav_date_active %}active{% endblock %}
 
 {% block home_content %}
-    <div class="home_content">
-        <div class="home_show">我的归档</div>
-        <div class="motto_name">欢迎阅读评论，交个朋友吧</div>
-        <div class="motto_name">—勿谓寸阴短，既过难再获</div>
+
+    <div id="lunbobox">
+        <div id="toleft">
+            &lt;
+        </div>
+
+        <div class="lunbo">
+            <a href="#">
+                <div class="home_content" style="background: url({% static 'blog/media/banner1.jpg' %});background-size: 100% 100%;">
+                    <div class="home_show">我的归档</div>
+                    <div class="word_info">欢迎阅读评论，交个朋友吧</div>
+                    <div class="motto_name">—勿谓寸阴短，既过难再获</div>
+                </div>
+            </a>
+            <a href="#">
+                <div class="home_content" style="background: url({% static 'blog/media/banner2.jpg' %});background-size: 100% 100%;">
+                    <div class="home_show">我的归档</div>
+                    <div class="word_info">欢迎阅读评论，交个朋友吧</div>
+                    <div class="motto_name">—勿谓寸阴短，既过难再获</div>
+                </div>
+            </a>
+            <a href="#">
+                <div class="home_content" style="background: url({% static 'blog/media/banner3.jpg' %});background-size: 100% 100%;">
+                    <div class="home_show">我的归档</div>
+                    <div class="word_info">欢迎阅读评论，交个朋友吧</div>
+                    <div class="motto_name">—勿谓寸阴短，既过难再获</div>
+                </div>
+            </a>
+        </div>
+
+        <div id="toright">
+            &gt;
+        </div>
+
+        <ul>
+            <li></li>
+            <li></li>
+            <li></li>
+        </ul>
     </div>
 {% endblock %}
 
 {% block content %}
 
-    <div class="container">
+    <div class="container" style="margin-top: 1em">
 
         <div class="category_list">目前共计{{ post_count }}篇博文</div>
 

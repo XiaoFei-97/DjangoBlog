@@ -14,16 +14,50 @@
 {% endblock %}
 
 {% block home_content %}
-    <div class="home_content">
-        <div class="home_show">我的博客</div>
-        <div class="motto_name">欢迎阅读评论，评论需注册登录</div>
-        <div class="motto_name">—If You Can Make It Here,You Can Make It Anywhere</div>
+    <div id="lunbobox">
+        <div id="toleft">
+            &lt;
+        </div>
+
+        <div class="lunbo">
+            <a href="#">
+                <div class="home_content" style="background: url({% static 'blog/media/banner1.jpg' %});background-size: 100% 100%;">
+                    <div class="home_show">我的博客</div>
+                    <div class="word_info">欢迎阅读评论，评论需注册登录</div>
+                    <div class="motto_name">—If You Can Make It Here,You Can Make It Anywhere</div>
+                </div>
+            </a>
+            <a href="#">
+                <div class="home_content" style="background: url({% static 'blog/media/banner2.jpg' %});background-size: 100% 100%;">
+                    <div class="home_show">我的博客</div>
+                    <div class="word_info">欢迎阅读评论，评论需注册登录</div>
+                    <div class="motto_name">—If You Can Make It Here,You Can Make It Anywhere</div>
+                </div>
+            </a>
+            <a href="#">
+                <div class="home_content" style="background: url({% static 'blog/media/banner3.jpg' %});background-size: 100% 100%;">
+                    <div class="home_show">我的博客</div>
+                    <div class="word_info">欢迎阅读评论，评论需注册登录</div>
+                    <div class="motto_name">—If You Can Make It Here,You Can Make It Anywhere</div>
+                </div>
+            </a>
+        </div>
+
+        <div id="toright">
+            &gt;
+        </div>
+
+        <ul style="bottom: 20px">
+            <li></li>
+            <li></li>
+            <li></li>
+        </ul>
     </div>
 {% endblock %}
 
 {#页面内容#}
 {% block content %}
-    <div class="container">
+    <div class="container" style="margin-top: 1em">
         <div class="row">
             <div class="col-xs-12 col-sm-8 col-md-9">
                 <div class="blog-border">
