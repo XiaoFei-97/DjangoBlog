@@ -149,11 +149,11 @@ $(function() {
 var t;
 var index = 0;
 /////自动播放
-t = setInterval(play, 3000);
+t = setInterval(play, 5000);
 
 function play() {
     index++;
-    if (index > 2) {
+    if (index > 4) {
         index = 0
     }
     // console.log(index)
@@ -190,7 +190,7 @@ $("#toleft").click(function() {
     index--;
     if (index < 0) //判断index<0的情况为：开始点击#toright  index=0时  再点击 #toleft 为负数了 会出错
     {
-        index = 2
+        index = 4
     }
     console.log(index);
     $("#lunbobox ul li").eq(index).css({
@@ -205,7 +205,7 @@ $("#toleft").click(function() {
 
 $("#toright").click(function() {
     index++;
-    if (index > 2) {
+    if (index > 4) {
         index = 0
     }
     console.log(index);
@@ -245,11 +245,11 @@ $("#lunbobox ul li,.lunbo a div,#toright,#toleft ").hover(
     function() {
         //$('#toright,#toleft').hide()
         //alert('aaa')
-        t = setInterval(play, 3000);
+        t = setInterval(play, 5000);
 
         function play() {
             index++;
-            if (index > 2) {
+            if (index > 4) {
                 index = 0
             }
             $("#lunbobox ul li").eq(index).css({
@@ -268,7 +268,7 @@ $("#lunbobox ul li,.lunbo a div,#toright,#toleft ").hover(
             //侧边栏文本
             siderText: "公告 & 打赏",
             //侧边栏文本高度调整
-            siderTextTop: "-40px",
+            siderTextTop: "-20px",
             //侧边栏背景颜色
             siderBgcolor: "#323d45",
             //整个侧边栏的高度设置可以px，em，或百分比
