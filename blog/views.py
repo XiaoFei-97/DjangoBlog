@@ -171,7 +171,11 @@ def blog(request):
 
 
 def detail(request, pk):
-    """显示当前选择文章内容"""
+    """
+        作用：显示当前选择文章内容
+        request:请求对象
+        pk：每篇文章的pk值
+    """
     # 接收了一个pk值,这个值是在url中传递的主键,利用该主键可以找到文章的对象
     # get_object_or_404的用法是(模型名,get方法)
     post = get_object_or_404(Post, pk=pk)
@@ -195,14 +199,14 @@ def detail(request, pk):
     next_post = Post.objects.filter(created_time__lt=post.created_time).first()
 
     context.update({'article': post.body, 'title': post.title,
-               'author': post.author, 'created_time': post.created_time,
-               'category': post.category, 'previous_post': previous_post,
-               'next_post': next_post, 'read_num': post.get_read_num,
-               'user': request.user, 'post_id': post.id, 'post': post,
-               'login_form': LoginForm(),
-               # 'comments': comments.order_by('-comment_time'),
-               # 'comment_form': CommentForm(initial={'content_type': post_content_type.model, 'object_id': pk, 'reply_comment_id': 0}),
-               # 'comment_count':Comment.objects.filter(content_type=post_content_type, object_id=post.pk).count()
+                    'author': post.author, 'created_time': post.created_time,
+                    'category': post.category, 'previous_post': previous_post,
+                    'next_post': next_post, 'read_num': post.get_read_num,
+                    'user': request.user, 'post_id': post.id, 'post': post,
+                    'login_form': LoginForm(),
+                    # 'comments': comments.order_by('-comment_time'),
+                    # 'comment_form': CommentForm(initial={'content_type': post_content_type.model, 'object_id': pk, 'reply_comment_id': 0}),
+                    # 'comment_count':Comment.objects.filter(content_type=post_content_type, object_id=post.pk).count()
                })
     response = render(request, 'blog/detail.html', context)
     # 第一个参数是键,键值,和过期时间

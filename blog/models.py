@@ -43,7 +43,7 @@ class Tag(models.Model):
 
 class Post(models.Model, ReadNumExpandMethod):  
     """
-    文章的数据库表稍微复杂一点，主要是涉及的字段更多。
+        文章的数据库表稍微复杂一点，主要是涉及的字段更多。
     """
 
     # 文章标题

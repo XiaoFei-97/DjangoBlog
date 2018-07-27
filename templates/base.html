@@ -84,17 +84,37 @@
                     {% endif %}
                     {# 搜索框 #}
                     <form method='get' class="navbar-form navbar-left" action="/search/">
-                        <div class="form-group search_box">
-                            <input type="text" name="q" class="form-control" placeholder="搜点啥?">
-                        </div>
-                        <button type="submit" class="hidden-sm btn btn-default"><span class="glyphicon glyphicon-search"></span></button>
+                        <input type="text" name="q" class="form-control" placeholder="搜点啥?" autofocus="">
+                        <button type="submit" class="hidden-xs hidden-sm btn btn-default">
+                            <span class="glyphicon glyphicon-search"></span>
+                        </button>
                     </form>
                 </ul>
             </div>
         </div>
     </div>
 
-    {% block home_content %}{% endblock %}
+    <div id="lunbobox">
+{#        <div id="toleft">#}
+{#            &lt;#}
+{#        </div>#}
+
+        <div class="lunbo">
+            {% block home_content %}{% endblock %}
+        </div>
+
+{#        <div id="toright">#}
+{#            &gt;#}
+{#        </div>#}
+
+{#        <ul class="hidden-xs">#}
+{#            <li></li>#}
+{#            <li></li>#}
+{#            <li></li>#}
+{#            <li></li>#}
+{#            <li></li>#}
+{#        </ul>#}
+    </div>
 
     {% block content %}{% endblock %}
 

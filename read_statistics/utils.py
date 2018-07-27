@@ -1,8 +1,3 @@
-# _*_ coding:utf-8 _*_
-"""
-@author:jack
-@time:18-5-30下午10:09
-"""
 import datetime
 from django.contrib.contenttypes.models import ContentType
 from django.utils import timezone
@@ -12,17 +7,22 @@ from blog.models import Post
 
 
 def read_statistics_once_read(request, obj):
-    """阅读+1的处理逻辑功能"""
+    """
+        作用：阅读+1的处理逻辑功能
+        request：请求对象
+        obj：post实例对象
+    """
     ct = ContentType.objects.get_for_model(obj)
     key = "%s_%s_read" % (ct.model, obj.pk)
     if not request.COOKIES.get(key):
 
+        '''
         # 第一种办法：新增阅读计数功能
-        # post.read_num += 1
-        # post.save()
+        post.read_num += 1
+        post.save()
 
         # 第二种办法：新增阅读计数功能
-        '''
+        
         if ReadNum.objects.filter(post=post).count():
             # 存在记录
             readnum = ReadNum.objects.get(post=post)
@@ -33,10 +33,10 @@ def read_statistics_once_read(request, obj):
         # 计数+1
         readnum.read_num += 1
         readnum.save()
-        '''
+        
 
         # 第三种办法：创建应用型的
-        '''
+        
         if ReadNum.objects.filter(content_type=ct, object_id=obj.pk).count():
             # 存在记录
             readnum = ReadNum.objects.get(content_type=ct, object_id=obj.pk)
@@ -53,11 +53,13 @@ def read_statistics_once_read(request, obj):
 
         # 当天阅读数+1
         date = timezone.now().date()
-        # if ReadDetail.objects.filter(content_type=ct, object_id=obj.pk, date=date).count():
-        #     readDetail = ReadDetail.objects.get(content_type=ct, object_id=obj.pk, date=date)
-        #
-        # else:
-        #     readDetail = ReadDetail(content_type=ct, object_id=obj.pk, date=date)
+        '''
+        if ReadDetail.objects.filter(content_type=ct, object_id=obj.pk, date=date).count():
+            readDetail = ReadDetail.objects.get(content_type=ct, object_id=obj.pk, date=date)
+       
+        else:
+            readDetail = ReadDetail(content_type=ct, object_id=obj.pk, date=date)
+        '''
 
         readdetail, created = ReadDetail.objects.get_or_create(content_type=ct, object_id=obj.pk, date=date)
         readdetail.read_num += 1
@@ -66,7 +68,10 @@ def read_statistics_once_read(request, obj):
 
 
 def get_seven_days_read_data(content_type):
-    """获取七天内的阅读记录"""
+    """
+        作用：获取七天内的阅读记录
+        content_type：数据表的模型类
+    """
     today = timezone.now().date()
     dates = []
     read_nums = []
@@ -82,6 +87,10 @@ def get_seven_days_read_data(content_type):
 
 
 def get_year_read_data(content_type):
+    """
+        作用：获取该年每个月的阅读记录
+        content_type: 数据表的模型类
+    """
     # 获取每个月的阅读记录
     months = []
     read_nums = []
@@ -97,23 +106,30 @@ def get_year_read_data(content_type):
     return months, read_nums, year
 
 
-# def get_today_hot_data(content_type):
-#     """获取今日博客排行榜"""
-#     today = timezone.now().date()
-#     read_detail = ReadDetail.objects.filter(content_type=content_type, date=today).order_by('-read_num')
-#     return read_detail[:7]  # 前七条
+'''
+def get_today_hot_data(content_type):
+    """获取今日博客排行榜"""
+    today = timezone.now().date()
+    read_detail = ReadDetail.objects.filter(content_type=content_type, date=today).order_by('-read_num')
+    return read_detail[:7]  # 前七条
+'''
 
 
 def get_new_recommend_post(content_type):
-    """获取昨天博客排行榜"""
+    """
+        作用：获取最新推荐博客列表
+        content_type:数据表的模型类
+    """
     today = timezone.now().date()
     yesterday = today - datetime.timedelta(days=1)
     read_detail = ReadDetail.objects.filter(content_type=content_type, date=yesterday).order_by('-read_num')
-    return read_detail[0:15]  # 前七条
+    return read_detail[0:15]  # 前十五条
 
 
 def get_7_days_read_posts():
-    """获取博客7天排行榜"""
+    """
+        作用：获取阅读量周榜博客榜单
+    """
     today = timezone.now().date()
     date = today - datetime.timedelta(days=7)
     posts = Post.objects \
@@ -125,7 +141,9 @@ def get_7_days_read_posts():
 
 
 def get_30_days_read_posts():
-    """获取博客30天排行榜"""
+    """
+        作用：获取阅读量月榜博客榜单
+    """
     today = timezone.now().date()
     date = today - datetime.timedelta(days=30)
     posts = Post.objects \
@@ -137,7 +155,9 @@ def get_30_days_read_posts():
 
 
 def get_all_read_posts():
-    """获取博客排行总榜"""
+    """
+        作用：获取阅读量总榜博客榜单
+    """
     today = timezone.now().date()
     date = today - datetime.timedelta(days=30)
     posts = Post.objects \
