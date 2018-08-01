@@ -2,7 +2,10 @@
 {% load post_tags %}
 {% load staticfiles %}
 
-{#页面标题#}
+{% block title %}
+    博客分类
+{% endblock title %}
+
 {% block nav_blog_active %}{% endblock %}
 {% block nav_category_active %}active{% endblock %}
 
