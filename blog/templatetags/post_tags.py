@@ -56,17 +56,6 @@ def get_date_count(year, month):
 
 
 @register.simple_tag
-def get_random_recomment():
-    # 随机推荐
-    random_posts = set()
-    post_list = Post.objects.all()
-    while random_posts.__len__() < 15:
-        random_posts.add(random.choice(post_list))
-
-    return random_posts
-
-
-@register.simple_tag
 def get_like_post(category, id):
     # 猜你喜欢
     # 使用Q可以过滤出不要的条件

@@ -3,7 +3,7 @@
 {% load post_tags %}
 
 {% block title %}
-    蒋振飞的博客|关注互联网IT技术
+    蒋振飞的博客 | 记录互联网IT学习分享
 {% endblock %}
 
 {% block header_extend %}
@@ -87,6 +87,7 @@
                         <ul>
                             <li><a href="https://www.liaoxuefeng.com/" target="_Blank">廖雪峰老师</a></li>
                             <li><a href="https://cuiqingcai.com/" target="_Blank">崔庆才老师</a></li>
+                            <li><a href="http://cuijiahua.com/" target="_Blank">Jack Cui</a></li>
                             <li><a href="https://blog.wktadmin.com/" target="_Blank">我的学长</a></li>
                             <li><a href="http://www.jloongking.cn/" target="_Blank">jloongking</a></li>
                             <li><a href="http://www.aaron-zhao.com/" target="_Blank">Aaron Zhao</a></li>
@@ -95,7 +96,6 @@
                             <li><a href="https://hubojing.github.io/" target="_Blank">胡博靖</a></li>
                             <li><a href="http://www.ityouknow.com/" target="_Blank">纯洁的微笑</a></li>
                             <li><a href="http://www.ityouknow.com/" target="_Blank">极客博客</a></li>
-                            <li><a href="http://www.tfss.me/" target="_Blank">颓废书生</a></li>
                          </ul>
                     </div>
 
@@ -216,8 +216,7 @@
                <div class="home-block">
                     <h4 class="home-block-title">随机推荐</h4>
                     <ul class="list">
-                        {% get_random_recomment as random_list%}
-                        {% for post in random_list %}
+                        {% for post in random_recommend %}
                             <li class="light-item">
                                 <a href="{% url 'blog:detail' post.id %}" target="_Blank">{{ post }}</a>
                             </li>

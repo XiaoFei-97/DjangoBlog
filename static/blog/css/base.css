@@ -240,6 +240,11 @@ ul{
     color: cyan;
 }
 
+/*文章段落*/
+#post-body p{
+    line-height: 25px;
+}
+
 /*关于我*/
 .introduce-info li{
     margin: 0.5em;

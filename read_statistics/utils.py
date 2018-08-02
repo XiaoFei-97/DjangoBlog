@@ -1,4 +1,5 @@
 import datetime
+import random
 from django.contrib.contenttypes.models import ContentType
 from django.utils import timezone
 from django.db.models import Sum
@@ -126,6 +127,16 @@ def get_new_recommend_post(content_type):
     return read_detail[0:15]  # 前十五条
 
 
+def get_random_recomment():
+    # 随机推荐
+    random_posts = set()
+    post_list = Post.objects.all()
+    while random_posts.__len__() < 15:
+        random_posts.add(random.choice(post_list))
+
+    return random_posts
+
+
 def get_7_days_read_posts():
     """
         作用：获取阅读量周榜博客榜单
@@ -159,9 +170,8 @@ def get_all_read_posts():
         作用：获取阅读量总榜博客榜单
     """
     today = timezone.now().date()
-    date = today - datetime.timedelta(days=30)
     posts = Post.objects \
-        .filter(read_detail__date__lt=today, read_detail__date__gte=date) \
+        .filter(read_detail__date__lt=today) \
         .values('id', 'title') \
         .annotate(read_num_sum=Sum('read_detail__read_num')) \
         .order_by('-read_num_sum')

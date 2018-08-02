@@ -149,7 +149,7 @@
 
     {% block script_extends %}{% endblock %}
     <script color="0,143,183" opacity='1' zIndex="-2" count="50" src="//cdn.bootcss.com/canvas-nest.js/1.0.1/canvas-nest.min.js"></script>
-    <script src="{% static 'blog/js/tctip.min.js' %}"></script>
+
 
     <script>
         ///轮播
@@ -190,7 +190,7 @@
             $(".lunbo a ").eq(index).fadeIn(2000).siblings().fadeOut(2000);
         };
 
-        ///点击鼠标 图片切换
+        //点击鼠标 图片切换
         $("#lunbobox ul li").click(function() {
 
             //添加 移除样式
@@ -207,7 +207,7 @@
             $(".lunbo a ").eq(index).fadeIn(2000).siblings().fadeOut(2000); // siblings  找到 兄弟节点(不包括自己）
         });
 
-        /////////////上一张、下一张切换
+        //上一张、下一张切换
         $("#toleft").click(function() {
             index--;
             if (index < 0) //判断index<0的情况为：开始点击#toright  index=0时  再点击 #toleft 为负数了 会出错
@@ -253,17 +253,17 @@
                     "color": ""
                 })
             });
-        ///
 
-        ///////鼠标移进  移出
+
+        //鼠标移进  移出
         $("#lunbobox ul li,.lunbo a div,#toright,#toleft ").hover(
-            ////////鼠标移进
+            //鼠标移进
             function() {
                 $('#toright,#toleft').show();
                 clearInterval(t);
 
             },
-            ///////鼠标移开
+            //鼠标移开
             function() {
                 //$('#toright,#toleft').hide()
                 //alert('aaa')
@@ -339,9 +339,9 @@
             var s = document.getElementsByTagName("script")[0];
             s.parentNode.insertBefore(hm, s);
         })();
-
-
     </script>
+
+    <script src="{% static 'blog/js/tctip.min.js' %}"></script>
 
     <script type="text/javascript">
 
@@ -359,6 +359,7 @@
         }
 
     </script>
+
 </body>
 
 </html>

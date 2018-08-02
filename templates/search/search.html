@@ -18,7 +18,7 @@
 
 {% block content %}
     {% if query %}
-            <div class="container" style="margin-top: 3em;margin-bottom: 2em">
+            <div class="container" style="margin-top: 2em;margin-bottom: 2em">
                 <div class="row">
                     <div class="col-xs-12 col-sm-8 col-md-9">
                         <h4 style="font-weight: bold">搜索到的博客</h4>
@@ -50,12 +50,12 @@
                                 </div>
                             {% empty %}
                                 <div class="no-find">
-                                  您要找的博客好像不存在，换一个试试吧
+                                  您要搜的博客好像不存在，换个关键词试试
                                 </div>
                             {% endfor %}
                         </div>
 
-                        <h4 style="font-weight: bold">搜索到的内容</h4>
+                        <h4 style="font-weight: bold;margin-top: 2em">搜索到的内容</h4>
                         <div class="blog-border">
                              {% for result in page.object_list %}
                                 <div class="blog-item">
@@ -83,7 +83,7 @@
                                 </div>
                             {% empty %}
                                 <div class="no-find">
-                                         您要找的内容好像不存在，换一个试试吧
+                                    您要搜的内容好像不存在，换个关键词试试
                                 </div>
                             {% endfor %}
                         </div>

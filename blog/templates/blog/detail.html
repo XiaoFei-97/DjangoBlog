@@ -177,8 +177,7 @@
                 <div class="side-list">
                     <h4><span class="glyphicon glyphicon-random"></span>&nbsp;&nbsp;随机推荐</h4>
                     <ul>
-                       {% get_random_recomment as random_list%}
-                        {% for post in random_list %}
+                        {% for post in random_recommend %}
                             <li class="light-item">
                                 <a href="{% url 'blog:detail' post.id %}" target="_Blank">{{ post }}</a>
                             </li>
