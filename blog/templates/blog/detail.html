@@ -155,7 +155,7 @@
 {#                                ({{ hot_data.read_num_sum }}) 表示该阅读记录次数#}
                             </div>
                         {% empty %}
-                            <li>暂无内容</li>
+                            暂无总榜 !
                         {% endfor %}
                     </ul>
                  </div>
@@ -169,7 +169,7 @@
                                 <a href="{% url 'blog:detail' post.id %}" target="_Blank">{{ post }}</a>
                             </li>
                         {% empty %}
-                            <h4>暂无推荐!</h4>
+                            正在猜测 ...
                         {% endfor %}
                     </ul>
                 </div>
@@ -182,7 +182,7 @@
                                 <a href="{% url 'blog:detail' post.id %}" target="_Blank">{{ post }}</a>
                             </li>
                         {% empty %}
-                            暂无推荐
+                            暂无推荐 ！
                         {% endfor %}
                     </ul>
                 </div>
@@ -195,7 +195,7 @@
                                 <a href="{% url 'blog:detail' post.content_object.id %}" target="_Blank">{{ post.content_object.title }}</a>
                             </li>
                         {% empty %}
-                            暂无推荐
+                            暂无推荐 ！
                         {% endfor %}
                     </ul>
                 </div>

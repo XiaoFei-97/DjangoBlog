@@ -59,8 +59,20 @@ def get_date_count(year, month):
 def get_like_post(category, id):
     # 猜你喜欢
     # 使用Q可以过滤出不要的条件
-    post_list =  Post.objects.filter(~Q(id=id), category=category)
-    return post_list[:15]
+    # post_list =  Post.objects.filter(~Q(id=id), category=category)
+    # return post_list[:15]
+    like_posts = set()
+    posts = Post.objects.all()
+    while like_posts.__len__() < 15:
+        post_list = Post.objects.filter(~Q(id=id), category=category)
+        for post in post_list:
+            like_posts.add(post)
+            if not like_posts.__len__() < 15:
+                return like_posts
+        random_post = random.choice(posts)
+        like_posts.add(random_post)
+    return like_posts
+
 
 
 

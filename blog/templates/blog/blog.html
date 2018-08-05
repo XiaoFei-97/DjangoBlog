@@ -93,8 +93,8 @@
                             </div>
                         </div>
                     {% empty %}
-                        <div class="blog">
-                            <h3>--暂无博客,敬请期待</h3>
+                        <div class="no-find">
+                            暂无博客,敬请期待 !
                         </div>
                     {% endfor %}
                 </div>
@@ -154,7 +154,7 @@
                                 <a href="{% url 'blog:detail' hot_data.id %}" target="_Blank">{{ hot_data.title|striptags|truncatechars:30|safe }}</a>
                             </div>
                         {% empty %}
-                            <li>暂无内容</li>
+                            暂无总榜 !
                         {% endfor %}
                     </ul>
                 </div>
@@ -167,7 +167,7 @@
                                 <a href="{% url 'blog:detail' post.id %}" target="_Blank">{{ post }}</a>
                             </li>
                         {% empty %}
-                            暂无推荐
+                            暂无推荐 !
                         {% endfor %}
                     </ul>
                 </div>
@@ -180,7 +180,7 @@
                                 <a href="{% url 'blog:detail' post.content_object.id %}" target="_Blank">{{ post.content_object.title }}</a>
                             </li>
                         {% empty %}
-                            暂无推荐
+                            暂无推荐 ！
                         {% endfor %}
                     </ul>
                 </div>

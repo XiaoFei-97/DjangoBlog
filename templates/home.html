@@ -73,8 +73,8 @@
                         <h4 class="home-block-title">博客分类</h4>
                         <ul class="list">
                             {% for category in category_list %}
-                                <li class="light-item">
-                                    <a href="{% url 'blog:category' category.id %}">{{ category }}</a>&nbsp;({% get_category_count category %})
+                                <li class="light-blog">
+                                    <a href="{% url 'blog:category' category.id %}">{{ category }}&nbsp;({% get_category_count category %})</a>
                                 </li>
                             {% empty %}
                             暂无分类
@@ -189,11 +189,11 @@
                     <h4 class="home-block-title">最新发表</h4>
                     <ul class="list">
                         {% for post in new_publish %}
-                            <li class="light-item">
+                            <li class="light-blog">
                                 <a href="{% url 'blog:detail' post.id %}" target="_Blank">{{ post }}</a>
                             </li>
                         {% empty %}
-                            暂无发表
+                            暂无发表 !
                         {% endfor %}
                     </ul>
                 </div>
@@ -203,11 +203,11 @@
                     <h4 class="home-block-title">最新推荐</h4>
                     <ul class="list">
                         {% for post in new_recommend %}
-                            <li class="light-item">
+                            <li class="light-blog">
                                 <a href="{% url 'blog:detail' post.content_object.id %}" target="_Blank">{{ post.content_object.title }}</a>
                             </li>
                         {% empty %}
-                            暂无推荐
+                            暂无推荐 !
                         {% endfor %}
                     </ul>
                 </div>
@@ -217,11 +217,11 @@
                     <h4 class="home-block-title">随机推荐</h4>
                     <ul class="list">
                         {% for post in random_recommend %}
-                            <li class="light-item">
+                            <li class="light-blog">
                                 <a href="{% url 'blog:detail' post.id %}" target="_Blank">{{ post }}</a>
                             </li>
                         {% empty %}
-                            暂无推荐
+                            暂无推荐 !
                         {% endfor %}
                     </ul>
                 </div>
@@ -239,11 +239,11 @@
                     <h4 class="home-block-title">周榜</h4>
                     <ul class="list">
                         {% for post in last_7_days_hot_data %}
-                            <li class="light-item">
+                            <li class="light-blog">
                                 <a href="{% url 'blog:detail' post.id %}" target="_Blank">{{ post.title }}</a>
                             </li>
                         {% empty %}
-                            暂无周榜
+                            暂无周榜 !
                         {% endfor %}
                     </ul>
                 </div>
@@ -253,11 +253,11 @@
                     <h4 class="home-block-title">月榜</h4>
                     <ul class="list">
                         {% for post in last_30_days_hot_data %}
-                            <li class="light-item">
+                            <li class="light-blog">
                                 <a href="{% url 'blog:detail' post.id %}" target="_Blank">{{ post.title }}</a>
                             </li>
                         {% empty %}
-                            暂无月榜
+                            暂无月榜 !
                         {% endfor %}
                     </ul>
                 </div>
@@ -267,11 +267,11 @@
                     <h4 class="home-block-title">总榜</h4>
                     <ul class="list">
                         {% for post in all_hot_posts %}
-                            <li class="light-item">
+                            <li class="light-blog">
                                 <a href="{% url 'blog:detail' post.id %}" target="_Blank">{{ post.title }}</a>
                             </li>
                         {% empty %}
-                            暂无总榜
+                            暂无总榜 !
                         {% endfor %}
                     </ul>
                 </div>
