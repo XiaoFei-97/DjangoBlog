@@ -331,7 +331,8 @@ ul{
 .box{
     width: 100%;
     text-align: center;
-    margin-left: 1em;
+    margin-left: 0.5em;
+    font-size: 20px;
 }
 
 .box div{
