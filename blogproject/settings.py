@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'ckeditor',  # 富文本编辑器
     'ckeditor_uploader',
+    'DjangoUeditor',
     'haystack',
     'blog',
     'read_statistics',

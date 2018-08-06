@@ -24,11 +24,11 @@ urlpatterns = [
     # 通过在根目录下的url加上namespace属性可以实现反向解析的功能
     # 注意:在根目录的url为namespace而项目的url是name
     url(r'^', include('blog.urls', namespace='blog')),    # 该地址就在ip根目录下
-    url(r'^ckeditor/', include('ckeditor_uploader.urls')),
     url(r'^', include('comment.urls', namespace='comment')),
     url(r'^', include('likes.urls', namespace='likes')),
     url(r'^', include('user.urls', namespace='user')),
     url(r'^search/', include('haystack.urls')),
+    url(r'^ueditor/',include('DjangoUeditor.urls' )),
 ]
 
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
