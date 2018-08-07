@@ -428,19 +428,19 @@
             onepre.innerHTML = '<code id="mycode">'+mycode+'</code>';
         }
 
-$(function(){
-    $('pre code').each(function(){
-        var lines = $(this).text().split('\n').length - 1;
-        var $numbering = $('<ul/>').addClass('pre-numbering');
-        $(this)
-            .addClass('has-numbering')
-            .parent()
-            .append($numbering);
-        for(i=1;i<=lines+100;i++){
-            $numbering.append($('<li/>').text(i));
-        }
-    });
-});
+        $(function(){
+            $('pre code').each(function(){
+                var lines = $(this).text().split('\n').length - 1;
+                var $numbering = $('<ul/>').addClass('pre-numbering');
+                $(this)
+                    .addClass('has-numbering')
+                    .parent()
+                    .append($numbering);
+                for(i=1;i<=lines+100;i++){
+                    $numbering.append($('<li/>').text(i));
+                }
+            });
+        });
 
     </script>
 

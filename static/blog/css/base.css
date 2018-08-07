@@ -249,6 +249,14 @@ ul{
     margin-left: 2em;
 }
 
+#post-body img{
+    max-width: 100%;
+}
+
+#post-body a{
+    word-break: break-all;
+}
+
 /*关于我*/
 .introduce-info li{
     margin: 0.5em;
@@ -310,11 +318,9 @@ ul{
 }
 
 .no-find{
-    margin-left: 2em;
-    height: 50px;
-    /*font-size: 1.5em;*/
-    line-height: 60px;
-
+    width: 100%;
+    margin-left: 1em;
+    padding-top: 1em;
 }
 
 .light-blog a{
