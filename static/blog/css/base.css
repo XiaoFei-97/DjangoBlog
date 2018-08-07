@@ -245,6 +245,10 @@ ul{
     line-height: 25px;
 }
 
+#post-body .list-paddingleft-2{
+    margin-left: 2em;
+}
+
 /*关于我*/
 .introduce-info li{
     margin: 0.5em;

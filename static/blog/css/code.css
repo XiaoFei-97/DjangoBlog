@@ -1,12 +1,11 @@
 pre {
     position: relative;
     padding: 0;
-    /*margin-bottom: 24px;*/
     border-radius: 3px;
     border: 1px solid #C3CCD0;
     background: #FFF;
     overflow: hidden;
-    font-size: 13px;
+    font-size: 14px;
 }
 code {
     display: block;
@@ -14,11 +13,11 @@ code {
     overflow-y: auto;
     font-weight: 300;
     font-family: Menlo, monospace;
-    font-size: 0.8em;
+    font-size: 14px;
 }
 
 code.has-numbering {
-    margin-left: 21px;
+    margin-left: 10px;
 }
 
 .pre-numbering {
@@ -26,12 +25,12 @@ code.has-numbering {
     top: 0;
     left: 0;
     width: 30px;
-    padding: 8px 5px 5px 0;
+    padding: 8px 6px 5px 0;
     border-right: 1px solid #C3CCD0;
     border-radius: 3px 0 0 3px;
     background-color: #eee;
     text-align: right;
     font-family: Menlo, monospace;
-    font-size: 1.1em;
+    font-size: 14px;
     color: #AAA;
 }

@@ -422,16 +422,15 @@
 
         $(function(){
             $('pre code').each(function(){
-                var lines = $(this).text().split('\n').length - 1;
-                var $numbering = $('<ul/>').addClass('pre-numbering');
-                $(this)
-                    .addClass('has-numbering')
-                    .parent()
-                    .append($numbering);
-                // 100是防止代码自动换行的时候，代码行号也会算进去，后面的代码就会出现没有行号的现象，所以+100是增加行号，而超出容器那部分会被隐藏
-                for(i=1;i<=lines+100;i++){
-                    $numbering.append($('<li/>').text(i));
-                }
+                texts = $(this).text().replace(/&(?!#?[a-zA-Z0-9]+;)/g, '&amp;')
+                .replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/'/g, '&#39;').replace(/"/g, '&quot;')
+                var codetext = texts.split('\n');
+                var code = '';
+                $(codetext).each(function(v){
+                    code += '<li>'+codetext[v]+'</li>';
+                });
+                code = '<ol>'+code+'</ol>';
+                $(this).html(code);
             });
         });
 
