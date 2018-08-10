@@ -11,5 +11,6 @@ urlpatterns = [
     url(r'^date/(\d+)/(\d+)', views.date, name='date'),  # 访问地址:主机名+端口号/date/年/月
     url(r'^category_list/', views.category_list, name='category_list'),
     url(r'^date_list/', views.date_list, name='date_list'),
-    url(r'^search_list/', views.search_list, name='search_list'),
 ]
+
+handler404=views.page_not_found

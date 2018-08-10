@@ -257,6 +257,11 @@ ul{
     word-break: break-all;
 }
 
+#post-body table, #post-body tr, #post-body td{
+    border: 1px solid #000;
+    max-width: 100%;
+}
+
 /*关于我*/
 .introduce-info li{
     margin: 0.5em;
@@ -318,9 +323,13 @@ ul{
 }
 
 .no-find{
-    width: 100%;
-    margin-left: 1em;
-    padding-top: 1em;
+    font-size: 2em;
+    margin-top: 4em;
+    text-align: center;
+}
+
+.no-find a{
+    font-size: 0.8em;
 }
 
 .light-blog a{

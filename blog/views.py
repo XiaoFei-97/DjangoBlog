@@ -293,6 +293,6 @@ def date(request, year, month):
     return render(request, 'blog/date.html', context)
 
 
-def search_list(request):
-    # 搜索功能的逻辑处理
-    return render(request, 'search/search.html')
+def page_not_found(request):
+    return render(request, '404.html')
+

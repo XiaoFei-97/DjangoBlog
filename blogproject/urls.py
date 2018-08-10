@@ -17,6 +17,7 @@ from django.conf.urls import url, include
 from django.contrib import admin
 from django.conf import settings
 from django.conf.urls.static import static
+from blog.search_indexes import MySeachView
 
 
 urlpatterns = [
@@ -27,7 +28,7 @@ urlpatterns = [
     url(r'^', include('comment.urls', namespace='comment')),
     url(r'^', include('likes.urls', namespace='likes')),
     url(r'^', include('user.urls', namespace='user')),
-    url(r'^search/', include('haystack.urls')),
+    url(r'^search/', MySeachView(), name='haystack_search'),
     url(r'^ueditor/',include('DjangoUeditor.urls' )),
 ]
 
