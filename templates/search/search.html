@@ -66,51 +66,98 @@
                                 </div>
                             </div>
                         {% endfor %}
+<div class="paginator">
+                    <ul class="pagination">
+                        <li>
+                            {# 上一页 #}
+                            {% if page.has_previous %}
+                                <a href="?q={{ query }}&page={{ page.previous_page_number }}" aria-label="Previous">
+                                    <span aria-hidden="true">上一页</span>
+                                </a>
+                            {% else %}
+                                <span aria-hidden="true">&laquo;</span>
+                            {% endif %}
+                        </li>
+                        {# 全部页码 #}
+                        {# {% for page_num in page_of_list.paginator.page_range %}#}
+                        {# page_range在views中被处理成当前页数+-2的范围,目的是为了避免页码过于长#}
+{% for page_num in page_range %}
+                            {# 判断是否当前页 #}
+                            {% if page_num == page.number %}
+                                {# 如果是当前页就设置active高亮 #}
+                                <li class="active"><a href="?q={{ query }}&page={{ page_num }}">{{ page_num }}</a></li>
+                            {% else %}
+                                {% if page_num == '...' %}
+                                    <li><span>{{ page_num }}</span></li>
+                                {% else %}
+                                    <li><a href="?q={{ query }}&page={{ page_num }}">{{ page_num }}</a></li>
+                                {% endif %}
+                            {% endif %}
+                        {% endfor %}
+                        <li>
+                        {# 下一页 #}
+                        {% if page.has_next %}
+                            <a href="?q={{ query }}&page={{ page.next_page_number }}" aria-label="Previous">
+                                <span aria-hidden="true">下一页</span>
+                            </a>
+                        {% else %}
+                            <span aria-hidden="true">&raquo;</span>
+                            </li>
+                        {% endif %}
+                    </ul>
+                    <p>
+                        共有{{ page.paginator.count }}篇博客,
+                        当前第{{ page.number }}页, 共{{ page.paginator.num_pages }}页
+                    </p>
                 </div>
+            </div>
+
 
                 <div class="hidden-xs col-sm-4 col-md-3 blog-border">
                     <div class="side-list">
-                                      <h4><span class="glyphicon glyphicon-fire"></span>&nbsp;热门阅读总榜</h4>
-                                      <ul>
-                                      {% for hot_data in all_hot_posts %}
-                                      <div class="light-item">
-                                      <a href="{% url 'blog:detail' hot_data.id %}" target="_Blank">{{ hot_data.title|striptags|truncatechars:30|safe }}</a>
-                                      </div>
-                                      {% empty %}
-                                      暂无总榜 !
-                                      {% endfor %}
-                                      </ul>
-                                      </div>
+                        <h4><span class="glyphicon glyphicon-fire"></span>&nbsp;热门阅读总榜</h4>
+                        <ul>
+                            {% for hot_data in all_hot_posts %}
+                                <div class="light-item">
+                                    <a href="{% url 'blog:detail' hot_data.id %}" target="_Blank">{{ hot_data.title|striptags|truncatechars:30|safe }}</a>
+                                </div>
+                            {% empty %}
+                                暂无总榜 !
+                            {% endfor %}
+                        </ul>
+                    </div>
 
                     <div class="side-list">
-                                      <h4><span class="glyphicon glyphicon-random"></span>&nbsp;&nbsp;随机推荐</h4>
-                                      <ul>
-                                      {% for post in random_recommend %}
-                                      <li class="light-item">
-                                      <a href="{% url 'blog:detail' post.id %}" target="_Blank">{{ post }}</a>
-                                      </li>
-                                      {% empty %}
-                                      暂无推荐 !
-                                      {% endfor %}
-                                      </ul>
-                                      </div>
+                        <h4><span class="glyphicon glyphicon-random"></span>&nbsp;&nbsp;随机推荐</h4>
+                        <ul>
+                            {% for post in random_recommend %}
+                                <li class="light-item">
+                                    <a href="{% url 'blog:detail' post.id %}" target="_Blank">{{ post }}</a>
+                                </li>
+                            {% empty %}
+                                暂无推荐 !
+                            {% endfor %}
+                        </ul>
+                    </div>
 
                     <div class="side-list">
-                                      <h4><span class="glyphicon glyphicon-time"></span>&nbsp;最新推荐</h4>
-                                      <ul>
-                                      {% for post in new_recommend %}
-                                      <li class="light-item">
-                                      <a href="{% url 'blog:detail' post.content_object.id %}" target="_Blank">{{ post.content_object.title }}</a>
-                                      </li>
-                                      {% empty %}
-                                      暂无推荐 ！
-                                      {% endfor %}
-                                      </ul>
-                                      </div>
+                        <h4><span class="glyphicon glyphicon-time"></span>&nbsp;最新推荐</h4>
+                        <ul>
+                            {% for post in new_recommend %}
+                                <li class="light-item">
+                                    <a href="{% url 'blog:detail' post.content_object.id %}" target="_Blank">{{ post.content_object.title }}</a>
+                                </li>
+                            {% empty %}
+                                暂无推荐 ！
+                            {% endfor %}
+                        </ul>
+                    </div>
                 </div>
 
             </div>
         </div>
+
+
     {% endif %}
 {% endblock %}
 

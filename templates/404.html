@@ -13,7 +13,7 @@
 <link href="http://fonts.googleapis.com/css?family=Hind" rel="stylesheet">
 <!-- /font files -->
 <!-- css files -->
-<link href="css/style.css" rel="stylesheet" type="text/css" media="all" />
+<link href="{% static 'blog/css/404.css' %}" rel="stylesheet" type="text/css" media="all" />
 <!-- /css files -->
 <body>
 
@@ -23,10 +23,10 @@
 		</div>
 		<div class="w3layouts-right">
 			<div class="w3ls-text">
-				<h3>我们很抱歉！</h3>
-				<h4 class="w3-agileits2">您请求的页面无法找到。</h4>
-				<p>请 <a href="#">返回首页</a> 或发送邮件 <a href="mailto:support@example.com">support@w3l.com</a> 联系我们</p>
-				<p class="copyright">Copyright &copy; 2017.Company name All rights reserved.</p>
+				<h3>我很抱歉！</h3>
+				<h4 class="w3-agileits2">您请求的页面无法找到 !</h4>
+				<p>请 <a href="{% url 'blog:home' %}">返回首页</a> 或发送邮件 <a href="#">jack_970124.com</a> 联系我</p>
+				<p class="copyright-404">Welcome to visit my website © Jack Jiang</p>
 
 			</div>
 
