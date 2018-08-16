@@ -1,9 +1,8 @@
 /*全局body页面样式*/
 body{
     margin: 0;
-    margin-top: 70px!important;
+    /*margin-top: 70px!important;*/
     background-color: #4cae4c;
-    margin-bottom: 2em;
     min-height:100%;
     position:absolute;
     width: 100%;
@@ -216,7 +215,7 @@ ul{
     float: left;
     margin-right: 10%;
     margin-left: 2% ;
-    font-size: 0.75em;
+    font-size: 0.8em;
 }
 
 .about p, .response p, .contact p{
@@ -236,8 +235,12 @@ ul{
     margin-left: 1em;
 }
 
+.footer a:hover{
+    color: #d44d24;
+}
+
 .copyright a:hover{
-    color: cyan;
+    color: #fff;
 }
 
 /*文章段落*/
@@ -274,6 +277,11 @@ ul{
     margin-bottom: 1em;
 }
 
+.blog-border a:hover{
+    color: #d44d24;
+}
+
+
 .side-info{
     margin-left: 1em;
     margin-right: 1em;
@@ -306,15 +314,23 @@ ul{
     /*height: 30em;*/
     margin-top: 1em;
     /*border: 1px solid #ccc;*/
-    /*border-radius: 6px;*/
     /*margin-bottom: 1em;*/
     margin-left: 1em;
     margin-bottom: 2em;
+    min-height: 20em;
 }
 
 .category h4{
     padding-bottom: 0.5em;
     border-bottom: 1px solid #ccc;
+}
+
+.category h4 a{
+    color: #333;
+}
+
+.category h4 a:hover{
+    color: red;
 }
 
 /*搜索结果*/
@@ -343,7 +359,7 @@ ul{
 }
 
 .light-blog a:hover{
-    color: red;
+    color: #d44d24;
 }
 
 /*loading*/

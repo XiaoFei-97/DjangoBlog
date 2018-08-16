@@ -85,7 +85,7 @@
                     {% endif %}
                     {# 搜索框 #}
                     <form method='get' class="navbar-form navbar-left" target="_blank" action="/search/" onsubmit="return check()">
-                        <input type="text" name="q" class="form-control" placeholder="搜点啥?" autofocus="" id="find">
+                        <input type="text" name="q" class="form-control" placeholder="搜点啥?" id="find">
                         <button type="submit" class="hidden-xs hidden-sm btn btn-default" id="btn">
                             <span class="glyphicon glyphicon-search"></span>
                         </button>
@@ -96,7 +96,7 @@
     </div>
 
     {% block lunbobox %}
-    <div id="lunbobox">
+    <div id="lunbobox" style="margin-top: 70px">
 {#        <div id="toleft">#}
 {#            &lt;#}
 {#        </div>#}
@@ -133,7 +133,7 @@
                 <h4>建议反馈</h4>
                 <p>1.欢迎注册评论</p>
                 <p>2.可在相应的博文底下评论</p>
-                <p>3.发邮件到jack_970124@163.com</p>
+                <p>3.发邮件到 XiaoFei-97@outlook.com</p>
             </div>
             <div class="contact hidden-xs hidden-sm">
                 <h4>欢迎联系</h4>
@@ -326,9 +326,9 @@
                     className可以为空，或者传入myR-on；默认显示项。
         	**/
             list:{
-            notice: {icon: "{% static 'blog/media/tip.png' %}", name:"公告栏", className:"myR-on", text: '<p style="text-indent:1em;">最近白天需要考驾照，晚上继续学习爬虫及机器学习相关内容，网站更新较慢</p><p style="text-align:right;">2018-07-22</p>'},
-                alipay: {icon: "{% static 'blog/media/alipay.png' %}", name:"支付宝", desc: "用支付宝给振飞打赏\n感谢支持！", qrimg: "{% static 'blog/media/alipay.jpg' %}"},
-                weixin: {icon: "{% static 'blog/media/weixin.png' %}", name:"微信", desc: "用微信给振飞打赏\n感谢支持！", qrimg: "{% static 'blog/media/wepay.png' %}"}
+            notice: {icon: "{% static 'blog/media/tip.png' %}", name:"公告栏", className:"myR-on", text: '<p style="text-indent:1em;">本人目前专注于Python爬虫及Java程序设计，喜欢结交有想法的朋友，希望与大家多多沟通学习</p><p style="text-align:right;">2018-07-22</p>'},
+                alipay: {icon: "{% static 'blog/media/alipay.png' %}", name:"支付宝", desc: '用支付宝给"振飞"打赏\n感谢支持！', qrimg: "{% static 'blog/media/alipay.jpg' %}"},
+                weixin: {icon: "{% static 'blog/media/weixin.png' %}", name:"微信", desc: '用微信给"振飞"打赏\n感谢支持！', qrimg: "{% static 'blog/media/wepay.png' %}"}
             }
         };
 

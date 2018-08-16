@@ -62,7 +62,7 @@
                     <div class="category">
 
                         <h4>
-                            <a href="{% url 'blog:category' category.pk %}" style="color: #333; font-weight: bold"><span class="glyphicon glyphicon-file"></span>&nbsp;&nbsp;{{ category }}&nbsp;({% get_category_count category %})</a>
+                            <a href="{% url 'blog:category' category.pk %}"><span class="glyphicon glyphicon-tags"></span>&nbsp;&nbsp;{{ category }}&nbsp;({% get_category_count category %})</a>
                         </h4>
 
                         <div>
@@ -84,5 +84,4 @@
     </div>
 
 
-{#    <div class="box"></div>#}
 {% endblock %}

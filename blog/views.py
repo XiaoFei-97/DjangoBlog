@@ -15,8 +15,9 @@ from user.forms import LoginForm  # 导入登录表单
 
 def home(request):
     """
-        作用:网站首页的视图处理
-        request:请求对象
+    作用:网站首页的视图处理
+    :param request: 请求对象
+    :return: 首页模板视图
     """
     # 所有分类
     category_list = Category.objects.all()
@@ -77,9 +78,10 @@ def home(request):
 
 def get_blog_list_common_data(request, post_all_list):
     """
-        作用:博客列表,分类列表,时间排序列表的公共分页代码
-        request:请求对象
-        post_all_list:经过处理后的博客列表
+    博客列表,分类列表,时间排序列表的公共分页代码
+    :param request: 请求对象
+    :param post_all_list: 经过处理后的博客列表
+    :return: 公共的context参数
     """
     # 创建一个分页器对象,参数分别是文章列表,每页最大文章数量
     # 这里的EACH_RAGE_BLOG_NUMBER等于10,已经当成常量写进了seetings里
@@ -169,8 +171,9 @@ def get_blog_list_common_data(request, post_all_list):
 
 def blog(request):
     """
-        作用：博客列表的视图处理
-        request: 请求对象
+    博客列表的视图处理
+    :param request: 请求对象
+    :return: 博客列表视图
     """
     post_all_list = Post.objects.all()
 
@@ -183,9 +186,10 @@ def blog(request):
 
 def detail(request, pk):
     """
-        作用：显示当前选择文章内容
-        request:请求对象
-        pk：每篇文章的pk值
+    显示当前选择文章内容
+    :param request: 请求对象
+    :param pk: 每篇文章的pk值
+    :return: 博客详情页视图
     """
     # 接收了一个pk值,这个值是在url中传递的主键,利用该主键可以找到文章的对象
     # get_object_or_404的用法是(模型名,get方法)
@@ -229,8 +233,9 @@ def detail(request, pk):
 
 def category_list(request):
     """
-        作用：博客分类的视图处理
-        request：请求对象
+    博客分类的视图处理
+    :param request: 请求对象
+    :return: 博客分类视图
     """
     # 获得所有的分类
     category_list = Category.objects.all()
@@ -241,8 +246,10 @@ def category_list(request):
 
 def category(request, pk):
     """
-        作用：显示某分类下的全部文章
-        pk：分类的主键值
+    显示某分类下的全部文章
+    :param request: 请求对象
+    :param pk: 分类的主键值
+    :return: 分类列表的视图
     """
     category = get_object_or_404(Category, pk=pk)
 
@@ -261,8 +268,9 @@ def category(request, pk):
 
 def date_list(request):
     """
-        作用：日期归档的视图处理
-        request：请求对象
+    日期归档的视图处理
+    :param request: 请求对象
+    :return: 日期归档视图
     """
     # date_list = []
     date_list = Post.objects.dates('created_time', 'month', order='DESC')
@@ -277,7 +285,11 @@ def date_list(request):
 
 def date(request, year, month):
     """
-        作用：显示某归档下的全部文章
+    显示某归档下的全部文章
+    :param request: 请求对象
+    :param year: 年
+    :param month: 月
+    :return: 归档的视图
     """
     # django比较坑的地方就是使用mysql存储数据时，因为时区的问题无法得到Asia/Shanghai的时间，即无法过滤出月份
     # 在这里采用的方法是先将月份转化为字符串的形式，然后再使用，发现可行
@@ -294,5 +306,10 @@ def date(request, year, month):
 
 
 def page_not_found(request):
+    """
+    404错误视图
+    :param request:
+    :return: 404视图
+    """
     return render(request, '404.html')
 

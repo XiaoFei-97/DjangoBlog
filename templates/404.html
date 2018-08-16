@@ -1,38 +1,51 @@
 {% load staticfiles %}
 
-<!DOCTYPE html>
-<html lang="en">
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-<title>Home</title>
-<meta name="viewport" content="width=device-width, initial-scale=1" />
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<meta name="keywords" content="" />
-<script type="application/x-javascript"> addEventListener("load", function() { setTimeout(hideURLbar, 0); }, false); function hideURLbar(){ window.scrollTo(0,1); } </script>
-<!-- font files -->
-<link href="http://fonts.googleapis.com/css?family=Wallpoet" rel="stylesheet">
-<link href="http://fonts.googleapis.com/css?family=Hind" rel="stylesheet">
-<!-- /font files -->
-<!-- css files -->
-<link href="{% static 'blog/css/404.css' %}" rel="stylesheet" type="text/css" media="all" />
-<!-- /css files -->
+
+<!-- Viewport metatags -->
+<meta name="HandheldFriendly" content="true" />
+<meta name="MobileOptimized" content="320" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+
+<link rel="stylesheet" type="text/css" href="{% static 'blog/css/404.css' %}"  media="screen" />
+
+<title>404错误页面</title>
+
+</head>
+
 <body>
 
-	<div class="w3layouts-bg">
-		<div class="agileits-content">
-			<h2><span>4</span><span>0</span><span>4</span></h2>
-		</div>
-		<div class="w3layouts-right">
-			<div class="w3ls-text">
-				<h3>我很抱歉！</h3>
-				<h4 class="w3-agileits2">您请求的页面无法找到 !</h4>
-				<p>请 <a href="{% url 'blog:home' %}">返回首页</a> 或发送邮件 <a href="#">jack_970124.com</a> 联系我</p>
-				<p class="copyright-404">Welcome to visit my website © Jack Jiang</p>
+	<!-- Main Wrapper. Set this to 'fixed' for fixed layout and 'fluid' for fluid layout' -->
+	<div id="da-wrapper" class="fluid">
 
-			</div>
+        <!-- Content -->
+        <div id="da-content">
 
-		</div>
-		<div class="clearfix"></div>
-	</div>
+            <!-- Container -->
+            <div class="da-container clearfix">
+
+            	<div id="da-error-wrapper">
+
+                   	<div id="da-error-pin"></div>
+                    <div id="da-error-code">
+                    	error <span>404</span>                    </div>
+
+                	<h1 class="da-error-heading">哎哟喂！页面让狗狗叼走了！</h1>
+                    <p>大家可以到狗狗没有叼过的地方看看！ <a href="{% url 'blog:home' %}">点击进入首页</a></p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <div id="da-footer">
+        	<div class="da-container clearfix">
+           	<p>Welcome to visit my website © Jack Jiang<a href="https://github.com/XiaoFei-97" target="_blank">Github</a></div>
+        </div>
+    </div>
 
 </body>
 </html>
+

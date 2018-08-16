@@ -10,6 +10,15 @@ class CommentForm(forms.Form):
     """提交评论表单"""
     content_type = forms.CharField(widget=forms.HiddenInput)
     object_id = forms.IntegerField(widget=forms.HiddenInput)
+    # text = forms.CharField(widget=UEditorWidget(
+    #     attrs={"width": 800, "height": 200,
+    #            "toolbars": [['fullscreen', 'source', 'undo', 'redo', 'bold', 'italic',
+    #                          'underline', 'fontborder', 'strikethrough', 'superscript',
+    #                          'subscript', 'removeformat', 'formatmatch', 'autotypeset',
+    #                          'blockquote', 'pasteplain', '|', 'forecolor', 'backcolor',
+    #                          'insertorderedlist', 'insertunorderedlist','selectall',
+    #                         'cleardoc']]}),
+    #     error_messages={'required': '评论内容不能为空'})
     text = forms.CharField(widget=CKEditorWidget(config_name='comment_ckeditor'),
                            error_messages={'required': '评论内容不能为空'})
 
