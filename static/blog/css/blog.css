@@ -25,13 +25,18 @@ ul{
 
 .blog-title{
     font-size: 1.2em;
-    font-weight: bold;
+    font-weight: 700;
     margin-bottom: 0.5em;
 }
 
+.blog-title a{
+    color: rgba(0,0,0,.87);
+}
+
 .blog-describe{
-    color: #777;
+    color: #555;
     margin-bottom: 0.5em;
+    text-indent: 1em;
 }
 
 .blog-tags{
@@ -40,6 +45,9 @@ ul{
     padding-top: 0.5em;
     border-top: 1px solid #eee;
     display: inline-block;
+}
+.blog-tags a{
+    color: #666;
 }
 
 .list-type{

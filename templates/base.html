@@ -122,7 +122,7 @@
     {% block content %}{% endblock %}
 
     <div class="footer">
-        <div class="website-info">
+        <div class="website-info container">
             <div class="about">
                 <h4>关于本站</h4>
                 <p>1.基于Django+Bootstrap开发</p>
@@ -133,18 +133,32 @@
                 <h4>建议反馈</h4>
                 <p>1.欢迎注册评论</p>
                 <p>2.可在相应的博文底下评论</p>
-                <p>3.发邮件到 XiaoFei-97@outlook.com</p>
+                <p>3.关注博主动态请查看公告</p>
             </div>
             <div class="contact hidden-xs hidden-sm">
-                <h4>欢迎联系</h4>
-                <p>&nbsp;<img src="{% static 'blog/media/qq.ico' %}" alt="qq">：1378482556</p>
-                <p><img src="{% static 'blog/media/github.ico' %}" alt="github">：<a href="https://github.com/XiaoFei-97">https://github.com/XiaoFei-97</a></p>
+                <h4 style="margin-bottom: 0;">微信公众号</h4>
+                <img src="{% static 'blog/media/wechat.jpg' %}" style="width: 90px;height:85px;" alt="微信二维码">
+            </div>
+            <div class="tools hidden-xs hidden-sm hidden-md">
+                <h4>在线工具</h4>
+                <p><a href="https://www.djangoproject.com/" target="_blank">Django API文档</a></p>
+                <p><a href="https://v3.bootcss.com/" target="_blank">BootStrap中文网</a></p>
+                <p><a href="http://www.w3school.com.cn/" target="_blank">W3Shool</a></p>
             </div>
         </div>
 
         <div class="copyright">
-            <span>Welcome to visit my website © Jack Jiang</span>
-            <span class="hidden-xs"><a href="http://www.miibeian.gov.cn/" target="_blank">赣ICP备18008471号</a></span>
+            <div>© 蒋振飞的博客(JzfBlog.COM)&nbsp;&nbsp;
+                <a class="hidden-xs hidden-sm" href="https://www.oschina.net/">开源中国社区</a>&nbsp;&nbsp;
+                <a class="hidden-xs hidden-sm" href="https://www.aliyun.com/">阿里云服务器</a>&nbsp;&nbsp;
+                <a class="hidden-xs hidden-sm hidden-md" href="https://tongji.baidu.com" target="_blank">站长工具-百度统计</a>
+            </div>
+
+            <div>
+                <a href="http://www.miibeian.gov.cn/">赣ICP备18008471号-2</a>&nbsp;&nbsp;
+                <span class="hidden-xs">Designed by 蒋振飞</span>
+            </div>
+
         </div>
     </div>
 
@@ -291,7 +305,7 @@
             //侧边栏文本
             siderText: "公告 & 打赏",
             //侧边栏文本高度调整
-            siderTextTop: "-20px",
+            siderTextTop: "-30px",
             //侧边栏背景颜色
             siderBgcolor: "#323d45",
             //整个侧边栏的高度设置可以px，em，或百分比
@@ -326,7 +340,7 @@
                     className可以为空，或者传入myR-on；默认显示项。
         	**/
             list:{
-            notice: {icon: "{% static 'blog/media/tip.png' %}", name:"公告栏", className:"myR-on", text: '<p style="text-indent:1em;">本人目前专注于Python爬虫及Java程序设计，喜欢结交有想法的朋友，希望与大家多多沟通学习</p><p style="text-align:right;">2018-07-22</p>'},
+            notice: {icon: "{% static 'blog/media/tip.png' %}", name:"公告栏", className:"myR-on", text: '<p style="text-indent:1em;">本人目前专注于Python全栈，同时正在逐步学习网络爬虫及Java开发，喜欢结交志同道合的朋友，希望与大家共同进步</p><p style="text-align:right;">2018-07-22</p>'},
                 alipay: {icon: "{% static 'blog/media/alipay.png' %}", name:"支付宝", desc: '用支付宝给"振飞"打赏\n感谢支持！', qrimg: "{% static 'blog/media/alipay.jpg' %}"},
                 weixin: {icon: "{% static 'blog/media/weixin.png' %}", name:"微信", desc: '用微信给"振飞"打赏\n感谢支持！', qrimg: "{% static 'blog/media/wepay.png' %}"}
             }
