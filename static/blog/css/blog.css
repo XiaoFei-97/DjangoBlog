@@ -25,18 +25,18 @@ ul{
 
 .blog-title{
     font-size: 1.2em;
-    font-weight: 700;
+    font-weight: bold;
     margin-bottom: 0.5em;
 }
 
-.blog-title a{
-    color: rgba(0,0,0,.87);
+
+.blog-title a:hover{
+    color: #f2618c;
 }
 
 .blog-describe{
-    color: #555;
+    color: #666;
     margin-bottom: 0.5em;
-    text-indent: 1em;
 }
 
 .blog-tags{
@@ -48,6 +48,10 @@ ul{
 }
 .blog-tags a{
     color: #666;
+}
+
+.blog-tags a:hover{
+    color: #f2618c;
 }
 
 .list-type{

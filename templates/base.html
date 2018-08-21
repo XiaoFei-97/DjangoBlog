@@ -86,7 +86,7 @@
                     {# 搜索框 #}
                     <form method='get' class="navbar-form navbar-left" target="_blank" action="/search/" onsubmit="return check()">
                         <input type="text" name="q" class="form-control" placeholder="搜点啥?" id="find">
-                        <button type="submit" class="hidden-xs hidden-sm btn btn-default" id="btn">
+                        <button type="submit" class="hidden-sm btn btn-default" id="btn">
                             <span class="glyphicon glyphicon-search" style="line-height:1;"></span>
                         </button>
                     </form>
@@ -148,7 +148,7 @@
         </div>
 
         <div class="copyright">
-            <div>© 蒋振飞的博客(JzfBlog.COM)&nbsp;&nbsp;
+            <div>&nbsp;&nbsp;&nbsp;© 蒋振飞的博客(JzfBlog.COM)&nbsp;&nbsp;
                 <a class="hidden-xs hidden-sm" href="https://www.oschina.net/">开源中国社区</a>&nbsp;&nbsp;
                 <a class="hidden-xs hidden-sm" href="https://www.aliyun.com/">阿里云服务器</a>&nbsp;&nbsp;
                 <a class="hidden-xs hidden-sm hidden-md" href="https://tongji.baidu.com" target="_blank">站长工具-百度统计</a>
@@ -340,7 +340,7 @@
                     className可以为空，或者传入myR-on；默认显示项。
         	**/
             list:{
-            notice: {icon: "{% static 'blog/media/tip.png' %}", name:"公告栏", className:"myR-on", text: '<p style="text-indent:1em;">本人目前专注于Python全栈，同时正在逐步学习网络爬虫及Java开发，喜欢结交志同道合的朋友，希望与大家共同进步</p><p style="text-align:right;">2018-07-22</p>'},
+            notice: {icon: "{% static 'blog/media/tip.png' %}", name:"公告栏", className:"myR-on", text: '<p style="text-indent:1em;">最近网站出了一个bug，个别浏览器对博文的代码空格样式不兼容，导致代码缩进过宽，正在努力尝试修复中...</p><p style="text-align:right;">2018-07-22</p>'},
                 alipay: {icon: "{% static 'blog/media/alipay.png' %}", name:"支付宝", desc: '用支付宝给"振飞"打赏\n感谢支持！', qrimg: "{% static 'blog/media/alipay.jpg' %}"},
                 weixin: {icon: "{% static 'blog/media/weixin.png' %}", name:"微信", desc: '用微信给"振飞"打赏\n感谢支持！', qrimg: "{% static 'blog/media/wepay.png' %}"}
             }

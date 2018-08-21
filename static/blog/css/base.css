@@ -293,8 +293,9 @@ ul{
     margin-right: 1em;
 }
 
-.side-info a{
-    color:#333;
+
+.side-info a:hover{
+    color: #f2618c;
 }
 
 .side-info h4{
@@ -340,7 +341,7 @@ ul{
 }
 
 .category h4 a:hover{
-    color: #337ab7;
+    color: #f2618c;
 }
 
 /*搜索结果*/
@@ -358,14 +359,14 @@ ul{
     font-size: 0.8em;
 }
 
-.light-blog a, .light-item a{
+.light-blog a{
     /*display: block;*/
     /*margin: 0.2em;*/
     color: #555;
 }
 
-.light-blog a:hover{
-    color: #337ab7;
+.light-blog a:hover, .light-item a:hover{
+    color: #f2618c;
 }
 
 /*loading*/
@@ -508,6 +509,14 @@ ul{
     .copyright div{
         text-align: center;
     }
+    .navbar-form input{
+        width: 70%;
+        float: left;
+    }
+    .navbar-form button{
+        margin-left: 3px;
+    }
+
 }
 
 
