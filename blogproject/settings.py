@@ -37,6 +37,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'xadmin',
+    'crispy_forms',
     'ckeditor',  # 富文本编辑器
     'ckeditor_uploader',
     'DjangoUeditor',
@@ -136,7 +138,7 @@ STATICFILES_DIRS = [
     os.path.join(BASE_DIR, 'static/')
 ]
 # nginx
-STATIC_ROOT='/home/jzf/sites/jzfblog.com/static/'
+STATIC_ROOT = '/home/jzf/sites/jzfblog.com/static/'
 
 CKEDITOR_JQUERY_URL = 'https://apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js'
 
@@ -231,6 +233,7 @@ HAYSTACK_CONNECTIONS = {
         'PATH': os.path.join(BASE_DIR, 'whoosh_index'),
     }
 }
+
 
 #自动生成索引
 HAYSTACK_SIGNAL_PROCESSOR = 'haystack.signals.RealtimeSignalProcessor'

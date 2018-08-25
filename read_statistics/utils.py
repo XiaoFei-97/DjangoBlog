@@ -5,13 +5,15 @@ from django.utils import timezone
 from django.db.models import Sum
 from .models import ReadNum, ReadDetail
 from blog.models import Post
+from django.db.models import Q
 
 
 def read_statistics_once_read(request, obj):
     """
-        作用：阅读+1的处理逻辑功能
-        request：请求对象
-        obj：post实例对象
+    作用：阅读+1的处理逻辑功能
+    :param request: 请求对象
+    :param obj: post实例对象
+    :return: cookies的key
     """
     ct = ContentType.objects.get_for_model(obj)
     key = "%s_%s_read" % (ct.model, obj.pk)
@@ -36,7 +38,7 @@ def read_statistics_once_read(request, obj):
         readnum.save()
         
 
-        # 第三种办法：创建应用型的
+        # 第三种办法：创建应用型
         
         if ReadNum.objects.filter(content_type=ct, object_id=obj.pk).count():
             # 存在记录
@@ -70,8 +72,9 @@ def read_statistics_once_read(request, obj):
 
 def get_seven_days_read_data(content_type):
     """
-        作用：获取七天内的阅读记录
-        content_type：数据表的模型类
+    作用：获取七天内的阅读记录
+    :param content_type: 数据表的模型类
+    :return: 七天内的日期和阅读量
     """
     today = timezone.now().date()
     dates = []
@@ -89,8 +92,9 @@ def get_seven_days_read_data(content_type):
 
 def get_year_read_data(content_type):
     """
-        作用：获取该年每个月的阅读记录
-        content_type: 数据表的模型类
+    作用：获取该年每个月的阅读记录
+    :param content_type: 数据表的模型类
+    :return: 全年每月的阅读量
     """
     # 获取每个月的阅读记录
     months = []
@@ -118,8 +122,9 @@ def get_today_hot_data(content_type):
 
 def get_new_recommend_post(content_type):
     """
-        作用：获取最新推荐博客列表
-        content_type:数据表的模型类
+    作用：获取最新推荐博客列表
+    :param content_type: 数据表的模型类
+    :return: 最新推荐的前15条博客
     """
     today = timezone.now().date()
     yesterday = today - datetime.timedelta(days=1)
@@ -128,9 +133,17 @@ def get_new_recommend_post(content_type):
 
 
 def get_random_recomment():
+    """
+    作用：获取随机推荐博客列表
+    :return: 随机推荐的前15条博客
+    """
     # 随机推荐
     random_posts = set()
-    post_list = Post.objects.all()
+
+    post_list = Post.objects.filter(Q(display=0) | Q(display__isnull=True))
+    if post_list.count() < 15:
+        return post_list
+
     while random_posts.__len__() < 15:
         random_posts.add(random.choice(post_list))
 
@@ -139,12 +152,13 @@ def get_random_recomment():
 
 def get_7_days_read_posts():
     """
-        作用：获取阅读量周榜博客榜单
+    作用：获取阅读量周榜博客榜单
+    :return: 周榜博客前15条博客
     """
     today = timezone.now().date()
     date = today - datetime.timedelta(days=7)
     posts = Post.objects \
-        .filter(read_detail__date__lt=today, read_detail__date__gte=date) \
+        .filter(Q(display=0) | Q(display__isnull=True), read_detail__date__lt=today, read_detail__date__gte=date) \
         .values('id', 'title') \
         .annotate(read_num_sum=Sum('read_detail__read_num')) \
         .order_by('-read_num_sum')
@@ -153,12 +167,13 @@ def get_7_days_read_posts():
 
 def get_30_days_read_posts():
     """
-        作用：获取阅读量月榜博客榜单
+    作用：获取阅读量月榜博客榜单
+    :return: 月榜博客前15条博客
     """
     today = timezone.now().date()
     date = today - datetime.timedelta(days=30)
     posts = Post.objects \
-        .filter(read_detail__date__lt=today, read_detail__date__gte=date) \
+        .filter(Q(display=0) | Q(display__isnull=True), read_detail__date__lt=today, read_detail__date__gte=date) \
         .values('id', 'title') \
         .annotate(read_num_sum=Sum('read_detail__read_num')) \
         .order_by('-read_num_sum')
@@ -167,11 +182,12 @@ def get_30_days_read_posts():
 
 def get_all_read_posts():
     """
-        作用：获取阅读量总榜博客榜单
+    作用：获取阅读量总榜博客榜单
+    :return: 总榜博客前15条博客
     """
     today = timezone.now().date()
     posts = Post.objects \
-        .filter(read_detail__date__lt=today) \
+        .filter(Q(display=0) | Q(display__isnull=True), read_detail__date__lt=today) \
         .values('id', 'title') \
         .annotate(read_num_sum=Sum('read_detail__read_num')) \
         .order_by('-read_num_sum')

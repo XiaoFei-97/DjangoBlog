@@ -153,11 +153,11 @@
             <div class="hidden-xs col-sm-4 col-md-3 blog-border">
 
                 <div class="side-list">
-                    <h4><span class="glyphicon glyphicon-fire"></span>&nbsp;热门阅读总榜</h4>
+                    <h4><span class="glyphicon glyphicon-fire"></span>&nbsp;热门阅读</h4>
                     <ul>
                         {% for hot_data in all_hot_posts %}
                             <div class="light-item">
-                                <a href="{% url 'blog:detail' hot_data.id %}" target="_Blank">{{ hot_data.title|striptags|truncatechars:30|safe }}</a>
+                                <a href="{% url 'blog:detail' hot_data.id %}" target="_Blank">{{ hot_data.title }}</a>
 {#                                ({{ hot_data.read_num_sum }}) 表示该阅读记录次数#}
                             </div>
                         {% empty %}
@@ -172,7 +172,7 @@
                        {% get_like_post post.category post.id as like_list%}
                         {% for post in like_list %}
                             <li class="light-item">
-                                <a href="{% url 'blog:detail' post.id %}" target="_Blank">{{ post }}</a>
+                                <a href="{% url 'blog:detail' post.id %}" target="_Blank">{{ post.title }}</a>
                             </li>
                         {% empty %}
                             正在猜测 ...
@@ -185,7 +185,7 @@
                     <ul>
                         {% for post in random_recommend %}
                             <li class="light-item">
-                                <a href="{% url 'blog:detail' post.id %}" target="_Blank">{{ post }}</a>
+                                <a href="{% url 'blog:detail' post.id %}" target="_Blank">{{ post.title }}</a>
                             </li>
                         {% empty %}
                             暂无推荐 ！

@@ -147,7 +147,7 @@
 
             <div class="hidden-xs col-sm-4 col-md-3 blog-border">
                 <div class="side-list">
-                    <h4><span class="glyphicon glyphicon-fire"></span>&nbsp;热门阅读总榜</h4>
+                    <h4><span class="glyphicon glyphicon-fire"></span>&nbsp;热门阅读</h4>
                     <ul>
                         {% for hot_data in all_hot_posts %}
                             <div class="light-item">
@@ -164,7 +164,7 @@
                     <ul>
                         {% for post in random_recommend %}
                             <li class="light-item">
-                                <a href="{% url 'blog:detail' post.id %}" target="_Blank">{{ post }}</a>
+                                <a href="{% url 'blog:detail' post.id %}" target="_Blank">{{ post.title }}</a>
                             </li>
                         {% empty %}
                             暂无推荐 !

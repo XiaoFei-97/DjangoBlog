@@ -18,10 +18,12 @@ from django.contrib import admin
 from django.conf import settings
 from django.conf.urls.static import static
 from blog.search_indexes import MySeachView
+import xadmin
 
 
 urlpatterns = [
-    url(r'^code/', admin.site.urls),
+    # url(r'^code/', admin.site.urls),
+    url(r'^xadmin/', xadmin.site.urls),
     # 通过在根目录下的url加上namespace属性可以实现反向解析的功能
     # 注意:在根目录的url为namespace而项目的url是name
     url(r'^', include('blog.urls', namespace='blog')),    # 该地址就在ip根目录下
@@ -29,7 +31,7 @@ urlpatterns = [
     url(r'^', include('likes.urls', namespace='likes')),
     url(r'^', include('user.urls', namespace='user')),
     url(r'^search/', MySeachView(), name='haystack_search'),
-    url(r'^ueditor/',include('DjangoUeditor.urls' )),
+    url(r'^ueditor/', include('DjangoUeditor.urls')),
 ]
 
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

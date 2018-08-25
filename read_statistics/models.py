@@ -1,19 +1,20 @@
 from django.db import models
-from django.db.models.fields import exceptions
 from django.contrib.contenttypes.fields import GenericForeignKey
 from django.contrib.contenttypes.models import ContentType
 from django.utils import timezone
+from django.db.models.fields import exceptions
+# from blog.models import Post
 
 
 class ReadNum(models.Model):
     """
-        单篇博客计数的模型类
-        继承model.Model模型类
+    作用：单篇博客计数的模型类
+    models.Model继承model.Model模型类
     """
-    read_num = models.IntegerField(u'阅读计数', default=0)
+    read_num = models.IntegerField(default=0, verbose_name=u'阅读次数')
 
-    content_type = models.ForeignKey(ContentType, on_delete=models.CASCADE)
-    object_id = models.PositiveIntegerField()
+    content_type = models.ForeignKey(ContentType, verbose_name=u'类型', on_delete=models.CASCADE)
+    object_id = models.PositiveIntegerField(verbose_name=u'阅读ID')
 
     # 使用contenttypes模型类来找出关联blog
     content_object = GenericForeignKey('content_type', 'object_id')
@@ -26,8 +27,8 @@ class ReadNum(models.Model):
 
 class ReadNumExpandMethod(object):
     """
-        计数扩展类,此方法放在admin的list_display中
-        继承object模型类
+    作用：计数扩展类,此方法放在admin的list_display中
+    object：继承object模型类
     """
     def get_read_num(self):
         ct = ContentType.objects.get_for_model(self)
@@ -43,14 +44,14 @@ class ReadNumExpandMethod(object):
 
 class ReadDetail(models.Model):
     """
-        根据日期计数的模型类
-        继承model.Model模型类
+    作用：根据日期计数的模型类
+    models.Model继承model.Model模型类
     """
-    read_num = models.IntegerField(default=0)
-    date = models.DateField(default=timezone.now)
+    read_num = models.IntegerField(default=0, verbose_name=u'阅读次数')
+    date = models.DateField(default=timezone.now, verbose_name=u'阅读日期',)
 
-    content_type = models.ForeignKey(ContentType, on_delete=models.CASCADE)
-    object_id = models.PositiveIntegerField()
+    content_type = models.ForeignKey(ContentType, verbose_name=u'类型', on_delete=models.CASCADE)
+    object_id = models.PositiveIntegerField(verbose_name=u'阅读ID')
     content_object = GenericForeignKey('content_type', 'object_id')
 
     class Meta:

@@ -46,9 +46,6 @@ ul{
     border-top: 1px solid #eee;
     display: inline-block;
 }
-.blog-tags a{
-    color: #666;
-}
 
 .blog-tags a:hover{
     color: #f2618c;

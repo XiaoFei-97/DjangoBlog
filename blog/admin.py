@@ -5,8 +5,8 @@ from .models import Category, Tag, Post  # ReadNum
 @admin.register(Category)
 class CategoryAdmin(admin.ModelAdmin):
     """
-        作用:自定义分类管理工具
-        admin.ModelAdmin:继承admin.ModelAdmin类
+    作用:自定义分类管理工具
+    admin.ModelAdmin:继承admin.ModelAdmin类
     """
     # 在后台显示id值和分类名
     list_display = ('id', 'name')
@@ -15,8 +15,8 @@ class CategoryAdmin(admin.ModelAdmin):
 @admin.register(Tag)
 class TagAdmin(admin.ModelAdmin):
     """
-        作用:自定义标签管理工具
-        admin.ModelAdmin:继承admin.ModelAdmin类
+    作用:自定义标签管理工具
+    admin.ModelAdmin:继承admin.ModelAdmin类
     """
     # 在后台显示od值,标签名
     list_display = ('id', 'name')
@@ -25,8 +25,8 @@ class TagAdmin(admin.ModelAdmin):
 @admin.register(Post)
 class PostAdmin(admin.ModelAdmin):
     """
-        作用:自定义文章管理工具
-        admin.ModelAdmin:继承admin.ModelAdmin类
+    作用:自定义文章管理工具
+    admin.ModelAdmin:继承admin.ModelAdmin类
     """
     # 在后台显示id值，博文名，创建时间，修改时间，目录，作者
     list_display = ('id', 'title', 'created_time', 'modified_time', 'category', 'author', 'get_read_num')

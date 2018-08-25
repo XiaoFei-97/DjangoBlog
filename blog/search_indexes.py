@@ -19,7 +19,15 @@ class PostIndex(indexes.SearchIndex, indexes.Indexable):
 
 
 class MySeachView(SearchView):
+    """
+    作用：自定义的search视图
+    SearchView：继承SearchView类
+    """
     def extra_context(self):  # 重载extra_context来添加额外的context内容
+        """
+        添加自定义的context参数，传递到search.html视图
+        :return: 自定义的context参数
+        """
         context = super(MySeachView, self).extra_context()
 
         # 这里的EACH_RAGE_BLOG_NUMBER等于10,已经当成常量写进了seetings里
@@ -68,9 +76,9 @@ class MySeachView(SearchView):
         # 阅读量总榜博客榜单
         all_hot_posts = get_all_read_posts()
         context = {
-            'page_range': page_range,
-                   'random_recommend': random_recommend,
-                   'new_recommend': new_recommend,
-                   'all_hot_posts': all_hot_posts,
-                   }
+                'page_range': page_range,
+                'random_recommend': random_recommend,
+                'new_recommend': new_recommend,
+                'all_hot_posts': all_hot_posts,
+            }
         return context

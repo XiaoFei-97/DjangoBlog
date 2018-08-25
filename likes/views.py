@@ -5,16 +5,19 @@ from django.db.models import ObjectDoesNotExist
 from .models import LikeCount, LikeRecord
 
 
+
 def SuccessResponse(liked_num):
     # 成功的响应
     data = {'status': 'SUCCESS', 'liked_num': liked_num}
     return JsonResponse(data)
 
 
+
 def ErrorResponse(code, message):
     # 错误的响应
     data = {'status': 'ERROR', 'code': code, 'message': message}
     return JsonResponse(data)
+
 
 def like_change(request):
     """点赞逻辑功能处理"""

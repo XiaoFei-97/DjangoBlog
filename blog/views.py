@@ -8,6 +8,7 @@ from read_statistics.utils import read_statistics_once_read, get_seven_days_read
 # contenttypes 是Django内置的一个应用，可以追踪项目中所有app和model的对应关系，并记录在ContentType表中
 from django.contrib.contenttypes.models import ContentType
 from user.forms import LoginForm  # 导入登录表单
+from django.db.models import Q
 # from django.core.cache import cache  # 缓存数据
 # from comment.forms import CommentForm  # 导入评论表单
 # from comment.models import Comment   # 导入Comment评论模块
@@ -23,10 +24,10 @@ def home(request):
     category_list = Category.objects.all()
 
     # 所有博客列表
-    post_list = Post.objects.all()
+    post_list = Post.objects.filter(Q(display=0) | Q(display__isnull=True))
 
     # 最新发表的15篇博客
-    new_publish = Post.objects.all()[:15]
+    new_publish = Post.objects.filter(Q(display=0) | Q(display__isnull=True))[:15]
 
     # 获取Post模型类或模型的实例，并返回ContentType表示该模型的实例
     post_content_type = ContentType.objects.get_for_model(Post)
@@ -65,8 +66,8 @@ def home(request):
     # context用来渲染模板
     context = {
         'category_list': category_list, 'post_count': post_list.count,
-        'new_publish':new_publish, 'new_recommend': new_recommend,
-        'random_recommend':random_recommend, 'seven_dates': seven_dates,
+        'new_publish': new_publish, 'new_recommend': new_recommend,
+        'random_recommend': random_recommend, 'seven_dates': seven_dates,
         'seven_read_nums': seven_read_nums, 'thirty_dates': thirty_dates,
         'thirty_read_nums': thirty_read_nums, 'year': str(year),
         'last_7_days_hot_data': last_7_days_hot_data, 'last_30_days_hot_data': last_30_days_hot_data,
@@ -133,7 +134,7 @@ def get_blog_list_common_data(request, post_all_list):
     # 给每个category对象绑定post_count字段
     post_category_list = []
     for category in category_list:
-        category.post_count = Post.objects.filter(category=category).count()
+        category.post_count = Post.objects.filter(Q(display=0) | Q(display__isnull=True), category=category).count()
         post_category_list.append(category)
 
     # 获取博客的创建时间,且按创建时间月份排序
@@ -143,7 +144,7 @@ def get_blog_list_common_data(request, post_all_list):
     # 利用字典
     post_date_dict = {}
     for post_date in post_dates:
-        post_date_count = Post.objects.filter(created_time__year=post_date.year, created_time__month=post_date.month).count()
+        post_date_count = Post.objects.filter(Q(display=0) | Q(display__isnull=True), created_time__year=post_date.year, created_time__month=post_date.month).count()
         post_date_dict[post_date] = post_date_count
 
     # 随机推荐的15篇博客
@@ -175,7 +176,7 @@ def blog(request):
     :param request: 请求对象
     :return: 博客列表视图
     """
-    post_all_list = Post.objects.all()
+    post_all_list = Post.objects.all().filter(Q(display=0) | Q(display__isnull=True))
 
     # 使用公共的get_blog_list_common_data的方法
     context = get_blog_list_common_data(request, post_all_list)
@@ -194,7 +195,7 @@ def detail(request, pk):
     # 接收了一个pk值,这个值是在url中传递的主键,利用该主键可以找到文章的对象
     # get_object_or_404的用法是(模型名,get方法)
     post = get_object_or_404(Post, pk=pk)
-    post_all_list = Post.objects.all()
+    post_all_list = Post.objects.filter(Q(display=0) | Q(display__isnull=True))
 
     # 使用公共的get_blog_list_common_data的方法
     context = get_blog_list_common_data(request, post_all_list)
@@ -208,11 +209,11 @@ def detail(request, pk):
     # 在django中不能使用>=或<=,所以django自定义了__gt和__lt
     # 目的:得出创建时间比当前博客创建时间较晚的所有博客列表的最后一篇博客,也就是当前博客的上一篇
     # 因为博客是按照创建时间的先后来排序的:即先创建的靠后,那么上一篇博客创建时间晚于当前博客
-    previous_post = Post.objects.filter(created_time__gt=post.created_time).last()
+    previous_post = Post.objects.filter(created_time__gt=post.created_time, display=0).last()
 
     # 目的:得出创建时间比当前博客创建时间较早的所有博客列表的第一篇博客,也就是当前博客的下一篇
     # 因为博客是按照创建时间的先后来排序的:即先创建的靠后,那么上一篇博客创建时间早于当前博客
-    next_post = Post.objects.filter(created_time__lt=post.created_time).first()
+    next_post = Post.objects.filter(created_time__lt=post.created_time, display=0).first()
 
     context.update({'article': post.body, 'title': post.title,
                     'author': post.author, 'created_time': post.created_time,
@@ -254,7 +255,7 @@ def category(request, pk):
     category = get_object_or_404(Category, pk=pk)
 
     # 因为从url中获得了一个category的pk,就可以在post中进行过滤
-    post_list = Post.objects.all().filter(category=category)
+    post_list = Post.objects.filter(Q(display=0) | Q(display__isnull=True), category=category)
 
     # 使用公共部分的 get_blog_list_common_data方法
     context = get_blog_list_common_data(request, post_list)
@@ -274,12 +275,13 @@ def date_list(request):
     """
     # date_list = []
     date_list = Post.objects.dates('created_time', 'month', order='DESC')
-    post_count = Post.objects.all().count()
+    post_count = Post.objects.filter(Q(display=0) | Q(display__isnull=True)).count()
     # for post_date in date_list:
     #     date_list.append(str(post_date.year) +'年' + str(post_date.month) + '月')
 
     context = {'date_list': date_list,
-               'post_count': post_count,}
+               'post_count': post_count,
+               }
     return render(request, 'blog/date_list.html', context)
 
 
@@ -295,7 +297,7 @@ def date(request, year, month):
     # 在这里采用的方法是先将月份转化为字符串的形式，然后再使用，发现可行
     month = str(month)
 
-    post_list = Post.objects.all().filter(created_time__year=year, created_time__month=month)
+    post_list = Post.objects.all().filter(Q(display=0) | Q(display__isnull=True), created_time__year=year, created_time__month=month)
     # 将年月拼接一下
     post_time = year+'年'+month+'月'
 

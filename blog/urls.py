@@ -13,4 +13,4 @@ urlpatterns = [
     url(r'^date_list/', views.date_list, name='date_list'),
 ]
 
-handler404=views.page_not_found
+handler404 = views.page_not_found

@@ -1,0 +1,19 @@
+# _*_ coding:utf-8 _*_
+
+from django.contrib import admin
+from .models import LikeCount, LikeRecord
+import xadmin
+
+
+class LikeCountAdmin(object):
+    list_display = ['object_id', 'content_type', 'get_like_post', 'liked_num']
+
+
+xadmin.site.register(LikeCount, LikeCountAdmin)
+
+
+class LikeRecordAdmin(object):
+    list_display = ['object_id', 'content_type', 'get_like_post', 'user', 'liked_time']
+
+
+xadmin.site.register(LikeRecord, LikeRecordAdmin)
