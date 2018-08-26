@@ -57,7 +57,7 @@ class Post(models.Model, ReadNumExpandMethod):
 
     # 文章正文，我们使用了 TextField。
     # 存储比较短的字符串可以使用 CharField，但对于文章的正文来说可能会是一大段文本，因此使用 TextField 来存储大段文本。
-    body = UEditorField(verbose_name=u'内容', width=800, height=500, toolbars="full", imagePath="images/", filePath="files/", upload_settings={"imageMaxSize": 1204000},)
+    body = UEditorField(verbose_name=u'内容', width=580, height=340, toolbars="full", imagePath="images/", filePath="files/", upload_settings={"imageMaxSize": 1204000},)
 
     # 这两个列分别表示文章的创建时间和最后一次修改时间，存储时间的字段用 DateTimeField 类型。
     # auto_now_add=True时间可以被确定为现在的时间,不需要在后台对该字段名进行操作
