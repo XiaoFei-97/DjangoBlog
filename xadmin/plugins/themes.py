@@ -1,7 +1,6 @@
 #coding:utf-8
 from __future__ import print_function
 import httplib2
-import requests
 from django.template import loader
 from django.core.cache import cache
 from django.utils import six
@@ -15,7 +14,7 @@ if six.PY2:
     import urllib
 else:
     import urllib.parse
-
+import requests
 THEME_CACHE_KEY = 'xadmin_themes'
 
 
@@ -27,6 +26,9 @@ class ThemePlugin(BaseAdminPlugin):
     use_bootswatch = False
     default_theme = static('xadmin/css/themes/bootstrap-xadmin.css')
     bootstrap2_theme = static('xadmin/css/themes/bootstrap-theme.css')
+    Cerulean_theme = static('xadmin/css/themes/Cerulean-theme.css')
+    Lumen_theme = static('xadmin/css/themes/Lumen-theme.css')
+    test_theme = static('xadmin/css/themes/test-theme.css')
 
     def init_request(self, *args, **kwargs):
         return self.enable_themes
@@ -45,11 +47,23 @@ class ThemePlugin(BaseAdminPlugin):
             return func(self.request.COOKIES['_theme'])
         return self.default_theme
 
+    def get_context(self, context):
+        context['site_theme'] = self._get_theme()
+        return context
+
+    # Media
+    def get_media(self, media):
+        return media + self.vendor('jquery-ui-effect.js', 'xadmin.plugin.themes.js')
+
+    # Block Views
     def block_top_navmenu(self, context, nodes):
 
         themes = [
-            {'name': _(u"Default"), 'description': _(u"Default bootstrap theme"), 'css': self.default_theme},
-            {'name': _(u"Bootstrap2"), 'description': _(u"Bootstrap 2.x theme"), 'css': self.bootstrap2_theme},
+            {'name': _(u"默认"), 'description': _(u"Default bootstrap theme"), 'css': self.default_theme},
+            # {'name': _(u"默认2"), 'description': _(u"Bootstrap 2.x theme"), 'css': self.bootstrap2_theme},
+            {'name': _(u"天蓝色"), 'css': self.Cerulean_theme},
+            {'name': _(u"流名色"), 'css': self.Lumen_theme},
+            {'name': _(u"艳红色"), 'css': self.test_theme},
             ]
         select_css = context.get('site_theme', self.default_theme)
 
@@ -63,11 +77,22 @@ class ThemePlugin(BaseAdminPlugin):
             else:
                 ex_themes = []
                 try:
-                    flag = False#假如为True使用原来的代码，假如为Flase，使用requests库来访问
+                    # h = httplib2.Http()
+                    # resp, content = h.request("https://bootswatch.com/api/3.json", 'GET', '',
+                    #     headers={"Accept": "application/json", "User-Agent": self.request.META['HTTP_USER_AGENT']})
+                    # if six.PY3:
+                    #     content = content.decode()
+                    # watch_themes = json.loads(content)['themes']
+                    # ex_themes.extend([
+                    #     {'name': t['name'], 'description': t['description'],
+                    #         'css': t['cssMin'], 'thumbnail': t['thumbnail']}
+                    #     for t in watch_themes])
+                    flag = False  # 假如为True使用原来的代码，假如为Flase，使用requests库来访问
                     if flag:
                         h = httplib2.Http()
                         resp, content = h.request("http://bootswatch.com/api/3.json", 'GET', '',
-                            headers={"Accept": "application/json", "User-Agent": self.request.META['HTTP_USER_AGENT']})
+                                                  headers={"Accept": "application/json",
+                                                           "User-Agent": self.request.META['HTTP_USER_AGENT']})
                         if six.PY3:
                             content = content.decode()
                         watch_themes = json.loads(content)['themes']
@@ -76,10 +101,9 @@ class ThemePlugin(BaseAdminPlugin):
                         if six.PY3:
                             content = content.text.decode()
                         watch_themes = json.loads(content.text)['themes']
-
                     ex_themes.extend([
                         {'name': t['name'], 'description': t['description'],
-                            'css': t['cssMin'], 'thumbnail': t['thumbnail']}
+                         'css': t['cssMin'], 'thumbnail': t['thumbnail']}
                         for t in watch_themes])
                 except Exception as e:
                     print(e)
@@ -88,5 +112,6 @@ class ThemePlugin(BaseAdminPlugin):
                 themes.extend(ex_themes)
 
         nodes.append(loader.render_to_string('xadmin/blocks/comm.top.theme.html', {'themes': themes, 'select_css': select_css}))
+
 
 site.register_plugin(ThemePlugin, BaseAdminView)

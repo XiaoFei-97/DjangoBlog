@@ -28,8 +28,8 @@ PLUGINS = (
     'language', 
     'quickfilter',
     'sortablelist',
-	'importexport',
-    'ueditor'
+    'importexport',
+    'ueditor',
 )
 
 

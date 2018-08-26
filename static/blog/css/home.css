@@ -53,7 +53,7 @@
 
 .contents #read-item{
     /*width: 500px;*/
-    /*height: 300px;*/
+    min-height: 280px;
     /*background-color: gold;*/
     display: none;
     /*line-height: 300px;*/

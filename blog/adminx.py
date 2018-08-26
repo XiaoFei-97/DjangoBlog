@@ -61,14 +61,13 @@ xadmin.site.register(Tag, TagAdmin)
 
 
 class BaseSetting(object):
-    # 主题
     enable_themes = True
-    use_bootswatch = True
+    use_bootswatch = True  # 调用更多主题
 
 
 class GlobalSetting(object):
     # 设置网站标题
-    site_title = "蒋振飞博客后台管理系统"
+    site_title = "后台管理系统"
     # 设置网站页脚
     site_footer = "蒋振飞的博客"
     # 设置应用图标

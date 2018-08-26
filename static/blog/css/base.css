@@ -251,6 +251,7 @@ ul{
 /*文章段落*/
 #post-body p{
     line-height: 25px;
+    font-size: 15px;
 }
 
 #post-body .list-paddingleft-2{
@@ -323,12 +324,12 @@ ul{
 
 .category{
     /*height: 30em;*/
-    margin-top: 1em;
+    /*margin-top: 1em;*/
     /*border: 1px solid #ccc;*/
     /*margin-bottom: 1em;*/
     margin-left: 1em;
-    margin-bottom: 2em;
-    min-height: 20em;
+    /*margin-bottom: 2em;*/
+    min-height: 23em;
 }
 
 .category h4{
@@ -515,6 +516,9 @@ ul{
     }
     .navbar-form button{
         margin-left: 3px;
+    }
+    .category{
+        min-height: 0;
     }
 
 }
