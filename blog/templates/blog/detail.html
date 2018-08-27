@@ -10,12 +10,26 @@
 
 {% block header_extend %}
     <link rel="stylesheet" href="{% static 'blog/css/blog.css' %}">
-    <link rel="stylesheet" href="{% static 'blog/css/code.css' %}">
-    <link rel="stylesheet" type="text/css" href="{% static 'blog/css/foundation.css' %}">
-    <script type="text/javascript" src="{% static 'blog/js/highlight.pack.js' %}"></script>
-    <script>hljs.initHighlightingOnLoad();</script>
+    {# highlight代码高亮 #}
+{#    <link rel="stylesheet" href="{% static 'blog/css/code.css' %}">#}
+{#    <link rel="stylesheet" type="text/css" href="{% static 'blog/css/foundation.css' %}">#}
+{#    <script type="text/javascript" src="{% static 'blog/js/highlight.pack.js' %}"></script>#}
+{#    <script>#}
+{#        hljs.initHighlightingOnLoad();#}
+{#    </script>#}
+    {# ueditor自带代码高亮 #}
+{#    <link rel="stylesheet" href="{% static 'ueditor/third-party/SyntaxHighlighter/shCoreDefault.css' %}">#}
+{#    <script type="text/javascript" src="{% static 'ueditor/third-party/SyntaxHighlighter/shCore.js' %}"></script>#}
+{#    <script type="text/javascript">#}
+{#        SyntaxHighlighter.all();#}
+{#    </script>#}
+    <!-- 谷歌代码高亮 -->
+    <link rel="stylesheet" href="{% static 'blog/css/prettify.css' %}">
+    <script type="text/javascript" src="{% static 'blog/js/prettify.js' %}"></script>
+    <!-- ckeditor编辑框 -->
     <script type="text/javascript" src="{% static "ckeditor/ckeditor-init.js" %}"></script>
     <script type="text/javascript" src="{% static "ckeditor/ckeditor/ckeditor.js" %}"></script>
+    <!-- ueditor编辑框 -->
     <script type="text/javascript" charset="utf-8" src="{% static 'ueditor/ueditor.config.js' %}"></script>
     <script type="text/javascript" charset="utf-8" src="{% static 'ueditor/ueditor.all.js' %}"> </script>
 {% endblock %}
@@ -244,6 +258,12 @@
 {% block script_extends %}
 
     <script type="text/javascript">
+        //开启高亮
+        $(window).load(function () {
+            $("pre").addClass("prettyprint linenums");
+            prettyPrint();
+        });
+
 
         String.prototype.format = function(){
             {#因为javascript中没有占位或其他可以方法可以补充,所以需要自己创建一个函数将其实现类似于占位的方式#}
@@ -358,7 +378,7 @@
             });
             return false;
         });
-
+        //更新点赞状态
         function likeChange(obj, content_type, object_id){
             var is_like = obj.getElementsByClassName('active').length == 0
             $.ajax({
@@ -420,30 +440,30 @@
         });
     </script>
 
-    <script type="text/javascript">
-
-        var allpre = document.getElementsByTagName("pre");
-        for(i = 0; i < allpre.length; i++)
-        {
-            var onepre = document.getElementsByTagName("pre")[i];
-            var mycode = document.getElementsByTagName("pre")[i].innerHTML;
-            onepre.innerHTML = '<code id="mycode">'+mycode+'</code>';
-        }
-
-        $(function(){
-            $('pre code').each(function(){
-                var lines = $(this).text().split('\n').length - 1;
-                var $numbering = $('<ul/>').addClass('pre-numbering');
-                $(this)
-                    .addClass('has-numbering')
-                    .parent()
-                    .append($numbering);
-                for(i=1;i<=lines+100;i++){
-                    $numbering.append($('<li/>').text(i));
-                }
-            });
-        });
-
-    </script>
+{#    <script type="text/javascript">#}
+{##}
+{#        var allpre = document.getElementsByTagName("pre");#}
+{#        for(i = 0; i < allpre.length; i++)#}
+{#        {#}
+{#            var onepre = document.getElementsByTagName("pre")[i];#}
+{#            var mycode = document.getElementsByTagName("pre")[i].innerHTML;#}
+{#            onepre.innerHTML = '<code id="mycode">'+mycode+'</code>';#}
+{#        }#}
+{##}
+{#        $(function(){#}
+{#            $('pre code').each(function(){#}
+{#                var lines = $(this).text().split('\n').length - 1;#}
+{#                var $numbering = $('<ul/>').addClass('pre-numbering');#}
+{#                $(this)#}
+{#                    .addClass('has-numbering')#}
+{#                    .parent()#}
+{#                    .append($numbering);#}
+{#                for(i=1;i<=lines+100;i++){#}
+{#                    $numbering.append($('<li/>').text(i));#}
+{#                }#}
+{#            });#}
+{#        });#}
+{##}
+{#    </script>#}
 
 {% endblock %}
