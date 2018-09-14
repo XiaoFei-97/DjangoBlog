@@ -12,6 +12,11 @@ from django.http import JsonResponse
 
 
 def login_for_modal(request):
+    """
+    模态框
+    :param request: 请求对象
+    :return: json数据
+    """
     login_form = LoginForm(request.POST)
     if login_form.is_valid():
         # cleaned_data是一个字典,包含了字段的信息
@@ -31,7 +36,11 @@ def login_for_modal(request):
 
 
 def login(request):
-    """用户登录逻辑处理"""
+    """
+    用户登录逻辑处理
+    :param request:
+    :return: 登录视图
+    """
     '''
     # 利用request的POST方法获取form表单中的post数据
     username = request.POST.get('username')
@@ -79,7 +88,11 @@ def login(request):
 
 
 def register(request):
-    """用户注册功能相关处理"""
+    """
+    用户注册功能相关处理
+    :param request: 请求对象
+    :return: 注册成功返回首页，失败返回注册表单
+    """
     if request.method == 'POST':
         reg_form = RegForm(request.POST)
         # 判断是否有效
@@ -104,7 +117,7 @@ def register(request):
             user.email = email
             user.set_password(password)
             user.save()
-
+    
         '''
 
     # 验证失败
@@ -128,7 +141,7 @@ def user_info(request):
 
 def about(request):
     context = {}
-    return render(request, 'user/about.html',context)
+    return render(request, 'user/about.html',   context)
 
 
 

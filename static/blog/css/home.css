@@ -9,7 +9,7 @@
 #container, #container2{
     height: 20em;
     min-width: 20em;
-    max-width: 50em;
+    margin: 0 auto;
     padding-top: 2em;
 }
 

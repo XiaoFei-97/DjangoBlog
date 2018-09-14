@@ -38,6 +38,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'xadmin',
+    'django_redis',
     'crispy_forms',
     'ckeditor',  # 富文本编辑器
     'ckeditor_uploader',
@@ -218,11 +219,20 @@ CKEDITOR_CONFIGS = {
 }
 
 # 缓存设置
+# CACHES = {
+#         'default':{
+#             'BACKEND': 'django.core.cache.backends.db.DatabaseCache',
+#             'LOCATION': 'my_cache_table',
+#     }
+# }
 CACHES = {
-        'default':{
-            'BACKEND': 'django.core.cache.backends.db.DatabaseCache',
-            'LOCATION': 'my_cache_table',
-    }
+    'default': {
+        'BACKEND': 'django_redis.cache.RedisCache',
+        'LOCATION': '127.0.0.1:6379',
+        "OPTIONS": {
+            "CLIENT_CLASS": "django_redis.client.DefaultClient",
+        },
+    },
 }
 
 HAYSTACK_CONNECTIONS = {

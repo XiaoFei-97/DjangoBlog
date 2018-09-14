@@ -21,12 +21,12 @@
                          {{ field }}
                          <p class="text-danger">{{ field.errors.as_text }}</p>
                      {% endfor %}
-{#                            错误信息标红#}
+                        {# 错误信息标红 #}
                         <span class="pull-left text-danger">{{ login_form.non_field_errors }}</span>
-{#                      <span>用户名：</span>#}
-{#                      <input type="text" name="username">#}
-{#                      <span>密码：</span>#}
-{#                      <input type="password" name="password">#}
+                        {# <span>用户名：</span> #}
+                        {# <input type="text" name="username"> #}
+                        {# <span>密码：</span> #}
+                        {# <input type="password" name="password"> #}
                         <span style="font-weight: bold;">没有帐号？<a style="color: #337ab7;" href="{% url 'user:register' %}">点击注册</a></span>
                         <input class="btn btn-primary pull-right" style="margin-bottom: 0.5em" type="submit" value="登录">
                  </form>

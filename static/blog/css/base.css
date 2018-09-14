@@ -323,13 +323,9 @@ ul{
 }
 
 .category{
-    /*height: 30em;*/
-    /*margin-top: 1em;*/
-    /*border: 1px solid #ccc;*/
-    /*margin-bottom: 1em;*/
+    margin-bottom: 1em;
     margin-left: 1em;
-    /*margin-bottom: 2em;*/
-    min-height: 23em;
+    min-height: 25em;
 }
 
 .category h4{
@@ -372,10 +368,11 @@ ul{
 
 /*loading*/
 .box{
-    width: 100%;
-    text-align: center;
-    margin-left: 7px;
+    padding-left: 5px;
     font-size: 20px;
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
 }
 
 .box div{
@@ -442,7 +439,7 @@ ul{
     line-height: 30px;
 }
 .box div:nth-child(9){
-    background-color: bisque;
+    background-color: orangered;
     animation: loading 1.2s ease 700ms infinite alternate;
     text-align: center;
     line-height: 30px;
@@ -474,6 +471,12 @@ ul{
 .box div:nth-child(14){
     background-color: blueviolet;
     animation: loading 1.2s ease 1.2s infinite alternate;
+    text-align: center;
+    line-height: 30px;
+}
+.box div:nth-child(15){
+    background-color: sandybrown;
+    animation: loading 1.2s ease 1.3s infinite alternate;
     text-align: center;
     line-height: 30px;
 }

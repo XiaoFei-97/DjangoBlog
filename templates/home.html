@@ -3,11 +3,13 @@
 {% load post_tags %}
 
 {% block title %}
-    蒋振飞的博客-关注互联网IT技术
+    蒋振飞的博客
 {% endblock %}
 
 {% block header_extend %}
+    <!--其他-->
     <link rel="stylesheet" href="{% static 'blog/css/home.css' %}">
+    <!--图表显示-->
     <script src="https://cdn.hcharts.cn/highcharts/highcharts.js"></script>
 {% endblock %}
 
@@ -162,7 +164,6 @@
                             <p>1.Html5实战 作者:Rob Crowther</p>
                             <p>2.HTML+CSS网页设计 作者:田中雨,郭磊</p>
                             <p>3.Web开发典藏大系：jQuery网页开发实例精解 作者：黄格力</p>
-{#                            <p></p>#}
                         </div>
 
                         <div class="col-sm-3">
@@ -171,8 +172,6 @@
                             <p>2.网络爬虫全解析 作者：罗刚</p>
                             <h3>其他</h3>
                             <p>1.现代软件工厂构建之法 作者：邹欣</p>
-{#                            <p></p>#}
-{#                            <p></p>#}
                         </div>
                     </div>
 
@@ -182,6 +181,7 @@
         </div>
 
         <div class="row">
+            <!--最新发表-->
             <div class="col-sm-4">
                <div class="home-block">
                     <h4 class="home-block-title">最新发表</h4>
@@ -196,6 +196,7 @@
                     </ul>
                 </div>
             </div>
+            <!--最新推荐-->
             <div class="col-sm-4">
                <div class="home-block">
                     <h4 class="home-block-title">最新推荐</h4>
@@ -210,6 +211,7 @@
                     </ul>
                 </div>
             </div>
+            <!--随机推荐-->
             <div class="col-sm-4">
                <div class="home-block">
                     <h4 class="home-block-title">随机推荐</h4>
@@ -232,6 +234,7 @@
         </h3>
 
         <div class="row">
+            <!--周榜-->
             <div class="col-sm-4">
                <div class="home-block">
                     <h4 class="home-block-title">周榜</h4>
@@ -246,6 +249,7 @@
                     </ul>
                 </div>
             </div>
+            <!--月榜-->
             <div class="col-sm-4">
                <div class="home-block">
                     <h4 class="home-block-title">月榜</h4>
@@ -260,6 +264,7 @@
                     </ul>
                 </div>
             </div>
+            <!--总榜-->
             <div class="col-sm-4">
                <div class="home-block">
                     <h4 class="home-block-title">总榜</h4>
@@ -278,10 +283,11 @@
 
     </div>
 
-
-
 {% endblock %}
+
 {% block script_extends %}
+
+    <!--图表显示-->
      <script>
         // 图表配置
         var options1 = {
@@ -298,7 +304,7 @@
             yAxis: {
                 title: { text: null }, // y 轴标题
                 labels:{ enabled:false },
-                gridLineDashStyle: 'ShortDash',  // 刻度线对齐方式
+                gridLineDashStyle: 'solid',  // 刻度线对齐方式
             },
 
             series: [{                              // 数据列
@@ -310,7 +316,6 @@
                 line:{
                     dataLabels: {
                         enabled: true,
-                        color:'darkblue',
                     }
                 }
             },
@@ -333,7 +338,7 @@
             yAxis: {
                 title: { text: null }, // y 轴标题
                 labels:{ enabled:false },
-                gridLineDashStyle: 'ShortDash',  // 刻度线对齐方式
+                gridLineDashStyle: 'solid',  // 刻度线对齐方式
             },
 
             series: [{                              // 数据列
@@ -345,7 +350,6 @@
                 line:{
                     dataLabels: {
                         enabled: true,
-                        color:'darkblue',
                     }
                 }
             },
@@ -374,6 +378,5 @@
          });
 
      </script>
-
 
 {% endblock %}

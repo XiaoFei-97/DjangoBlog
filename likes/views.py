@@ -5,12 +5,10 @@ from django.db.models import ObjectDoesNotExist
 from .models import LikeCount, LikeRecord
 
 
-
 def SuccessResponse(liked_num):
     # 成功的响应
     data = {'status': 'SUCCESS', 'liked_num': liked_num}
     return JsonResponse(data)
-
 
 
 def ErrorResponse(code, message):
