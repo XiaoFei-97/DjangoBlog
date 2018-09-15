@@ -40,6 +40,8 @@ class MySeachView(SearchView):
         # 注意这里的page_of_list是一个paginator对象
         page_of_list = paginator.page(int(page_num))
 
+        key = self.request.GET.get('q')
+
         # 获取当前页码
         current_page_num = page_of_list.number
 
@@ -80,5 +82,6 @@ class MySeachView(SearchView):
                 'random_recommend': random_recommend,
                 'new_recommend': new_recommend,
                 'all_hot_posts': all_hot_posts,
+                'key': key,
             }
         return context
