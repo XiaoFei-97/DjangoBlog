@@ -63,13 +63,13 @@
                         </div>
                         {% empty %}
                             <div class="no-find">
-                                很抱歉，没有检索您想要的内容，换个关键词再试试 ？
-                                <div>
+                                非常抱歉，没有检索您想要的内容，换个关键词再试试 ？
+                                <p style="margin-top: 2em">
                                     <a href="{% url 'blog:home' %}">返回首页</a>
-                                </div>
+                                </p>
                             </div>
                         {% endfor %}
-<div class="paginator">
+                <div class="paginator">
                     <ul class="pagination">
                         <li>
                             {# 上一页 #}
@@ -84,7 +84,7 @@
                         {# 全部页码 #}
                         {# {% for page_num in page_of_list.paginator.page_range %}#}
                         {# page_range在views中被处理成当前页数+-2的范围,目的是为了避免页码过于长#}
-{% for page_num in page_range %}
+                        {% for page_num in page_range %}
                             {# 判断是否当前页 #}
                             {% if page_num == page.number %}
                                 {# 如果是当前页就设置active高亮 #}

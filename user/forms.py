@@ -8,14 +8,14 @@ class LoginForm(forms.Form):
     用户登录表单
     """
     # 用户名
-    username = forms.CharField(label='用户名',
+    username = forms.CharField(label='帐号',
                                widget=forms.TextInput(
-                                   attrs={'class': 'form-control', 'placeholder': '请输入用户名'}))
+                                   attrs={'placeholder': '请输入用户名'}))
 
     # 密码
     password = forms.CharField(label='密码',
                                widget=forms.PasswordInput(
-                                   attrs={'class': 'form-control', 'placeholder': '请输入密码'}))
+                                   attrs={'placeholder': '请输入密码'}))
 
     def clean(self):
         """
@@ -27,7 +27,7 @@ class LoginForm(forms.Form):
         user = auth.authenticate(username=username, password=password)
         # 判断用户是否存在
         if user is None:
-            raise forms.ValidationError('用户名或密码不正确')
+            raise forms.ValidationError('用户名或密码不正确,请重试')
         else:
             self.cleaned_data['user'] = user
         return self.cleaned_data
@@ -38,28 +38,28 @@ class RegForm(forms.Form):
     用户注册表单
     """
     # 用户名
-    username = forms.CharField(label='用户名',
+    username = forms.CharField(label='账号',
                                max_length=30,
                                min_length=3,
                                widget=forms.TextInput(
-                                   attrs={'class': 'form-control', 'placeholder': '请输入用户名'}))
+                                   attrs={'placeholder': '请输入用户名'}))
 
     # 邮箱
     email = forms.EmailField(label='邮箱',
                              widget=forms.EmailInput(
-                                   attrs={'class': 'form-control', 'placeholder': '请输入邮箱'}))
+                                   attrs={ 'placeholder': '请输入邮箱'}))
 
     # 密码
     password = forms.CharField(label='密码',
                                min_length=6,
                                widget=forms.PasswordInput(
-                                   attrs={'class': 'form-control', 'placeholder': '请输入密码'}))
+                                   attrs={'placeholder': '请输入密码'}))
 
     # 再次输入密码
-    password_again = forms.CharField(label='再输入一次密码',
+    password_again = forms.CharField(label='密码',
                                      min_length=6,
                                      widget=forms.PasswordInput(
-                                        attrs={'class': 'form-control', 'placeholder': '再输入依次密码'}))
+                                        attrs={'placeholder': '再输入一次密码'}))
 
     def clean_username(self):
         """

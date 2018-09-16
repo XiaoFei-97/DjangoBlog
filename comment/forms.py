@@ -7,7 +7,9 @@ from .models import Comment
 
 
 class CommentForm(forms.Form):
-    """提交评论表单"""
+    """
+    提交评论表单
+    """
     content_type = forms.CharField(widget=forms.HiddenInput)
     object_id = forms.IntegerField(widget=forms.HiddenInput)
     # text = forms.CharField(widget=UEditorWidget(

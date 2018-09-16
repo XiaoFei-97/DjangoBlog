@@ -24,7 +24,12 @@ def home(request):
     category_list = Category.objects.all()
 
     # 所有博客列表
-    post_list = Post.objects.filter(Q(display=0) | Q(display__isnull=True))
+    # post_list = Post.objects.filter(Q(display=0) | Q(display__isnull=True))
+    post_list = cache.get('post_list')
+    if post_list is None:
+        post_list = Post.objects.filter(Q(display=0) | Q(display__isnull=True))
+        # 60*60表示60秒*60,也就是1小时
+        cache.set('post_list', post_list, 60 * 60)
 
     # 最新发表的15篇博客
     # new_publish = Post.objects.filter(Q(display=0) | Q(display__isnull=True))[:15]
@@ -207,14 +212,14 @@ def blog(request):
     :return: 博客列表视图
     """
     # post_all_list = Post.objects.all().filter(Q(display=0) | Q(display__isnull=True))
-    post_all_list = cache.get('post_all_list')
-    if post_all_list is None:
-        post_all_list = Post.objects.all().filter(Q(display=0) | Q(display__isnull=True))
+    post_list = cache.get('post_list')
+    if post_list is None:
+        post_list = Post.objects.all().filter(Q(display=0) | Q(display__isnull=True))
         # 60*60表示60秒*60,也就是1小时
-        cache.set('post_all_list', post_all_list, 60 * 60)
+        cache.set('post_list', post_list, 60 * 60)
 
     # 使用公共的get_blog_list_common_data的方法
-    context = get_blog_list_common_data(request, post_all_list)
+    context = get_blog_list_common_data(request, post_list)
 
     # 给request返回一个blog.html文件
     return render(request, 'blog/blog.html', context)
@@ -231,14 +236,14 @@ def detail(request, pk):
     # get_object_or_404的用法是(模型名,get方法)
     post = get_object_or_404(Post, pk=pk)
     # post_all_list = Post.objects.filter(Q(display=0) | Q(display__isnull=True))
-    post_all_list = cache.get('post_all_list')
-    if post_all_list is None:
-        post_all_list = Post.objects.all().filter(Q(display=0) | Q(display__isnull=True))
+    post_list = cache.get('post_list')
+    if post_list is None:
+        post_list = Post.objects.all().filter(Q(display=0) | Q(display__isnull=True))
         # 60*60表示60秒*60,也就是1小时
-        cache.set('post_all_list', post_all_list, 60 * 60)
+        cache.set('post_list', post_list, 60 * 60)
 
     # 使用公共的get_blog_list_common_data的方法
-    context = get_blog_list_common_data(request, post_all_list)
+    context = get_blog_list_common_data(request, post_list)
 
     # read_statistics_once_read是在read_statistics应用中的方法,表示计数+1
     read_cookie_key = read_statistics_once_read(request, post)

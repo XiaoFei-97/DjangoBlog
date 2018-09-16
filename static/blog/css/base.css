@@ -16,7 +16,7 @@ a{
 ul{
     list-style: none;
     padding: 0;
-    margin: 0;
+    margin: 0!important;
 }
 
 
@@ -36,7 +36,7 @@ ul{
 
 .blog-info-description{
     list-style: none;
-    margin-left: 3em;
+    margin-left: 3em!important;
 }
 
 .blog-info-description li{
@@ -350,6 +350,7 @@ ul{
     font-size: 2em;
     margin-top: 4em;
     text-align: center;
+    color:red;
 }
 
 .no-find a{
@@ -501,6 +502,73 @@ ul{
     background-color: #f8f8f8;
 }
 
+/* 清除浮动 */
+.clearfix:before,.clearfix:after{content:"";display:table}
+.clearfix:after{clear:both;}
+.clearfix{zoom:1}
+
+/* 浮动 */
+.fl{float:left}
+.fr{float:right}
+/*登录样式*/
+.head-login{
+    text-align: center;
+    margin-top: 80px;
+    margin-bottom: 20px;
+}
+.login{
+    width: 350px;
+    border: 1px dashed #aaa;
+    padding: 1.2em;
+    margin: auto;
+    min-height: 160px;
+}
+
+.login form{
+    display: inline-block;
+}
+
+.register-button{
+    width: 80px;
+    height: 80px;
+    float: right;
+    margin-top:30px;
+}
+
+.no-user{
+    font-weight: 700;
+}
+
+.other_account{
+    font-weight: 700;
+}
+
+/*注册样式*/
+.head-register{
+    text-align: center;
+    margin-top: 50px;
+    margin-bottom: 20px;
+}
+
+.register{
+    width: 350px;
+    border: 1px dashed #aaa;
+    padding: 1.2em;
+    margin: auto;
+    min-height: 220px;
+}
+
+.login-button{
+    width: 80px;
+    height: 80px;
+    float: right;
+    margin-top:50px;
+}
+
+.register form{
+    display: inline-block;
+}
+
 @media screen and (min-width: 768px) {
     #navbar-collapse ul .item{
         line-height: 30px;
@@ -530,7 +598,25 @@ ul{
     .category{
         min-height: 0;
     }
-
+    .head-login{
+        margin-top: 40px;
+        margin-bottom: 20px;
+    }
+    .head-register{
+        margin-top: 10px;
+        margin-bottom: 20px;
+    }
+    .login,.register{
+        width: 260px;
+    }
+    .head-login,.head-register span{
+        font-size: 0.8em;
+    }
+    .no-find{
+        font-size: 1em;
+        margin-top: 4em;
+        text-align: center;
+    }
 }
 
 
