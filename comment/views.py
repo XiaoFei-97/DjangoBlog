@@ -71,7 +71,7 @@ def update_comment(request):
         comment.save()
         # 返回数据
         data = {'status': 'SUCCESS',
-                'username': comment.user.username,
+                'username': comment.user.get_nickname_or_username(),
                 # strftime并不能正确得出当前时间,会把时区给掩盖掉,所以使用timestamp时间戳
                 # 'comment_time': comment.comment_time.strftime('%Y-%m-%d %H:%M:%S'),
                 'comment_time': comment.comment_time.timestamp(),
@@ -79,7 +79,7 @@ def update_comment(request):
                 'content_type': ContentType.objects.get_for_model(comment).model # 得到对应字符串
                 }
         if not parent is None:
-            data['reply_to'] = comment.reply_to.username
+            data['reply_to'] = comment.reply_to.get_nickname_or_username()
         else:
             data['reply_to'] = ''
         data['pk'] = comment.pk

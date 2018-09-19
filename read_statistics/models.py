@@ -40,6 +40,7 @@ class ReadNumExpandMethod(object):
         # 对象不存在就返回0
         except exceptions.ObjectDoesNotExist:
             return 0
+    get_read_num.short_description = '阅读'
 
 
 class ReadDetail(models.Model):

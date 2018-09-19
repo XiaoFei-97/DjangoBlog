@@ -25,6 +25,8 @@ class LikeCount(models.Model):
         except exceptions.ObjectDoesNotExist:
             return 0
 
+    get_like_post.short_description = '文章'
+
     class Meta:
         verbose_name = '点赞计数'
         verbose_name_plural = '点赞计数'
@@ -50,6 +52,8 @@ class LikeRecord(models.Model):
         # 对象不存在就返回0
         except exceptions.ObjectDoesNotExist:
             return 0
+
+    get_like_post.short_description = '文章'
 
     class Meta:
         verbose_name = '点赞记录'

@@ -15,6 +15,7 @@ pre {
     word-break: break-all;
     word-wrap: break-word;
     white-space:normal;
+    font-size: 14px;
 }
 
 /* Specify class=linenums on a pre to get line numbering */

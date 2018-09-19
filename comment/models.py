@@ -37,6 +37,8 @@ class Comment(models.Model):
         except exceptions.ObjectDoesNotExist:
             return 0
 
+    get_comment.short_description = '文章'
+
     def __str__(self):
         return self.text
 

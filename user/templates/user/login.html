@@ -17,7 +17,7 @@
         </div>
 
         <div class="login">
-             <form action="" method="POST">
+            <form action="" method="POST">
              {% csrf_token %}
              {% for field in login_form %}
                  <label for="{{ field.id_for_label }}">{{ field.label }}:</label>
@@ -31,20 +31,26 @@
                 {# <input type="text" name="username"> #}
                 {# <span>密码：</span> #}
                 {# <input type="password" name="password"> #}
-                 <input class="btn btn-primary pull-right" type="submit" value="登录">
+                <button class="btn btn-primary pull-right" type="submit">登录</button>
 
-         </form>
+            </form>
 
             <div class="register-button hidden-xs">
                 <p class="no-user">没有账号？</p>
                 <p><a href="{% url 'user:register' %}">
                     <button>点击注册</button>
                 </a></p>
+
+                <p class="no-user">忘记密码？</p>
+                <p><a href="{% url 'user:forgot_password' %}">
+                    <button>点击找回</button>
+                </a></p>
             </div>
         </div>
 
 
         {% if user.is_authenticated %}
+            <span>已登录，跳转到首页...</span>
             <script type="text/javascript">
                 window.location.href = '/';
             </script>

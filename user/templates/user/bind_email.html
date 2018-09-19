@@ -1,0 +1,96 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+
+{% block title %}
+    修改昵称
+{% endblock %}
+
+{% block nav_login_active %}active{% endblock %}
+{% block lunbobox %}{% endblock %}
+
+{% block content %}
+    <div class="container" style="margin-top: 70px;">
+        {% if not user.is_authenticated %}
+            <div class="head-login">
+                <h2 class="text-info">绑定邮箱</h2>
+                <span>与我取得联系，共同成长吧</span>
+            </div>
+
+            <div class="bind_email">
+                <form class="pull-left" action="" method="POST">
+                     {% csrf_token %}
+                     {% for field in email_form %}
+                         <label for="{{ field.id_for_label }}">{{ field.label }}:</label>
+                         {{ field }}
+                         <p class="text-danger">{{ field.errors.as_text }}</p>
+                     {% endfor %}
+                    {# 错误信息标红 #}
+                    <span id="tip" class="text-danger">{{ login_form.non_field_errors }}</span>
+                    <div class="clearfix"></div>
+                    <div class="pull-left">
+                        <button id="send_code" class="btn btn-primary">发送验证码</button>
+                    </div>
+
+                    <div class="pull-right">
+                        <input class="btn btn-primary pull" type="submit" value="绑定">
+                    </div>
+                </form>
+                <div style="color: red;margin-top: 10px">验证码区分大小写</div>
+                <button style="margin-top: 27px" class="btn btn-default pull-right" onclick="window.location.href={{ return_back_url }}">返回</button>
+
+            </div>
+        {% else %}
+            <span>已登录，跳转到首页...</span>
+            <script type="text/javascript">
+                window.location.href = '/';
+            </script>
+        {% endif %}
+
+    </div>
+{% endblock %}
+
+{% block script_extends %}
+    <script type="text/javascript">
+        $("#send_code").click(function () {
+           var email = $("#id_email").val()
+            //判断邮箱是否为空
+            if(email==""){
+               $("#tip").text('邮箱不能为空');
+               return false;
+            }
+            //发送验证码
+            $.ajax({
+                url: '{% url 'user:send_verification_code' %}',
+                type: 'GET',
+                data: {
+                    'email': email,
+                    'send_for': 'bind_eamil_code'
+                },
+                cache: false,
+                success: function (data) {
+                    if(data['status']=='ERROR'){
+                        alert('当前请求过于频繁！');
+
+                    }
+                }
+            });
+           //把按钮变灰
+            $(this).addClass('disabled');
+            $(this).attr('disabled', true);
+            var time = 60;
+            $(this).text(time + 's');
+            var interval = setInterval(() => {
+                if(time <= 0){
+                    clearInterval(interval);
+                    $(this).removeClass('disabled');
+                    $(this).attr('disabled', false);
+                    $(this).text('发送验证码');
+                    return false;
+                }
+
+                time --;
+                $(this).text(time + 's');
+            }, 1000);
+        });
+    </script>
+{% endblock %}

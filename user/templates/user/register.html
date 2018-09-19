@@ -33,18 +33,27 @@
                 {# <span>密码：</span> #}
                 {# <input type="password" name="password"> #}
                 {# <span style="font-weight: bold;">已有帐号？<a style="color: #337ab7;" href="{% url 'user:login' %}">点击登录</a></span>#}
-                <input class="btn btn-primary pull-right" type="submit" value="注册">
+                <div class="clearfix"></div>
+                <div class="pull-left">
+                    <button id="send_code" class="btn btn-primary">发送验证码</button>
+                </div>
+                <button class="btn btn-primary pull-right" type="submit">注册</button>
             </form>
 
             <div class="login-button hidden-xs">
                 <p class="no-user">已有账号？</p>
-                <p><a href="{% url 'user:login' %}">
-                    <button>点击登录</button>
-                </a></p>
+                <p>
+                    <a href="{% url 'user:login' %}"><button>点击登录</button></a>
+                </p>
+                <p class="no-user">忘记密码？</p>
+                <p>
+                    <a href="{% url 'user:forgot_password' %}"><button>点击找回</button></a>
+                </p>
             </div>
         </div>
 
         {% if user.is_authenticated %}
+            <span>已登录，跳转到首页...</span>
             <script type="text/javascript">
                 window.location.href = '/';
             </script>
@@ -52,4 +61,49 @@
 
         {% endif %}
     </div>
+{% endblock %}
+
+{% block script_extends %}
+    <script type="text/javascript">
+        $("#send_code").click(function () {
+           var email = $("#id_email").val()
+            //判断邮箱是否为空
+            if(email==""){
+               $("#tip").text('邮箱不能为空');
+               return false;
+            }
+            //发送验证码
+            $.ajax({
+                url: '{% url 'user:send_verification_code' %}',
+                type: 'GET',
+                data: {
+                    'email': email,
+                    'send_for': 'register_code'
+                },
+                cache: false,
+                success: function (data) {
+                    if(data['status']=='ERROR'){
+                        alert('当前请求过于频繁！');
+                    }
+                }
+            });
+           //把按钮变灰
+            $(this).addClass('disabled');
+            $(this).attr('disabled', true);
+            var time = 60;
+            $(this).text(time + 's');
+            var interval = setInterval(() => {
+                if(time <= 0){
+                    clearInterval(interval);
+                    $(this).removeClass('disabled');
+                    $(this).attr('disabled', false);
+                    $(this).text('发送验证码');
+                    return false;
+                }
+
+                time --;
+                $(this).text(time + 's');
+            }, 1000);
+        });
+    </script>
 {% endblock %}

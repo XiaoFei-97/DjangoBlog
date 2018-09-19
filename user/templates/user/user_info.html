@@ -6,21 +6,29 @@
 {% block content %}
     <div class="container">
         <div class="row">
-            <div class="col-xs-11 col-sm-5 col-lg-5 col-sm-offset-1 side-info blog-border" style="margin-top: 135px">
-                    {% if user.is_authenticated %}
-                        <h4>我的信息</h4>
-                        <h3>{{ user.username }}</h3>
-{#                                <p><a href="#">修改昵称</a>  <a href="#">修改密码</a></p>#}
-                        <p>注册邮箱：{% if user.email %}{{ user.email }}{% else %}未绑定 <a href="#">绑定邮箱</a>{% endif %}</p>
-                        <p>加入时间：{{ user.date_joined }}</p>
-                        <p>上次登录时间：{{ user.last_login}}</p>
-                    {% else %}
-                        <span>未登录，跳转到首页...</span>
-                        <script type="text/javascript">
-                            window.location.href = '/';
-                        </script>
-                    {% endif %}
-                </div>
+            <div class="col-xs-11 col-sm-5 col-lg-5 col-sm-offset-1 side-info blog-border user-info">
+                {% if user.is_authenticated %}
+                    <h4>我的信息</h4>
+                    <h3>{{ user.username }}</h3>
+                    <p>
+                        昵称：{{ user.get_nickname }}
+                        {% if user.get_nickname %}
+                            <a style="margin-left: 0.5em" href="{% url 'user:change_name' %}?from={{ request.get_full_path }}">修改昵称</a>
+                        {% else %}
+                            <a href="{% url 'user:change_name' %}?from={{ request.get_full_path }}">添加昵称</a>
+                        {% endif %}
+                    </p>
+                    <p>注册邮箱：{% if user.email %}{{ user.email }}{% else %}未绑定 <a href="{% url 'user:bind_email' %}?from={{ request.get_full_path }}">绑定邮箱</a>{% endif %}</p>
+                    <p>加入时间：{{ user.date_joined }}</p>
+                    <p>上次登录时间：{{ user.last_login}}</p>
+                    <p><a href="{% url 'user:change_password' %}">修改密码</a></p>
+                {% else %}
+                    <span>未登录，跳转到首页...</span>
+                    <script type="text/javascript">
+                        window.location.href = '/';
+                    </script>
+                {% endif %}
+            </div>
 
             </div>
         </div>

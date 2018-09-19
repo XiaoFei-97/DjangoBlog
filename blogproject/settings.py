@@ -155,31 +155,6 @@ CKEDITOR_IMAGE_BACKEND = 'PIL'
 # 自定义参数
 EACH_RAGE_BLOG_NUMBER = 10
 
-# ckeditor扩展
-# CKEDITOR_CONFIGS = {
-#     'default': {
-#         'toolbar': (
-# 			['div','Source','-','Save','NewPage','Preview','-','Templates'],
-# 			['Cut','Copy','Paste','PasteText','PasteFromWord','-','Print','SpellChecker','Scayt'],
-# 			['Undo','Redo','-','Find','Replace','-','SelectAll','RemoveFormat'],
-# 			['Form','Checkbox','Radio','TextField','Textarea','Select','Button', 'ImageButton','HiddenField'],
-# 			['Bold','Italic','Underline','Strike','-','Subscript','Superscript'],
-# 			['NumberedList','BulletedList','-','Outdent','Indent','Blockquote'],
-# 			['JustifyLeft','JustifyCenter','JustifyRight','JustifyBlock'],
-# 			['Link','Unlink','Anchor'],
-# 			['Image','Flash','Table','HorizontalRule','Smiley','SpecialChar','PageBreak'],
-# 			['Styles','Format','Font','FontSize'],
-# 			['TextColor','BGColor'],
-# 			['Maximize','ShowBlocks','-','About', 'pbckcode'],
-# 		),
-#        'width':'auto',
-#       'height': '180',
-#        'tabSpaces': 4,
-#        'removePlugins': 'elementsPath',
-#        'resize_enabled': False,
-# 	}
-# }
-
 
 CKEDITOR_CONFIGS = {
     'default': {
@@ -219,12 +194,6 @@ CKEDITOR_CONFIGS = {
 }
 
 # 缓存设置
-# CACHES = {
-#         'default':{
-#             'BACKEND': 'django.core.cache.backends.db.DatabaseCache',
-#             'LOCATION': 'my_cache_table',
-#     }
-# }
 CACHES = {
     'default': {
         'BACKEND': 'django_redis.cache.RedisCache',
@@ -244,7 +213,37 @@ HAYSTACK_CONNECTIONS = {
     }
 }
 
-
-#自动生成索引
+# 自动生成索引
 HAYSTACK_SIGNAL_PROCESSOR = 'haystack.signals.RealtimeSignalProcessor'
 HAYSTACK_SEARCH_RESULTS_PER_PAGE = 10
+
+# 发送邮件设置
+# https://doc.djangoproject.com/en/2.0/ref/settings/#email
+# https://doc.djangoproject.com/en/2.0/topics/email
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp-mail.outlook.com'
+EMAIL_PORT = 587
+EMAIL_HOST_USER = 'XiaoFei-97@outlook.com'
+EMAIL_HOST_PASSWORD = '5201314jzf#love'
+EMAIL_SUBJECT_PREFIX = '[蒋振飞的博客]'
+EMAIL_USE_TLS = True  # 与SMTP服务器通信时，是否启动TLS链接（安全链接）
+
+# github登录
+OAUTH_GITHUB_CONFIG = {
+    # 'oauth_type_id': 3,  # 对应模型中记录的ID
+    'oauth_type': 'Github',
+
+    'client_id': '50675d10fab22eba7342',
+    'client_secret': 'af39cde883162c12ce57e69cb078708aba915ccd',
+    'redirect_uri': 'http://127.0.0.1:8000/oauth/github_check',  # 回调地址
+    'scope': 'user:email',  # 授权的权限
+    'state': 'Github',
+
+    # 其他请求的链接
+    'url_authorize': 'https://github.com/login/oauth/authorize',
+    'url_access_token': 'https://github.com/login/oauth/access_token',
+    'url_open_id': '',
+    'url_user_info': 'https://api.github.com/user',
+    'url_email': 'https://api.github.com/user/emails',
+}
+

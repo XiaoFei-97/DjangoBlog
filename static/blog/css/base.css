@@ -251,7 +251,7 @@ ul{
 /*文章段落*/
 #post-body p{
     line-height: 25px;
-    font-size: 15px;
+    font-size: 14px;
 }
 
 #post-body .list-paddingleft-2{
@@ -294,6 +294,11 @@ ul{
     margin-right: 1em;
 }
 
+.user-info{
+    margin-left: 1em;
+    margin-right: 1em;
+    margin-top: 10rem;
+}
 
 .side-info a:hover{
     color: #f2618c;
@@ -510,6 +515,7 @@ ul{
 /* 浮动 */
 .fl{float:left}
 .fr{float:right}
+
 /*登录样式*/
 .head-login{
     text-align: center;
@@ -532,7 +538,6 @@ ul{
     width: 80px;
     height: 80px;
     float: right;
-    margin-top:30px;
 }
 
 .no-user{
@@ -567,6 +572,46 @@ ul{
 
 .register form{
     display: inline-block;
+}
+
+/*修改昵称*/
+.change_name{
+    width: 250px;
+    border: 1px dashed #aaa;
+    padding: 1.2em;
+    margin: auto;
+    min-height: 100px;
+}
+
+/*绑定邮箱*/
+.bind_email{
+    width: 300px;
+    border: 1px dashed #aaa;
+    padding: 1.2em;
+    margin: auto;
+    height: 140px;
+}
+
+.bind_email form {
+    display: inline-block;
+}
+
+/*修改密码*/
+.change_password{
+    width: 250px;
+    border: 1px dashed #aaa;
+    padding: 1.2em;
+    margin: auto;
+    height: 180px;
+}
+
+/*忘记密码*/
+.forgot_password{
+    width: 250px;
+    border: 1px dashed #aaa;
+    padding: 1.2em;
+    margin: auto;
+    min-height: 180px;
 }
 
 @media screen and (min-width: 768px) {
@@ -616,6 +661,31 @@ ul{
         font-size: 1em;
         margin-top: 4em;
         text-align: center;
+    }
+    .login{
+        margin-bottom: 20px;
+    }
+    .register{
+        margin-bottom: 40px;
+    }
+    .login input{
+        width: 100%;
+    }
+    .register input{
+        width: 100%;
+    }
+    .change_name{
+        min-height: 120px;
+    }
+    .change_name input{
+        width: 100%;
+    }
+    .change_password{
+        height: 240px;
+        margin-bottom: 50px;
+    }
+    .change_password input{
+        width: 100%;
     }
 }
 

@@ -6,9 +6,13 @@ from django.urls import reverse    # 反向解析
 from django.contrib.auth.models import User
 # from comment.models import Comment
 # from comment.forms import CommentForm
-from .forms import LoginForm, RegForm
-# from .models import Profile
+from .forms import *
 from django.http import JsonResponse
+from django.core.mail import send_mail
+from .models import Profile
+import string
+import random
+import time
 
 
 def login_for_modal(request):
@@ -94,7 +98,7 @@ def register(request):
     :return: 注册成功返回首页，失败返回注册表单
     """
     if request.method == 'POST':
-        reg_form = RegForm(request.POST)
+        reg_form = RegForm(request.POST, request=request)
         # 判断是否有效
         # 验证通过
         if reg_form.is_valid():
@@ -105,6 +109,8 @@ def register(request):
             # 创建用户
             user = User.objects.create_user(username, email, password)
             user.save()
+            # 清楚session
+            del request.sesssion['register_code']
             # 登录用户
             user = auth.authenticate(username=username, password=password)
             auth.login(request, user)
@@ -144,4 +150,116 @@ def about(request):
     return render(request, 'user/about.html',   context)
 
 
+def change_name(request):
+    """修改昵称"""
+    if request.method == 'POST':
+        name_form = ChangeNameForm(request.POST, user=request.user)
+        if name_form.is_valid():
+            new_nickname = name_form.cleaned_data['new_nickname']
+            profile, created = Profile.objects.get_or_create(user=request.user)
+            profile.nickname = new_nickname
+            profile.save()
+            return redirect(request.GET.get('from', reverse('blog:home')))
 
+    else:
+        name_form = ChangeNameForm()
+
+    context = {'name_form': name_form}
+    return render(request, 'user/change_name.html', context)
+
+
+def change_password(request):
+    """修改密码"""
+    if request.method == 'POST':
+        password_form = ChangePasswordForm(request.POST, user=request.user)
+        if password_form.is_valid():
+            user = request.user
+            new_password = password_form.cleaned_data['new_password']
+            # past_password = password_form.cleaned_data['past_password']
+
+            # 直接赋值是没办法加密的
+            user.set_password(new_password)
+            user.save()
+            auth.logout(request)
+            return redirect('user:login')
+
+    else:
+        password_form = ChangePasswordForm()
+
+    context = {'password_form': password_form}
+    return render(request, 'user/change_password.html', context)
+
+
+def forgot_password(request):
+    """忘记密码"""
+    if request.method == 'POST':
+        forgot_form = ForgotPasswordForm(request.POST, request=request)
+        if forgot_form.is_valid():
+            new_password = forgot_form.cleaned_data['new_password']
+            email = forgot_form.cleaned_data['email']
+            user = User.objects.get(email=email)
+            user.set_password(new_password)
+            user.save()
+
+            # 情书session
+            del request.session['forgot_password_code']
+            return redirect('user:login')
+
+    else:
+        forgot_form = ForgotPasswordForm()
+
+    context = {'forgot_form': forgot_form}
+    return render(request, 'user/forgot_password.html', context)
+
+
+def bind_email(request):
+    """绑定邮箱"""
+    if request.method == 'POST':
+        email_form = BindEmailForm(request.POST, request=request)
+        if email_form.is_valid():
+            email = email_form.cleaned_data['email']
+            request.user.email = email
+            request.user.save()
+            # 清楚session
+            del request.sesssion['bind_eamil_code']
+            return redirect(request.GET.get('from', reverse('blog:home')))
+
+    else:
+        email_form = BindEmailForm()
+
+    context = {'email_form': email_form}
+    return render(request, 'user/bind_email.html', context)
+
+
+def send_verification_code(request):
+    email = request.GET.get('email', '')
+    send_for = request.GET.get('send_for', '')
+    data = {}
+    if email != '':
+        # 生成验证码
+        # 利用random的sample方法
+        # 参数：string.ascii_letters，返回所有大小写字母
+        # 参数：string.digits,返回0-9的数字
+        # 返回的结果是一个列表
+        code = ''.join(random.sample(string.ascii_letters + string.digits, 4))
+        now = int(time.time())
+        send_code_time = request.session.get('send_code_time', 0)
+        if now - send_code_time < 30:
+            data["status"] = 'ERROR'
+        else:
+            # session默认有效期是两星期
+            request.session[send_for] = code
+            request.session['send_code_time'] = now
+
+            # 发送邮件
+            send_mail(
+                '绑定邮箱',
+                '验证码: %s' % code,
+                'XiaoFei-97@outlook.com',
+                [email],
+                fail_silently=False,
+            )
+            data["status"] = 'SUCCESS'
+    else:
+        data["status"] = 'ERROR'
+    return JsonResponse(data)

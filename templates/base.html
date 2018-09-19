@@ -86,9 +86,13 @@
                         </li>
                     {% else %}
                         <li class="dropdown hover">
-                            <a href="#" class="dropdown-toggle hidden-sm" data-toggle="dropdown" role="button"><span class="glyphicon glyphicon-user item"></span>&nbsp;您好:&nbsp;{{ user.username }}<span class="caret"></span></a>
+                            <a href="#" class="dropdown-toggle hidden-sm" data-toggle="dropdown" role="button"><span class="glyphicon glyphicon-user item"></span>&nbsp;您好:&nbsp;{{ user.get_nickname_or_username }}<span class="caret"></span></a>
                             <ul class="dropdown-menu">
+                                {% if user.is_staff or user.is_superuser %}
+                                    <li><a href="{% url 'xadmin:index' %}">后台管理</a></li>
+                                {% endif %}
                                 <li><a href="{% url 'user:user_info' %}">用户中心</a></li>
+                                <li><a href="{% url 'user:change_password' %}">修改密码</a></li>
                                 <li><a href="{% url 'user:logout' %}?from={{ request.get_full_path }}">退出</a></li>
                             </ul>
                         </li>

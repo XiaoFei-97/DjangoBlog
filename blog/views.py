@@ -7,7 +7,7 @@ from read_statistics.utils import read_statistics_once_read, get_seven_days_read
                                 get_7_days_read_posts, get_30_days_read_posts, get_all_read_posts  # 导入自定义工具包
 # contenttypes 是Django内置的一个应用，可以追踪项目中所有app和model的对应关系，并记录在ContentType表中
 from django.contrib.contenttypes.models import ContentType
-from user.forms import LoginForm  # 导入登录表单
+from user.forms import LoginModalForm  # 导入登录模态框表单
 from django.db.models import Q
 from django.core.cache import cache  # 缓存数据
 # from comment.forms import CommentForm  # 导入评论表单
@@ -265,7 +265,7 @@ def detail(request, pk):
                     'category': post.category, 'previous_post': previous_post,
                     'next_post': next_post, 'read_num': post.get_read_num,
                     'user': request.user, 'post_id': post.id, 'post': post,
-                    'login_form': LoginForm(),
+                    'LoginModalForm': LoginModalForm(),
                     # 'comments': comments.order_by('-comment_time'),
                     # 'comment_form': CommentForm(initial={'content_type': post_content_type.model, 'object_id': pk, 'reply_comment_id': 0}),
                     # 'comment_count':Comment.objects.filter(content_type=post_content_type, object_id=post.pk).count()
