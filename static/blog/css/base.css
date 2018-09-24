@@ -250,8 +250,8 @@ ul{
 
 /*文章段落*/
 #post-body p{
-    line-height: 25px;
-    font-size: 14px;
+    line-height: 20px;
+    font-size: 15px;
 }
 
 #post-body .list-paddingleft-2{
@@ -576,7 +576,7 @@ ul{
 
 /*修改昵称*/
 .change_name{
-    width: 250px;
+    width: 300px;
     border: 1px dashed #aaa;
     padding: 1.2em;
     margin: auto;
@@ -598,7 +598,7 @@ ul{
 
 /*修改密码*/
 .change_password{
-    width: 250px;
+    width: 300px;
     border: 1px dashed #aaa;
     padding: 1.2em;
     margin: auto;
@@ -607,7 +607,7 @@ ul{
 
 /*忘记密码*/
 .forgot_password{
-    width: 250px;
+    width: 300px;
     border: 1px dashed #aaa;
     padding: 1.2em;
     margin: auto;

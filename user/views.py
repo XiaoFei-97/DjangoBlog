@@ -9,7 +9,7 @@ from django.contrib.auth.models import User
 from .forms import *
 from django.http import JsonResponse
 from .models import Profile
-from .tasks import send_email_by_celery
+from django.core.mail import send_mail
 import string
 import random
 import time
@@ -252,7 +252,13 @@ def send_verification_code(request):
             request.session['send_code_time'] = now
 
             # 发送邮件
-            send_email_by_celery.delay(code, email)
+            send_mail(
+                '绑定邮箱',
+                '验证码: %s' % code,
+                'XiaoFei-97@outlook.com',
+                [email],
+                fail_silently=False,
+            )
 
             data["status"] = 'SUCCESS'
     else:

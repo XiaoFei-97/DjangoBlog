@@ -106,9 +106,9 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'blog',
-        'USER': 'root',
-        'PASSWORD': 'mysql',
-        'HOST': 'localhost',
+        'USER': os.environ.get('DJANGO_MYSQL_USER'),
+        'PASSWORD': os.environ.get('DJANGO_MYSQL_PASSWORD'),
+        'HOST': os.environ.get('DJANGO_MYSQL_HOST'),
         'PORT': '3306'
     }
 }
@@ -241,7 +241,7 @@ EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = 'smtp-mail.outlook.com'
 EMAIL_PORT = 587
 EMAIL_HOST_USER = 'XiaoFei-97@outlook.com'
-EMAIL_HOST_PASSWORD = '5201314jzf#love'
+EMAIL_HOST_PASSWORD = os.environ.get('DJANGO_EMAIL_PASSWORD')
 EMAIL_SUBJECT_PREFIX = '[蒋振飞的博客]'
 EMAIL_USE_TLS = True  # 与SMTP服务器通信时，是否启动TLS链接（安全链接）
 
