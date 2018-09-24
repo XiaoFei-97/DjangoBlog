@@ -22,7 +22,7 @@ import xadmin
 
 
 urlpatterns = [
-    # url(r'^code/', admin.site.urls),
+    url(r'^task/', admin.site.urls),
     url(r'^xadmin/', xadmin.site.urls),
     # 通过在根目录下的url加上namespace属性可以实现反向解析的功能
     # 注意:在根目录的url为namespace而项目的url是name

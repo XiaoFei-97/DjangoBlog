@@ -2,16 +2,9 @@ from django.shortcuts import get_object_or_404, render
 from .models import Post, Category  # ReadNum
 from django.core.paginator import *   # 导入分页功能
 from django.conf import settings   # 导入settings,可以使用其中自定义的全局变量
-from read_statistics.utils import read_statistics_once_read, get_seven_days_read_data, \
-                                get_year_read_data, get_new_recommend_post, get_random_recomment, \
-                                get_7_days_read_posts, get_30_days_read_posts, get_all_read_posts  # 导入自定义工具包
 # contenttypes 是Django内置的一个应用，可以追踪项目中所有app和model的对应关系，并记录在ContentType表中
-from django.contrib.contenttypes.models import ContentType
 from user.forms import LoginModalForm  # 导入登录模态框表单
-from django.db.models import Q
-from django.core.cache import cache  # 缓存数据
-# from comment.forms import CommentForm  # 导入评论表单
-# from comment.models import Comment   # 导入Comment评论模块
+from .tasks import *
 
 
 def home(request):
@@ -29,7 +22,7 @@ def home(request):
     if post_list is None:
         post_list = Post.objects.filter(Q(display=0) | Q(display__isnull=True))
         # 60*60表示60秒*60,也就是1小时
-        cache.set('post_list', post_list, 60 * 60)
+        cache.set('post_list', post_list, 30 * 60)
 
     # 最新发表的15篇博客
     # new_publish = Post.objects.filter(Q(display=0) | Q(display__isnull=True))[:15]
@@ -37,7 +30,7 @@ def home(request):
     if new_publish is None:
         new_publish = Post.objects.filter(Q(display=0) | Q(display__isnull=True))[:15]
         # 60*60表示60秒*60,也就是1小时
-        cache.set('new_publish', new_publish, 60 * 60)
+        cache.set('new_publish', new_publish, 30 * 60)
 
     # 获取Post模型类或模型的实例，并返回ContentType表示该模型的实例
     post_content_type = ContentType.objects.get_for_model(Post)
@@ -48,7 +41,7 @@ def home(request):
     if new_recommend is None:
         new_recommend = get_new_recommend_post(post_content_type)
         # 60*60表示60秒*60,也就是1小时
-        cache.set('new_recommend', new_recommend, 60 * 60)
+        cache.set('new_recommend', new_recommend, 30 * 60)
 
     # 随机推荐的15篇博客
     random_recommend = get_random_recomment()
@@ -65,7 +58,7 @@ def home(request):
     if last_7_days_hot_data is None:
         last_7_days_hot_data = get_7_days_read_posts()
         # 60*60表示60秒*60,也就是1小时
-        cache.set('last_7_days_hot_data', last_7_days_hot_data, 60 * 60)
+        cache.set('last_7_days_hot_data', last_7_days_hot_data, 30 * 60)
 
     # 阅读量月榜博客榜单
     # last_30_days_hot_data = get_30_days_read_posts()
@@ -73,7 +66,7 @@ def home(request):
     if last_30_days_hot_data is None:
         last_30_days_hot_data = get_30_days_read_posts()
         # 60*60表示60秒*60,也就是1小时
-        cache.set('last_30_days_hot_data', last_30_days_hot_data, 60 * 60)
+        cache.set('last_30_days_hot_data', last_30_days_hot_data, 30 * 60)
 
     # 阅读量总榜博客榜单
     # all_hot_posts = get_all_read_posts()
@@ -81,7 +74,7 @@ def home(request):
     if all_hot_posts is None:
         all_hot_posts = get_all_read_posts()
         # 60*60表示60秒*60,也就是1小时
-        cache.set('all_hot_posts', all_hot_posts, 60 * 60)
+        cache.set('all_hot_posts', all_hot_posts, 30 * 60)
 
     # context用来渲染模板
     context = {
@@ -163,7 +156,7 @@ def get_blog_list_common_data(request, post_all_list):
     if post_dates is None:
         post_dates = Post.objects.dates('created_time', 'month', order='DESC')
         # 60*60表示60秒*60,也就是1小时
-        cache.set('post_dates', post_dates, 60 * 60)
+        cache.set('post_dates', post_dates, 30 * 60)
 
     # 获取日期归档对应的博客数量
     # 利用字典
@@ -182,7 +175,7 @@ def get_blog_list_common_data(request, post_all_list):
     if new_recommend is None:
         new_recommend = get_new_recommend_post(post_content_type)
         # 60*60表示60秒*60,也就是1小时
-        cache.set('new_recommend', new_recommend, 60*60)
+        cache.set('new_recommend', new_recommend, 30*60)
 
     # 阅读量总榜博客榜单
     # all_hot_posts = get_all_read_posts()
@@ -190,7 +183,7 @@ def get_blog_list_common_data(request, post_all_list):
     if all_hot_posts is None:
         all_hot_posts = get_all_read_posts()
         # 60*60表示60秒*60,也就是1小时
-        cache.set('all_hot_posts', all_hot_posts, 60 * 60)
+        cache.set('all_hot_posts', all_hot_posts, 30 * 60)
 
     # context用来渲染模板
     context = {'post_list': page_of_list.object_list,
@@ -216,7 +209,7 @@ def blog(request):
     if post_list is None:
         post_list = Post.objects.all().filter(Q(display=0) | Q(display__isnull=True))
         # 60*60表示60秒*60,也就是1小时
-        cache.set('post_list', post_list, 60 * 60)
+        cache.set('post_list', post_list, 30 * 60)
 
     # 使用公共的get_blog_list_common_data的方法
     context = get_blog_list_common_data(request, post_list)
@@ -240,7 +233,7 @@ def detail(request, pk):
     if post_list is None:
         post_list = Post.objects.all().filter(Q(display=0) | Q(display__isnull=True))
         # 60*60表示60秒*60,也就是1小时
-        cache.set('post_list', post_list, 60 * 60)
+        cache.set('post_list', post_list, 30 * 60)
 
     # 使用公共的get_blog_list_common_data的方法
     context = get_blog_list_common_data(request, post_list)
@@ -323,7 +316,7 @@ def date_list(request):
     if date_list is None:
         date_list = Post.objects.dates('created_time', 'month', order='DESC')
         # 60*60表示60秒*60,也就是1小时
-        cache.set('date_list', date_list, 60 * 60)
+        cache.set('date_list', date_list, 30 * 60)
 
     post_count = Post.objects.filter(Q(display=0) | Q(display__isnull=True)).count()
     # for post_date in date_list:
