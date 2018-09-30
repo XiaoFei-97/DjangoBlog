@@ -1,5 +1,6 @@
 {#{% load staticfiles  %}#}
 {% load static from staticfiles %}
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -63,11 +64,11 @@
                      </li>
                      <!--分类-->
                      <li class="{% block nav_category_active %}{% endblock %}">
-                         <a href="{% url 'blog:category_list' %}"><span class="glyphicon glyphicon-file item">分类</span></a>
+                         <a href="{% url 'blog:category' 1 %}"><span class="glyphicon glyphicon-file item">分类</span></a>
                      </li>
                      <!--归档-->
                      <li class="{% block nav_date_active %}{% endblock %}">
-                         <a href="{% url 'blog:date_list' %}"><span class="glyphicon glyphicon-book item">归档</span></a>
+                         <a href="{% url 'blog:date' 2018 09 %}"><span class="glyphicon glyphicon-book item">归档</span></a>
                      </li>
                      <!--关于-->
                     <li class="{% block nav_about_active %}{% endblock %}">

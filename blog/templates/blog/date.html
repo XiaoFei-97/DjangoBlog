@@ -1,8 +1,79 @@
 {% extends 'blog/blog.html' %}
-
+{% load post_tags %}
+{% load staticfiles %}
 {#页面标题#}
 {% block title %}
     {{ post_time }}
 {% endblock title %}
 
-{% block list-type%}归档: {{ post_time }}{% endblock %}
+{% block nav_blog_active %}{% endblock %}
+{% block nav_date_active %}active{% endblock %}
+
+{% block home_content %}
+
+    <a href="#">
+        <div class="home_content" style="background: url({% static 'blog/media/banner2.jpg' %});background-size: 100% 100%;">
+            <div class="home_show">日期归档</div>
+            <div class="word_info">坚持发表个人原创技术笔记</div>
+            <div class="motto_name">—勿谓寸阴短，既过难再获</div>
+        </div>
+    </a>
+    <a href="#">
+        <div class="home_content" style="background: url({% static 'blog/media/banner3.jpg' %});background-size: 100% 100%;">
+            <div class="home_show">日期归档</div>
+            <div class="word_info">觉得有帮助，就打赏我吧</div>
+            <div class="motto_name">—路的尽头，仍然是路</div>
+        </div>
+    </a>
+    <a href="#">
+        <div class="home_content" style="background: url({% static 'blog/media/banner4.jpg' %});background-size: 100% 100%;">
+            <div class="home_show">日期归档</div>
+            <div class="word_info">欢迎阅读评论，评论需注册登录</div>
+            <div class="motto_name">—不达成功誓不休</div>
+        </div>
+    </a>
+    <a href="#">
+        <div class="home_content" style="background: url({% static 'blog/media/banner1.jpg' %});background-size: 100% 100%;">
+            <div class="home_show">日期归档</div>
+            <div class="word_info">欢迎阅读评论，喜欢就点个赞吧</div>
+            <div class="motto_name">—世界是真的，付出都是值得的</div>
+        </div>
+    </a>
+    <a href="#">
+        <div class="home_content" style="background: url({% static 'blog/media/banner5.jpg' %});background-size: 100% 100%;">
+            <div class="home_show">日期归档</div>
+            <div class="word_info">欢迎来访，博主动态请查看公告</div>
+            <div class="motto_name">—留一份不足，可得无限美好</div>
+        </div>
+    </a>
+
+{% endblock %}
+
+{% block side_list %}
+    <div class="side-list">
+        <h4><span class="glyphicon glyphicon-book"></span>&nbsp;日期归档</h4>
+        <ul>
+            {% for post_date in date_list %}
+
+                <div class="light-item">
+                    <a href="{% url 'blog:date' post_date.year post_date.month %}">
+                    {% get_date_to_month post_date %}&nbsp;({% get_date_count post_date.year post_date.month %})
+                </a>     </div>
+            {% empty %}
+                暂无归档 !
+            {% endfor %}
+        </ul>
+    </div>
+    <div class="side-list">
+        <h4><span class="glyphicon glyphicon-tag"></span>&nbsp;博客分类</h4>
+        <ul>
+            {% for category in category_list %}
+                <div class="light-item">
+                    <a href="{% url 'blog:category' category.id %}">{{ category }}&nbsp;({% get_category_count category %})</a>
+                </div>
+            {% empty %}
+                暂无分类 !
+            {% endfor %}
+        </ul>
+    </div>
+{% endblock %}

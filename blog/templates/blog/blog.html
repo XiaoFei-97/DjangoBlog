@@ -76,9 +76,8 @@
                                     {# <span>中的是分类和时间logo样式 #}
                                     <span class="glyphicon glyphicon-time"></span>&nbsp;{{ post.created_time|date:"Y-m-d" }}&nbsp;&nbsp;&nbsp;
 
-                                    <a href="{% url 'blog:category' post.category.id %}">
-                                        <span class="glyphicon glyphicon-file"></span>{{ post.category }}
-                                    </a>&nbsp;&nbsp;&nbsp;
+                                    分类：<a href="{% url 'blog:category' post.category.id %}">{{ post.category }}</a>&nbsp;&nbsp;&nbsp;
+
                                     阅读：{{ post.get_read_num }}&nbsp;&nbsp;&nbsp;
 
                                     评论：{% get_comment_count post %}&nbsp;&nbsp;&nbsp;
@@ -148,6 +147,7 @@
             </div>
 
             <div class="hidden-xs col-sm-4 col-md-3 blog-border">
+                {% block side_list %}
                 <!--热门阅读-->
                 <div class="side-list">
                     <h4><span class="glyphicon glyphicon-fire"></span>&nbsp;热门阅读</h4>
@@ -187,6 +187,7 @@
                         {% endfor %}
                     </ul>
                 </div>
+                {% endblock %}
             </div>
 
         </div>

@@ -270,19 +270,6 @@ def detail(request, pk):
     return response
 
 
-def category_list(request):
-    """
-    博客分类的视图处理
-    :param request: 请求对象
-    :return: 博客分类视图
-    """
-    # 获得所有的分类
-    category_list = Category.objects.all()
-
-    context = {'category_list': category_list}
-    return render(request, 'blog/category_list.html', context)
-
-
 def category(request, pk):
     """
     显示某分类下的全部文章
@@ -295,23 +282,6 @@ def category(request, pk):
     # 因为从url中获得了一个category的pk,就可以在post中进行过滤
     post_list = Post.objects.filter(Q(display=0) | Q(display__isnull=True), category=category)
 
-    # 使用公共部分的 get_blog_list_common_data方法
-    context = get_blog_list_common_data(request, post_list)
-
-    # 新增了一个当前分类名称的键
-    context.update({'category_name': category.name})
-
-    # 给request返回一个category.html文件
-    return render(request, 'blog/category.html', context)
-
-
-def date_list(request):
-    """
-    日期归档的视图处理
-    :param request: 请求对象
-    :return: 日期归档视图
-    """
-    # date_list = Post.objects.dates('created_time', 'month', order='DESC')
     date_list = cache.get('date_list')
     if date_list is None:
         date_list = Post.objects.dates('created_time', 'month', order='DESC')
@@ -319,13 +289,15 @@ def date_list(request):
         cache.set('date_list', date_list, 30 * 60)
 
     post_count = Post.objects.filter(Q(display=0) | Q(display__isnull=True)).count()
-    # for post_date in date_list:
-    #     date_list.append(str(post_date.year) +'年' + str(post_date.month) + '月')
 
-    context = {'date_list': date_list,
-               'post_count': post_count,
-               }
-    return render(request, 'blog/date_list.html', context)
+    # 使用公共部分的 get_blog_list_common_data方法
+    context = get_blog_list_common_data(request, post_list)
+
+    # 新增了一个当前分类名称的键
+    context.update({'category_name': category.name, 'date_list': date_list, 'post_count': post_count})
+
+    # 给request返回一个category.html文件
+    return render(request, 'blog/category.html', context)
 
 
 def date(request, year, month):
@@ -344,8 +316,16 @@ def date(request, year, month):
     # 将年月拼接一下
     post_time = year+'年'+month+'月'
 
+    date_list = cache.get('date_list')
+    if date_list is None:
+        date_list = Post.objects.dates('created_time', 'month', order='DESC')
+        # 60*60表示60秒*60,也就是1小时
+        cache.set('date_list', date_list, 30 * 60)
+
+    post_count = Post.objects.filter(Q(display=0) | Q(display__isnull=True)).count()
+
     context = get_blog_list_common_data(request, post_list)
-    context.update({'post_time': post_time})
+    context.update({'post_time': post_time, 'date_list': date_list, 'post_count': post_count})
 
     return render(request, 'blog/date.html', context)
 
