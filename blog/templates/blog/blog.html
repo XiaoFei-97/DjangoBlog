@@ -58,9 +58,6 @@
     <div class="container" style="margin-top: 1em;margin-bottom: 1em">
         <div class="row">
             <div class="col-xs-12 col-sm-8 col-md-9">
-                {# <div class="blog-border"> #}
-                    {# <h3 class="list-type">{% block list-type%}博客列表{% endblock %}</h3> #}
-                {# </div> #}
 
                 <div class="blog-border">
                     {# post_list|length是一种过滤器,过滤的结果为post_list的长度 #}
@@ -106,7 +103,7 @@
                             {# 上一页 #}
                             {% if page_of_list.has_previous %}
                                 <a href="?page={{ page_of_list.previous_page_number }}" aria-label="Previous">
-                                    <span aria-hidden="true">上一页</span>
+                                    <span aria-hidden="true">&laquo;</span>
                                 </a>
                             {% else %}
                                 <span aria-hidden="true">&laquo;</span>
@@ -132,12 +129,16 @@
                         {# 下一页 #}
                         {% if page_of_list.has_next %}
                             <a href="?page={{ page_of_list.next_page_number }}" aria-label="Previous">
-                                <span aria-hidden="true">下一页</span>
+                                <span aria-hidden="true">&raquo;</span>
                             </a>
                         {% else %}
                             <span aria-hidden="true">&raquo;</span>
                                 </li>
                         {% endif %}
+                    </ul>
+                    <ul class="pagination">
+                        <li id="page_goto"><span><input type="text" value="6"></span></li>
+                        <li><a href="javascript:void(0);" onclick="page_jump();">Go</a></li>
                     </ul>
                     <p>
                         共有{{ page_of_list.paginator.count }}篇博客,
@@ -234,6 +235,29 @@
                     console.log(xhr)
                 }
             });
+        }
+        // 翻页
+        function page_goto(page){
+            if(page==''){
+                page = 1;
+            }
+            var reg = /page=\d{0,2}/;
+            var url = window.location.href;
+
+            //判断是否有参数
+            if(reg.test(window.location.href)){
+                url = url.replace(reg, 'page=' + page);
+            }else if(url.indexOf("?") == -1){
+                url = url + '?page=' + page;
+            }else{
+                url = url + '&page=' + page;
+            }
+            //重定向
+            window.location.href = url;
+        }
+        function page_jump(){
+            var page = $("#page_goto input[type=text]")[0].value;
+            page_goto(page);
         }
     </script>
 {% endblock %}

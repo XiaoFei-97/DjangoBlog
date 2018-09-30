@@ -614,6 +614,17 @@ ul{
     min-height: 180px;
 }
 
+/*分页*/
+#page_goto input {
+    border: none;
+    padding: 0;
+    width: 2em;
+    text-align: center;
+}
+#page_goto span {
+    padding: 6px 4px;
+}
+
 @media screen and (min-width: 768px) {
     #navbar-collapse ul .item{
         line-height: 30px;

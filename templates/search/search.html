@@ -75,7 +75,7 @@
                             {# 上一页 #}
                             {% if page.has_previous %}
                                 <a href="?q={{ query }}&page={{ page.previous_page_number }}" aria-label="Previous">
-                                    <span aria-hidden="true">上一页</span>
+                                    <span aria-hidden="true">&laquo;</span>
                                 </a>
                             {% else %}
                                 <span aria-hidden="true">&laquo;</span>
@@ -101,12 +101,16 @@
                         {# 下一页 #}
                         {% if page.has_next %}
                             <a href="?q={{ query }}&page={{ page.next_page_number }}" aria-label="Previous">
-                                <span aria-hidden="true">下一页</span>
+                                <span aria-hidden="true">&raquo;</span>
                             </a>
                         {% else %}
                             <span aria-hidden="true">&raquo;</span>
                             </li>
                         {% endif %}
+                    </ul>
+                    <ul class="pagination">
+                        <li id="page_goto"><span><input type="text" value="6"></span></li>
+                        <li><a href="javascript:void(0);" onclick="page_jump();">Go</a></li>
                     </ul>
                     <p>
                         共有{{ page.paginator.count }}篇博客,
@@ -160,7 +164,31 @@
             </div>
         </div>
 
-
     {% endif %}
+    <script>
+            // 翻页
+            function page_goto(page){
+                if(page==''){
+                    page = 1;
+                }
+                var reg = /page=\d{0,2}/;
+                var url = window.location.href;
+
+                //判断是否有参数
+                if(reg.test(window.location.href)){
+                    url = url.replace(reg, 'page=' + page);
+                }else if(url.indexOf("?") == -1){
+                    url = url + '?page=' + page;
+                }else{
+                    url = url + '&page=' + page;
+                }
+                //重定向
+                window.location.href = url;
+            }
+            function page_jump(){
+                var page = $("#page_goto input[type=text]")[0].value;
+                page_goto(page);
+            }
+        </script>
 {% endblock %}
 
