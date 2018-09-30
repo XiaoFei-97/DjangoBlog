@@ -1,6 +1,7 @@
 from django import template
 from blog.models import Post
 from django.db.models import Q
+from read_statistics.utils import get_random_recomment
 import random
 
 register = template.Library()
@@ -61,28 +62,19 @@ def get_like_post(category, id):
     # 猜你喜欢
     # 使用Q可以过滤出不要的条件
     like_posts = set()
-    post_list = Post.objects.filter(~Q(id=id), category=category)
-    # return post_list[:15]
+    posts = Post.objects.filter(~Q(id=id), category=category)
 
-    length = post_list.__len__()
+    length = posts.__len__()
     if length < 15:
-        return post_list
+        random_recommend = get_random_recomment()
+        return random_recommend
     else:
         random_index = random.sample(range(length), 15)
         for i in random_index:
-            like_posts.add(post_list[i])
+            like_posts.add(posts[i])
 
-    # like_posts = set()
-    # posts = Post.objects.filter(Q(display=0) | Q(display__isnull=True))
-    # while like_posts.__len__() < 15:
-    #     post_list = Post.objects.filter(~Q(id=id), category=category)
-    #     for post in post_list:
-    #         like_posts.add(post)
-    #         if not like_posts.__len__() < 15:
-    #             return like_posts
-    #     random_post = random.choice(posts)
-    #     like_posts.add(random_post)
     return like_posts
+
 
 
 

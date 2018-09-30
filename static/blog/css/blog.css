@@ -9,7 +9,7 @@ ul{
 .blog-border{
     border: 1px solid #ccc;
     border-radius: 6px;
-    /*margin-bottom: 1em;*/
+    margin-bottom: 1em;
     padding-bottom: 1em;
 }
 .blog-item{
@@ -63,6 +63,10 @@ ul{
 
 .django-ckeditor-widget{
     width: 100%;
+}
+
+.side-list {
+    padding: 0 1em 0 1.5em;
 }
 
 .side-list h4{

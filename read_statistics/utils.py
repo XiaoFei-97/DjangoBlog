@@ -6,6 +6,7 @@ from django.db.models import Sum
 from .models import ReadNum, ReadDetail
 from blog.models import Post
 from django.db.models import Q
+from django.core.cache import cache  # 缓存数据
 
 
 def read_statistics_once_read(request, obj):
@@ -140,7 +141,12 @@ def get_random_recomment():
     # 随机推荐
     random_posts = set()
 
-    post_list = Post.objects.filter(Q(display=0) | Q(display__isnull=True))
+    post_list = cache.get('post_list')
+    if post_list is None:
+        post_list = Post.objects.filter(Q(display=0) | Q(display__isnull=True))
+        # 60*60表示60秒*60,也就是1小时
+        cache.set('post_list', post_list, 30 * 60)
+
     if post_list.count() < 15:
         return post_list
 

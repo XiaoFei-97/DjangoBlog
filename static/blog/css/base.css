@@ -625,6 +625,10 @@ ul{
     padding: 6px 4px;
 }
 
+
+.navbar-nav li a{
+    padding-left: 20px!important;
+}
 @media screen and (min-width: 768px) {
     #navbar-collapse ul .item{
         line-height: 30px;
@@ -699,7 +703,6 @@ ul{
         width: 100%;
     }
 }
-
 
 
 
