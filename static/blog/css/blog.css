@@ -12,6 +12,7 @@ ul{
     margin-bottom: 1em;
     padding-bottom: 1em;
 }
+
 .blog-item{
     clear: both;
     /*border-bottom: 1px solid #ddd;*/
@@ -65,8 +66,28 @@ ul{
     width: 100%;
 }
 
-.side-list {
-    padding: 0 1em 0 1.5em;
+@media screen and (max-width: 991px) {
+    .side-list {
+        padding: 0 1em 0 1.5em;
+    }
+    .blog-border1{
+        border: 1px solid #ccc;
+        border-radius: 6px;
+        margin-bottom: 1em;
+        padding-bottom: 1em;
+    }
+    .blog-border2{
+    }
+}
+@media screen and (min-width: 991px) {
+    .blog-border1{
+    }
+    .blog-border2{
+        border: 1px solid #ccc;
+        border-radius: 6px;
+        margin-bottom: 1em;
+        padding-bottom: 1em;
+    }
 }
 
 .side-list h4{
