@@ -82,7 +82,7 @@
 
                                     评论：{% get_comment_count post %}&nbsp;&nbsp;&nbsp;
 
-                                    推荐：<a onclick="likeChange(this, '{% get_content_type post %}', {{ post.id }})">
+                                    <span style="color:#c93756;">推荐：</span><a onclick="likeChange(this, '{% get_content_type post %}', {{ post.id }})">
                                         <span class="glyphicon glyphicon-thumbs-up {% get_like_status post %}"></span>
                                         <span class="liked-num">{% get_like_count post %}</span>
                                     </a>

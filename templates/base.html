@@ -26,8 +26,8 @@
 
     <!--使用bootstrap框架-->
     <link type="text/css" rel="stylesheet" href="{% static 'bootstrap-3.3.7/css/bootstrap.min.css' %}">
-    <script type="text/javascript" src="{% static 'blog/js/jquery-1.12.4.min.js' %}"></script>
-    <script type="text/javascript" src="{% static 'bootstrap-3.3.7/js/bootstrap.min.js' %}"></script>
+    <script src="https://code.jquery.com/jquery-1.12.4.js" integrity="sha256-Qw82+bXyGq6MydymqBxNPYTaUXXq7c8v3CwiYwLLNXU=" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
 
     {# <link rel="stylesheet" href="{% static 'blog/css/prism.css' %}"> #}
     {# <script src="{% static 'ckeditor/ckeditor/plugins/prism/lib/prism/prism_patched.min.js' %}"></script> #}
@@ -68,7 +68,7 @@
                      </li>
                      <!--归档-->
                      <li class="{% block nav_date_active %}{% endblock %}">
-                         <a href="{% url 'blog:date' 2018 09 %}"><span class="glyphicon glyphicon-book item">归档</span></a>
+                         <a href="{% url 'blog:date' 2018 10 %}"><span class="glyphicon glyphicon-book item">归档</span></a>
                      </li>
                      <!--关于-->
                     <li class="{% block nav_about_active %}{% endblock %}">
@@ -99,7 +99,7 @@
                         </li>
                     {% endif %}
                     <!--搜索框-->
-                    <form method='get' class="navbar-form navbar-left" target="_blank" action="/search/" onsubmit="return check()">
+                    <form method='get' class="navbar-form navbar-left" action="/search/" onsubmit="return check()">
                         <input type="text" name="q" class="form-control" placeholder="搜点啥?" id="find">
                         <button type="submit" class="btn btn-default" id="btn">
                             <span class="glyphicon glyphicon-search" style="line-height:1;"></span>
@@ -364,7 +364,13 @@
             }
         };
 
-        //百度统计
+    </script>
+
+    <!--公告侧边栏-->
+    <script src="{% static 'blog/js/tctip.min.js' %}"></script>
+
+    <!--新版百度统计-->
+    <script>
         var _hmt = _hmt || [];
         (function() {
             var hm = document.createElement("script");
@@ -374,8 +380,21 @@
         })();
     </script>
 
-    <!--公告侧边栏-->
-    <script src="{% static 'blog/js/tctip.min.js' %}"></script>
+    <!--百度收录-->
+    <script>
+        (function(){
+            var bp = document.createElement('script');
+            var curProtocol = window.location.protocol.split(':')[0];
+            if (curProtocol === 'https') {
+                bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+            }
+            else {
+                bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+            }
+            var s = document.getElementsByTagName("script")[0];
+            s.parentNode.insertBefore(bp, s);
+        })();
+    </script>
 
     <!--检查搜索框-->
     <script type="text/javascript">

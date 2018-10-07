@@ -14,7 +14,7 @@ class ReadNum(models.Model):
     read_num = models.IntegerField(default=0, verbose_name=u'阅读次数')
 
     content_type = models.ForeignKey(ContentType, verbose_name=u'类型', on_delete=models.CASCADE)
-    object_id = models.PositiveIntegerField(verbose_name=u'阅读ID')
+    object_id = models.PositiveIntegerField(verbose_name=u'ID')
 
     # 使用contenttypes模型类来找出关联blog
     content_object = GenericForeignKey('content_type', 'object_id')
@@ -52,7 +52,7 @@ class ReadDetail(models.Model):
     date = models.DateField(default=timezone.now, verbose_name=u'阅读日期',)
 
     content_type = models.ForeignKey(ContentType, verbose_name=u'类型', on_delete=models.CASCADE)
-    object_id = models.PositiveIntegerField(verbose_name=u'阅读ID')
+    object_id = models.PositiveIntegerField(verbose_name=u'ID')
     content_object = GenericForeignKey('content_type', 'object_id')
 
     class Meta:

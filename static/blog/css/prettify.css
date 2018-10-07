@@ -17,6 +17,11 @@ pre {
     white-space:normal;
     font-size: 14px;
 }
+@media screen and (max-width: 768px) {
+    pre {
+        font-size: 13px;
+    }
+}
 
 /* Specify class=linenums on a pre to get line numbering */
 ol.linenums { list-style-type:decimal; padding-left: 3em; margin-top: 0; margin-bottom: 0; color: #AEAEAE } /* IE indents via margin-left */

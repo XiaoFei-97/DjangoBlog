@@ -4,9 +4,10 @@ from django.db import models
 from django.contrib.auth.models import User  # 引入USER
 from django.contrib.contenttypes.fields import GenericRelation
 from ckeditor_uploader.fields import RichTextUploadingField
-from read_statistics.models import ReadNumExpandMethod, ReadDetail
+from read_statistics.models import ReadNumExpandMethod, ReadDetail, ReadNum
 from DjangoUeditor.models import UEditorField
 from django.contrib.contenttypes.models import ContentType
+from django.db.models.fields import exceptions
 
 
 class Category(models.Model):
@@ -105,6 +106,24 @@ class Post(models.Model, ReadNumExpandMethod):
         verbose_name = '文章'
         verbose_name_plural = '文章'
         ordering = ['-created_time']
+
+
+def get_read_post(self):
+    # 此处的一个异常处理,用来捕获没有计数对象的情况
+    # 例如在admin后台中,没有计数值会显示为‘-’
+    try:
+        post = Post.objects.get(id=self.object_id)
+        return post.title
+    # 对象不存在就返回0
+    except exceptions.ObjectDoesNotExist:
+        return 0
+
+
+get_read_post.short_description = '文章'
+
+ReadDetail.get_read_post = get_read_post
+ReadNum.get_read_post = get_read_post
+
 
 
 '''

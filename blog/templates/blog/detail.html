@@ -32,7 +32,9 @@
     <script type="text/javascript" src="{% static 'blog/js/prettify.js' %}"></script>
     <!-- ckeditor编辑框 -->
     <script type="text/javascript" src="{% static "ckeditor/ckeditor-init.js" %}"></script>
-    <script type="text/javascript" src="{% static "ckeditor/ckeditor/ckeditor.js" %}"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/ckeditor/4.9.2/ckeditor.js"></script>
+    {# <script type="text/javascript" src="{% static "ckeditor/ckeditor/ckeditor.js" %}"></script>#}
+
     <!-- ueditor编辑框 -->
 {#    <script type="text/javascript" charset="utf-8" src="{% static 'ueditor/ueditor.config.js' %}"></script>#}
 {#    <script type="text/javascript" charset="utf-8" src="{% static 'ueditor/ueditor.all.js' %}"> </script>#}
@@ -53,7 +55,7 @@
                         <h3 class="blog-name">{{ title }}</h3>
                         <ul class="blog-info-description">
                             <li>发布时间：{{ created_time|date:"Y-m-d H:i:s" }}</li>
-                            <li>作者：{{ author }}</li>
+                            <li>作者：{{ user.get_nickname_or_username }}</li>
                         </ul>
                         <ul class="blog-info-description">
                             <li>文章分类：
@@ -103,7 +105,7 @@
                     {% if user.is_authenticated %}
                         <form id="comment_form" action="{% url 'comment:update_comment' %}" method="POST" style="overflow: hidden">{% csrf_token %}
 {#                            多行文本输入#}
-                            <label for="comment-text">{{ user.get_nickname_or_username }},s欢迎评论</label>
+                            <label for="comment-text">{{ user.get_nickname_or_username }}，欢迎评论</label>
                             <div id="reply_content_container" style="display: none">
                                 <p id="reply_title">回复:</p>
                                 <div id="reply_content"></div>

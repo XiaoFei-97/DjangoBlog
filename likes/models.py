@@ -10,7 +10,7 @@ class LikeCount(models.Model):
     """点赞的模型类"""
     # 点赞的对象
     content_type = models.ForeignKey(ContentType, verbose_name=u'类型', on_delete=models.CASCADE)
-    object_id = models.PositiveIntegerField(verbose_name=u'点赞ID')
+    object_id = models.PositiveIntegerField(verbose_name=u'ID')
     content_object = GenericForeignKey('content_type', 'object_id')
     # 点赞数
     liked_num = models.IntegerField(verbose_name=u'点赞数', default=0)
