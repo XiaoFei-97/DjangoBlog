@@ -70,23 +70,32 @@
                             </div>
 
                             <div class="blog-describe">{{ post.body|cut:'&nbsp;'|striptags|truncatechars:150|safe}}</div>
-
-                            <div>
+                            {# 文章标签 #}
+                            {% get_post_tags post as tags_list %}
+                            {% if tags_list %}
                                 <div class="blog-tags">
-                                    {# <span>中的是分类和时间logo样式 #}
-                                    <span class="glyphicon glyphicon-time"></span>&nbsp;{{ post.created_time|date:"Y-m-d" }}&nbsp;&nbsp;&nbsp;
-
-                                    分类：<a href="{% url 'blog:category' post.category.id %}">{{ post.category }}</a>&nbsp;&nbsp;&nbsp;
-
-                                    阅读：{{ post.get_read_num }}&nbsp;&nbsp;&nbsp;
-
-                                    评论：{% get_comment_count post %}&nbsp;&nbsp;&nbsp;
-
-                                    <span style="color:#c93756;">推荐：</span><a onclick="likeChange(this, '{% get_content_type post %}', {{ post.id }})">
-                                        <span class="glyphicon glyphicon-thumbs-up {% get_like_status post %}"></span>
-                                        <span class="liked-num">{% get_like_count post %}</span>
-                                    </a>
+                                    {% for tag in tags_list %}
+                                        <span>{{ tag }}</span>
+                                    {% endfor %}
                                 </div>
+                            {% endif %}
+
+                            <div class="properties">
+
+                                {# <span>中的是分类和时间logo样式 #}
+                                <span class="glyphicon glyphicon-time"></span>&nbsp;{{ post.created_time|date:"Y-m-d" }}&nbsp;&nbsp;&nbsp;
+
+                                分类：<a href="{% url 'blog:category' post.category.id %}">{{ post.category }}</a>&nbsp;&nbsp;&nbsp;
+
+                                阅读：{{ post.get_read_num }}&nbsp;&nbsp;&nbsp;
+
+                                评论：{% get_comment_count post %}&nbsp;&nbsp;&nbsp;
+
+                                <span style="color:#c93756;">推荐：</span><a onclick="likeChange(this, '{% get_content_type post %}', {{ post.id }})">
+                                    <span class="glyphicon glyphicon-thumbs-up {% get_like_status post %}"></span>
+                                    <span class="liked-num">{% get_like_count post %}</span>
+                                </a>
+
                             </div>
                         </div>
                     {% empty %}

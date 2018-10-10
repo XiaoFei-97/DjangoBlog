@@ -1,4 +1,4 @@
-{% extends 'blog/blog.html' %}
+{% extends 'blog/category.html' %}
 {% load post_tags %}
 {% load staticfiles %}
 {#页面标题#}
@@ -7,6 +7,7 @@
 {% endblock title %}
 
 {% block nav_blog_active %}{% endblock %}
+{% block nav_category_active %}{% endblock %}
 {% block nav_date_active %}active{% endblock %}
 
 {% block home_content %}
@@ -47,33 +48,4 @@
         </div>
     </a>
 
-{% endblock %}
-
-{% block side_list %}
-    <div class="side-list">
-        <h4><span class="glyphicon glyphicon-book"></span>&nbsp;日期归档</h4>
-        <ul>
-            {% for post_date in date_list %}
-
-                <div class="light-item">
-                    <a href="{% url 'blog:date' post_date.year post_date.month %}">
-                    {% get_date_to_month post_date %}&nbsp;({% get_date_count post_date.year post_date.month %})
-                </a>     </div>
-            {% empty %}
-                暂无归档 !
-            {% endfor %}
-        </ul>
-    </div>
-    <div class="side-list">
-        <h4><span class="glyphicon glyphicon-tag"></span>&nbsp;博客分类</h4>
-        <ul>
-            {% for category in category_list %}
-                <div class="light-item">
-                    <a href="{% url 'blog:category' category.id %}">{{ category }}&nbsp;({% get_category_count category %})</a>
-                </div>
-            {% empty %}
-                暂无分类 !
-            {% endfor %}
-        </ul>
-    </div>
 {% endblock %}

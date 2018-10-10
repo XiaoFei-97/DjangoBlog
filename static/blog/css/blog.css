@@ -43,12 +43,27 @@ ul{
 .blog-tags{
     font-size: 0.7em;
     color: #777;
+    margin-bottom: 5px;
+}
+
+.blog-tags span{
+    margin-left: 2px;
+    /*color: #c93756;*/
+    background-color: #eee;
+    padding: 3px;
+    border-radius: 6px;
+    /*margin-bottom: 10px;*/
+}
+
+.properties{
+    font-size: 0.7em;
+    color: #777;
     padding-top: 0.5em;
     border-top: 1px solid #eee;
     display: inline-block;
 }
 
-.blog-tags a:hover{
+.properties a:hover{
     color: #f2618c;
 }
 
@@ -87,6 +102,9 @@ ul{
         border-radius: 6px;
         margin-bottom: 1em;
         padding-bottom: 1em;
+    }
+    .blog-border3{
+        margin-bottom: 1em;
     }
 }
 

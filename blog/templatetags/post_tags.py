@@ -76,6 +76,17 @@ def get_like_post(category, id):
     return like_posts
 
 
+@register.simple_tag
+def get_post_tags(post):
+    """
+    获取文章下的所有标签
+    :param post: 博客
+    :return: 标签列表
+    """
+    tags_list = post.tags.all()
+    return tags_list
+
+
 
 
 

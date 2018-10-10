@@ -9,7 +9,7 @@ from blogproject.settings import *
 
 class PostIndex(indexes.SearchIndex, indexes.Indexable):
     # 创建文章索引类
-    text = indexes.CharField(document=True, use_template=True)
+    text = indexes.EdgeNgramField(document=True, use_template=True)
 
     def get_model(self):
         return Post

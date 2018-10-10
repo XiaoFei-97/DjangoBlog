@@ -76,7 +76,7 @@ class Post(models.Model, ReadNumExpandMethod):
     # 文章可以没有标签，因此为标签 tags 指定了 blank=True。
 
     category = models.ForeignKey(Category, verbose_name=u'分类')
-    tags = models.ManyToManyField(Tag, blank=True, verbose_name=u'标签')
+    tags = models.ManyToManyField(Tag, blank=True, verbose_name=u'标签', related_name='tag_post')
 
     read_detail = GenericRelation(ReadDetail)
 

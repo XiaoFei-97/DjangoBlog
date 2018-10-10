@@ -64,6 +64,15 @@
                             <li>阅读({{ read_num }})</li>
                             <li>评论({% get_comment_count post %})</li>
                         </ul>
+                        <ul class="blog-info-description">
+                            {% get_post_tags post as tags_list %}
+                            {% if tags_list %}
+                                所属标签：{% for tag in tags_list %}
+                                    <li>{{ tag }}</li>
+                                {% endfor %}
+                            {% endif %}
+                        </ul>
+
                     </div>
 
                     <div class="panel-body">
