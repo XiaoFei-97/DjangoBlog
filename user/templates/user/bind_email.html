@@ -2,7 +2,7 @@
 {% load staticfiles %}
 
 {% block title %}
-    修改昵称
+    绑定邮箱
 {% endblock %}
 
 {% block nav_login_active %}active{% endblock %}
@@ -10,14 +10,14 @@
 
 {% block content %}
     <div class="container" style="margin-top: 70px;">
-        {% if not user.is_authenticated %}
+        {% if user.is_authenticated %}
             <div class="head-login">
                 <h2 class="text-info">绑定邮箱</h2>
-                <span>与我取得联系，共同成长吧</span>
+                <span>和你在一起压力好大，是谁让你这么优秀</span>
             </div>
 
             <div class="bind_email">
-                <form class="pull-left" action="" method="POST">
+                <form action="" method="POST" class="clearfix">
                      {% csrf_token %}
                      {% for field in email_form %}
                          <label for="{{ field.id_for_label }}">{{ field.label }}:</label>
@@ -27,22 +27,18 @@
                     {# 错误信息标红 #}
                     <span id="tip" class="text-danger">{{ login_form.non_field_errors }}</span>
                     <div class="clearfix"></div>
-                    <div class="pull-left">
-                        <button id="send_code" class="btn btn-primary">发送验证码</button>
-                    </div>
-
-                    <div class="pull-right">
-                        <input class="btn btn-primary pull" type="submit" value="绑定">
-                    </div>
+                    <input class="btn btn-primary pull-right" type="submit" value="绑定">
+                    <button id="send_code" class="btn btn-primary pull-left">发送验证码</button>
+                    <div class="clearfix"></div>
                 </form>
-                <div style="color: red;margin-top: 10px">验证码区分大小写</div>
-                <button style="margin-top: 27px" class="btn btn-default pull-right" onclick="window.location.href={{ return_back_url }}">返回</button>
-
+{#                <button style="margin-top: 27px" class="btn btn-default pull-right" onclick="window.location.href={{ return_back_url }}">返回</button>#}
             </div>
         {% else %}
-            <span>已登录，跳转到首页...</span>
+            <span>您尚未登录，3秒后跳转到首页...</span>
             <script type="text/javascript">
-                window.location.href = '/';
+                setTimeout( function(){
+                    window.location.href = '/';
+                }, 3*1000);
             </script>
         {% endif %}
 

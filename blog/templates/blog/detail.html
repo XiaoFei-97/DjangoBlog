@@ -68,7 +68,7 @@
                             {% get_post_tags post as tags_list %}
                             {% if tags_list %}
                                 所属标签：{% for tag in tags_list %}
-                                    <li>{{ tag }}</li>
+                                <li><span>{{ tag }}</span></li>
                                 {% endfor %}
                             {% endif %}
                         </ul>

@@ -93,6 +93,9 @@ ul{
     }
     .blog-border2{
     }
+    .blog-border3{
+        margin-bottom: 2em;
+    }
 }
 @media screen and (min-width: 991px) {
     .blog-border1{
@@ -102,9 +105,6 @@ ul{
         border-radius: 6px;
         margin-bottom: 1em;
         padding-bottom: 1em;
-    }
-    .blog-border3{
-        margin-bottom: 1em;
     }
 }
 

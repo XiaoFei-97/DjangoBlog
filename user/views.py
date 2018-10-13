@@ -110,11 +110,11 @@ def register(request):
             # 创建用户
             user = User.objects.create_user(username, email, password)
             user.save()
-            # 清楚session
-            del request.sesssion['register_code']
             # 登录用户
             user = auth.authenticate(username=username, password=password)
             auth.login(request, user)
+            # 清除session
+            del request.session['register_code']
             return redirect(request.GET.get('from', reverse('blog:home')))
 
         '''
@@ -221,8 +221,8 @@ def bind_email(request):
             email = email_form.cleaned_data['email']
             request.user.email = email
             request.user.save()
-            # 清楚session
-            del request.sesssion['bind_eamil_code']
+            # 清除session
+            del request.session['bind_eamil_code']
             return redirect(request.GET.get('from', reverse('blog:home')))
 
     else:
@@ -245,7 +245,7 @@ def send_verification_code(request):
         code = ''.join(random.sample(string.ascii_letters + string.digits, 4))
         now = int(time.time())
         send_code_time = request.session.get('send_code_time', 0)
-        if now - send_code_time < 30:
+        if now - send_code_time < 60:
             data["status"] = 'ERROR'
         else:
             # session默认有效期是两星期
@@ -260,6 +260,7 @@ def send_verification_code(request):
             #     [email],
             #     fail_silently=False,
             # )
+
             send_email_by_celery.delay(code, email)
 
             data["status"] = 'SUCCESS'

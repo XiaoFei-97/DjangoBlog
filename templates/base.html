@@ -16,7 +16,7 @@
     <!--网站信息-->
     <meta name="author" content="蒋振飞,XiaoFei-97@outlook.com">
     <meta name="keywords" content="蒋振飞,技术博客,原创">
-    <meta name="description" content="蒋振飞的个人博客，坚持发表个人原创技术笔记">
+    <meta name="description" content="蒋振飞的个人博客，坚持发表个人原创技术笔记，内容涵盖前端、后端、数据库、人工智能等，博文不定期更新。">
     <title>{% block title %}{% endblock%}</title>
     <link type="text/css" rel="shortcut icon" href="{% static 'blog/media/favicon.ico' %}">
 
@@ -160,8 +160,8 @@
             <div class="tools hidden-xs hidden-sm hidden-md">
                 <h4>在线工具</h4>
                 <p><a href="https://www.djangoproject.com/" target="_blank">Django API文档</a></p>
-                <p><a href="https://v3.bootcss.com/" target="_blank">BootStrap中文网</a></p>
-                <p><a href="http://www.w3school.com.cn/" target="_blank">W3Shool</a></p>
+                <p><a href="https://v3.bootcss.com/" target="_blank">BootStrap 中文网</a></p>
+                <p><a href="https://tool.lu/c/developer" target="_blank">开发在线工具</a></p>
             </div>
         </div>
 
@@ -358,7 +358,7 @@
                     className可以为空，或者传入myR-on；默认显示项。
         	**/
             list:{
-            notice: {icon: "{% static 'blog/media/tip.png' %}", name:"公告栏", className:"myR-on", text: '<p style="text-indent:1em;">个别浏览器对博文代码空格样式不兼容，导致代码缩进过宽的bug已解决，现已更换谷歌代码高亮插件，代码清晰易读</p><p style="text-align:right;">2018-08-27</p>'},
+            notice: {icon: "{% static 'blog/media/tip.png' %}", name:"公告栏", className:"myR-on", text: '<p style="text-indent:1em;">第三方登录功能尚处在开发阶段，在此期间，用户可以正常登录网站。新功能上线后，将会利用公告通知各位，欢迎关注！</p><p style="text-align:right;">2018-10-13</p>'},
                 alipay: {icon: "{% static 'blog/media/alipay.png' %}", name:"支付宝", desc: '用支付宝给"振飞"打赏\n感谢支持！', qrimg: "{% static 'blog/media/alipay.jpg' %}"},
                 weixin: {icon: "{% static 'blog/media/weixin.png' %}", name:"微信", desc: '用微信给"振飞"打赏\n感谢支持！', qrimg: "{% static 'blog/media/wepay.png' %}"}
             }

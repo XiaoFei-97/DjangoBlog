@@ -10,30 +10,38 @@
 
 {% block content %}
     <div class="container" style="margin-top: 70px;">
+        {% if user.is_authenticated %}
 
-        <div class="head-login">
-            <h2 class="text-info">修改昵称</h2>
-            <span>与我取得联系，共同成长吧</span>
-        </div>
+            <div class="head-login">
+                <h2 class="text-info">修改昵称</h2>
+                <span>机智如你，看看谁的昵称最好听</span>
+            </div>
 
-        <div class="change_name">
-             <form action="" method="POST">
-             {% csrf_token %}
-             {% for field in name_form %}
-                 <label for="{{ field.id_for_label }}">{{ field.label }}:</label>
-                 {{ field }}
-                 <p class="text-danger">{{ field.errors.as_text }}</p>
-             {% endfor %}
-                {# 错误信息标红 #}
-                <span class="text-danger">{{ login_form.non_field_errors }}</span>
-                {# <span>用户名：</span> #}
-                {# <input type="text" name="username"> #}
-                {# <span>密码：</span> #}
-                {# <input type="password" name="password"> #}
-                 <button class="btn btn-primary pull-right" type="submit">修改</button>
-            </form>
+            <div class="change_name clearfix">
+                 <form action="" method="POST">
+                 {% csrf_token %}
+                 {% for field in name_form %}
+                     <label for="{{ field.id_for_label }}">{{ field.label }}:</label>
+                     {{ field }}
+                     <p class="text-danger">{{ field.errors.as_text }}</p>
+                 {% endfor %}
+                    {# 错误信息标红 #}
+                    <span class="text-danger">{{ login_form.non_field_errors }}</span>
+                    {# <span>用户名：</span> #}
+                    {# <input type="text" name="username"> #}
+                    {# <span>密码：</span> #}
+                    {# <input type="password" name="password"> #}
+                     <button class="btn btn-primary pull-right" type="submit">修改</button>
+                </form>
 
-        </div>
-
+            </div>
+        {% else %}
+            <span>您尚未登录，3秒后跳转到首页...</span>
+            <script type="text/javascript">
+                setTimeout( function(){
+                    window.location.href = '/';
+                }, 3*1000);
+            </script>
+        {% endif %}
     </div>
 {% endblock %}

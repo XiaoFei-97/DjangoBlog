@@ -44,6 +44,9 @@ ul{
     margin-right:0.5em;
 }
 
+.blog-info-description li span{
+    color: purple;
+}
 
 .like{
     color: #337ab7;
@@ -260,6 +263,7 @@ ul{
 
 #post-body img{
     max-width: 100%;
+    height: auto!important;
 }
 
 #post-body a{
@@ -527,7 +531,7 @@ ul{
     border: 1px dashed #aaa;
     padding: 1.2em;
     margin: auto;
-    min-height: 160px;
+    /*min-height: 160px;*/
 }
 
 .login form{
@@ -538,6 +542,7 @@ ul{
     width: 80px;
     height: 80px;
     float: right;
+    margin-top: 20px;
 }
 
 .no-user{
@@ -560,14 +565,14 @@ ul{
     border: 1px dashed #aaa;
     padding: 1.2em;
     margin: auto;
-    min-height: 220px;
+    /*min-height: 220px;*/
 }
 
 .login-button{
     width: 80px;
     height: 80px;
     float: right;
-    margin-top:50px;
+    margin-top: 5px;
 }
 
 .register form{
@@ -576,20 +581,20 @@ ul{
 
 /*修改昵称*/
 .change_name{
-    width: 300px;
+    width: 250px;
     border: 1px dashed #aaa;
     padding: 1.2em;
     margin: auto;
-    min-height: 100px;
+    /*min-height: 100px;*/
 }
 
 /*绑定邮箱*/
 .bind_email{
-    width: 300px;
+    width: 250px;
     border: 1px dashed #aaa;
     padding: 1.2em;
     margin: auto;
-    height: 140px;
+    /*height: 140px;*/
 }
 
 .bind_email form {
@@ -598,20 +603,20 @@ ul{
 
 /*修改密码*/
 .change_password{
-    width: 300px;
+    width: 250px;
     border: 1px dashed #aaa;
     padding: 1.2em;
     margin: auto;
-    height: 180px;
+    /*height: 130px;*/
 }
 
 /*忘记密码*/
 .forgot_password{
-    width: 300px;
+    width: 250px;
     border: 1px dashed #aaa;
     padding: 1.2em;
     margin: auto;
-    min-height: 180px;
+    /*min-height: 180px;*/
 }
 
 /*分页*/
