@@ -46,6 +46,7 @@ ul{
 
 .blog-info-description li span{
     color: purple;
+    border-bottom: 1px solid purple;
 }
 
 .like{
@@ -629,14 +630,14 @@ ul{
 #page_goto span {
     padding: 6px 4px;
 }
-
+.navbar-down{box-shadow: 0 0 5px #888;}
 
 .navbar-nav li a{
     padding-left: 20px!important;
 }
 @media screen and (min-width: 768px) {
     #navbar-collapse ul .item{
-        line-height: 30px;
+        line-height: 32px;
     }
     #navbar-collapse ul form{
         line-height: 45px;

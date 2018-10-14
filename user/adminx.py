@@ -27,7 +27,7 @@ class ProfileAdmin(object):
     作用:自定义文章管理工具
     admin.ModelAdmin:继承admin.ModelAdmin类
     """
-    list_display = ['user', 'nickname']
+    list_display = ['user', 'nickname', 'image_url']
 
 
 xadmin.site.register(Profile, ProfileAdmin)

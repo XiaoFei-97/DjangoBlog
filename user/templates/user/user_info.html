@@ -6,8 +6,9 @@
 {% block content %}
     <div class="container">
         <div class="row">
-            <div class="col-xs-11 col-sm-5 col-lg-5 col-sm-offset-1 side-info blog-border user-info">
-                {% if user.is_authenticated %}
+            {% if user.is_authenticated %}
+
+                <div class="col-xs-11 col-sm-5 col-lg-5 col-sm-offset-1 side-info blog-border user-info">
                     <h4>我的信息</h4>
                     <h3>{{ user.username }}</h3>
                     <p>
@@ -28,14 +29,28 @@
                     <p>加入时间：{{ user.date_joined }}</p>
                     <p>上次登录时间：{{ user.last_login}}</p>
                     <p><a href="{% url 'user:change_password' %}">修改密码</a></p>
-                {% else %}
-                    <span>未登录，跳转到首页...</span>
-                    <script type="text/javascript">
-                        window.location.href = '/';
-                    </script>
-                {% endif %}
-            </div>
-
-            </div>
+                </div>
+            {% else %}
+                <div style="width: 500px;margin:auto;margin-top: 150px;">
+                    <h2 class="text-center">未登录</h2>
+                     <p class="text-center">
+                        <span>未登录，<span id="time_left">5</span>秒后跳转到首页...</span>
+                    </p>
+                </div>
+                <script type="text/javascript">
+                    $(function(){
+                        var time = 5000 / 1000;
+                        intervalid = window.setInterval(function(){
+                            if (time <= 0){
+                                clearInterval(intervalid);
+                                window.location = '/';
+                            }
+                            $('#time_left').text(time);
+                            time -= 1;
+                        },1000);
+                    });
+                </script>
+            {% endif %}
         </div>
+    </div>
 {% endblock %}

@@ -281,11 +281,11 @@ class BindEmailForm(forms.Form):
         return email
 
     def clean_verification_code(self):
-        code = self.request.session.get('bind_email_code', '').lower()
+        code = self.request.session.get('bind_eamil_code', '').lower()
         verification_code = self.cleaned_data.get('verification_code', '').lower()
         if not (code != '' and code == verification_code):
             raise forms.ValidationError('验证码不正确')
-        return verification_code
+        return self.cleaned_data
 
 
 class ForgotPasswordForm(forms.Form):

@@ -32,7 +32,7 @@ urlpatterns = [
     url(r'^', include('user.urls', namespace='user')),
     url(r'^search/', MySeachView(), name='haystack_search'),
     url(r'^ueditor/', include('DjangoUeditor.urls')),
-    # url(r'^oauth/', include('oauth.urls', namespace='oauth')),
+    url(r'^oauth/', include('oauth.urls', namespace='oauth')),
 ]
 
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

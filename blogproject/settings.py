@@ -66,6 +66,7 @@ INSTALLED_APPS = [
     'comment',
     'likes',
     'user',
+    'oauth',
 ]
 
 MIDDLEWARE = [
@@ -246,21 +247,19 @@ EMAIL_SUBJECT_PREFIX = '[蒋振飞的博客]'
 EMAIL_USE_TLS = True  # 与SMTP服务器通信时，是否启动TLS链接（安全链接）
 
 # github登录
-OAUTH_GITHUB_CONFIG = {
-    # 'oauth_type_id': 3,  # 对应模型中记录的ID
-    'oauth_type': 'Github',
+GITHUB_APP_ID = '50675d10fab22eba7342'
+GITHUB_KEY = 'af39cde883162c12ce57e69cb078708aba915ccd'
+GITHUB_CALLBACK_URL = 'http://127.0.0.1:8000/oauth/github_check'  # 填写你的回调地址
 
-    'client_id': '50675d10fab22eba7342',
-    'client_secret': 'af39cde883162c12ce57e69cb078708aba915ccd',
-    'redirect_uri': 'http://127.0.0.1:8000/oauth/github_check',  # 回调地址
-    'scope': 'user:email',  # 授权的权限
-    'state': 'Github',
+# QQ登录
+QQ_APP_ID = '************'
+QQ_KEY = '*******************8'
+QQ_CALLBACK_URL = 'http://127.0.0.1:8000/oauth/qq_check'    # 填写你的回调地址
 
-    # 其他请求的链接
-    'url_authorize': 'https://github.com/login/oauth/authorize',
-    'url_access_token': 'https://github.com/login/oauth/access_token',
-    'url_open_id': '',
-    'url_user_info': 'https://api.github.com/user',
-    'url_email': 'https://api.github.com/user/emails',
-}
+# 新浪微博登录
+WEIBO_APP_ID = '************'
+WEIBO_KEY = '*****************'
+WEIBO_CALLBACK_URL = 'http://127.0.0.1:8000/oauth/weibo_check'    # 填写你的回调地址
+
+
 

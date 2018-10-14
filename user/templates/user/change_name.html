@@ -36,11 +36,24 @@
 
             </div>
         {% else %}
-            <span>您尚未登录，3秒后跳转到首页...</span>
-            <script type="text/javascript">
-                setTimeout( function(){
-                    window.location.href = '/';
-                }, 3*1000);
+            <div style="width: 500px;margin:auto;margin-top: 150px;">
+                <h2 class="text-center">未登录</h2>
+                <p class="text-center">
+                    <span>您尚未登录，<span id="time_left">5</span>秒后跳转到首页...</span>
+                </p>
+            </div>
+             <script type="text/javascript">
+                $(function(){
+                    var time = 5000 / 1000;
+                    intervalid = window.setInterval(function(){
+                        if (time <= 0){
+                            clearInterval(intervalid);
+                            window.location = '/';
+                        }
+                        $('#time_left').text(time);
+                        time -= 1;
+                    },1000);
+                });
             </script>
         {% endif %}
     </div>

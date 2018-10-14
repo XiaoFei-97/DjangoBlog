@@ -35,7 +35,7 @@
 </head>
 
 <body>
-    <div class="navbar navbar-default navbar-fixed-top" role="navigation">
+    <div class="navbar navbar-default navbar-fixed-top navbar-down" role="navigation">
         <div class="container_fluid">
             <div class="navbar-header">
                 <!--网站logo-->
@@ -87,7 +87,13 @@
                         </li>
                     {% else %}
                         <li class="dropdown hover">
-                            <a href="#" class="dropdown-toggle hidden-sm" data-toggle="dropdown" role="button"><span class="glyphicon glyphicon-user item"></span>&nbsp;您好:&nbsp;{{ user.get_nickname_or_username }}<span class="caret"></span></a>
+                            <a href="#" class="dropdown-toggle hidden-sm" data-toggle="dropdown" role="button">
+                                {% if user.get_image_url %}
+                                    <img style="width: 32px;height: 32px;" src="{{ user.get_image_url }}" alt="头像">
+                                    {% else %}
+                                <span class="glyphicon glyphicon-user item"></span>
+                                {% endif %}
+                                &nbsp;{{ user.get_nickname_or_username }}<span class="caret"></span></a>
                             <ul class="dropdown-menu">
                                 <li><a href="{% url 'user:user_info' %}">用户中心</a></li>
                                 <li><a href="{% url 'user:change_password' %}">修改密码</a></li>
@@ -358,7 +364,7 @@
                     className可以为空，或者传入myR-on；默认显示项。
         	**/
             list:{
-            notice: {icon: "{% static 'blog/media/tip.png' %}", name:"公告栏", className:"myR-on", text: '<p style="text-indent:1em;">第三方登录功能尚处在开发阶段，在此期间，用户可以正常登录网站。新功能上线后，将会利用公告通知各位，欢迎关注！</p><p style="text-align:right;">2018-10-13</p>'},
+            notice: {icon: "{% static 'blog/media/tip.png' %}", name:"公告栏", className:"myR-on", text: '<p style="text-indent:1em;">Github第三方登录已成功接入，欢迎使用，同时QQ与新浪接入功能尚处在开发阶段，在此期间，用户可正常登录网站。后续更新，敬请期待！</p><p style="text-align:right;">2018-10-14</p>'},
                 alipay: {icon: "{% static 'blog/media/alipay.png' %}", name:"支付宝", desc: '用支付宝给"振飞"打赏\n感谢支持！', qrimg: "{% static 'blog/media/alipay.jpg' %}"},
                 weixin: {icon: "{% static 'blog/media/weixin.png' %}", name:"微信", desc: '用微信给"振飞"打赏\n感谢支持！', qrimg: "{% static 'blog/media/wepay.png' %}"}
             }
