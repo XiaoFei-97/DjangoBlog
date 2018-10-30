@@ -582,7 +582,7 @@ ul{
 
 /*修改昵称*/
 .change_name{
-    width: 250px;
+    width: 270px;
     border: 1px dashed #aaa;
     padding: 1.2em;
     margin: auto;
@@ -591,7 +591,7 @@ ul{
 
 /*绑定邮箱*/
 .bind_email{
-    width: 250px;
+    width: 270px;
     border: 1px dashed #aaa;
     padding: 1.2em;
     margin: auto;
@@ -604,7 +604,7 @@ ul{
 
 /*修改密码*/
 .change_password{
-    width: 250px;
+    width: 270px;
     border: 1px dashed #aaa;
     padding: 1.2em;
     margin: auto;
@@ -613,7 +613,7 @@ ul{
 
 /*忘记密码*/
 .forgot_password{
-    width: 250px;
+    width: 270px;
     border: 1px dashed #aaa;
     padding: 1.2em;
     margin: auto;
@@ -636,12 +636,12 @@ ul{
     padding-left: 20px!important;
 }
 @media screen and (min-width: 768px) {
-    #navbar-collapse ul .item{
-        line-height: 32px;
-    }
-    #navbar-collapse ul form{
-        line-height: 45px;
-    }
+    /*#navbar-collapse ul .item{*/
+        /*line-height: 32px;*/
+    /*}*/
+    /*#navbar-collapse ul form{*/
+        /*line-height: 45px;*/
+    /*}*/
     .copyright div{
         display: inline-block;
         margin-left: 9em;
@@ -658,9 +658,9 @@ ul{
     .navbar-form button{
         margin-left: 3px;
     }
-    .navbar-default{
-        border-bottom: 61px solid #e7e7e7!important;
-    }
+    /*.navbar-default{*/
+        /*border-bottom: 61px solid #e7e7e7!important;*/
+    /*}*/
     .category{
         min-height: 0;
     }

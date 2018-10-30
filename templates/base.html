@@ -40,7 +40,7 @@
             <div class="navbar-header">
                 <!--网站logo-->
                 <a class="navbar-brand" href="{% url 'blog:blog' %}">
-                    <img src="{% static 'blog/media/logo.png' %}" alt="logo">
+                    <img style="width:100px;" src="{% static 'blog/media/logo.png' %}" alt="logo">
                 </a>
 
                 <!--下拉菜单-->
@@ -87,7 +87,7 @@
                         </li>
                     {% else %}
                         <li class="dropdown hover">
-                            <a href="#" class="dropdown-toggle hidden-sm" data-toggle="dropdown" role="button">
+                            <a href="#" style="padding: 8px 0;" class="dropdown-toggle hidden-sm" data-toggle="dropdown" role="button">
                                 {% if user.get_image_url %}
                                     <img style="width: 32px;height: 32px;" src="{{ user.get_image_url }}" alt="头像">
                                     {% else %}
@@ -118,7 +118,7 @@
 
     <!--轮播图-->
     {% block lunbobox %}
-    <div id="lunbobox" style="margin-top: 60px">
+    <div id="lunbobox" style="margin-top: 40px">
         {# <div id="toleft"> #}
         {# &lt; #}
         {# </div> #}
@@ -292,7 +292,6 @@
                     "color": ""
                 })
             });
-
 
         //鼠标移进  移出
         $("#lunbobox ul li,.lunbo a div,#toright,#toleft ").hover(
