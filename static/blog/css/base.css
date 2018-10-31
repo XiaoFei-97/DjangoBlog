@@ -256,6 +256,7 @@ ul{
 #post-body p{
     line-height: 25px;
     font-size: 15px;
+    word-break: break-all;
 }
 
 #post-body .list-paddingleft-2{
@@ -630,11 +631,14 @@ ul{
 #page_goto span {
     padding: 6px 4px;
 }
-.navbar-down{box-shadow: 0 0 5px #888;}
-
-.navbar-nav li a{
-    padding-left: 20px!important;
+.navbar-down{
+    box-shadow: 0 0 5px #888;
 }
+
+/*.navbar-nav li a{*/
+    /*padding-left: 20px!important;*/
+/*}*/
+
 @media screen and (min-width: 768px) {
     /*#navbar-collapse ul .item{*/
         /*line-height: 32px;*/
