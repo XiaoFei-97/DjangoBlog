@@ -5,6 +5,8 @@ from django.conf import settings   # 导入settings,可以使用其中自定义�
 # contenttypes 是Django内置的一个应用，可以追踪项目中所有app和model的对应关系，并记录在ContentType表中
 from user.forms import LoginModalForm  # 导入登录模态框表单
 from .tasks import *
+from django.http import JsonResponse
+from django.views.decorators.csrf import csrf_exempt
 
 
 def home(request):
@@ -338,3 +340,26 @@ def page_not_found(request):
     """
     return render(request, '404.html')
 
+# 错误：CSRF token missing or incorrect.
+@csrf_exempt
+def findWords(request):
+    """
+    查询数据库的文章标题
+    :param request:
+    :return:
+    """
+    key = request.POST.get('key', '')
+    # print(key)
+    # list = Post.objects.filter(Q(display=0) | Q(display__isnull=True), title__istartswith=key)[:2]
+    list = Post.objects.filter(Q(display=0) | Q(display__isnull=True), title__icontains=key)[:5]
+
+    search_list = []
+    for post in list:
+        data = {
+            'id': post.id,
+            'title': post.title
+        }
+        search_list.append(data)
+    # print(search_list)
+    # 错误In order to allow non-dict objects to be serialized
+    return JsonResponse(search_list, safe=False)

@@ -249,7 +249,7 @@ EMAIL_USE_TLS = True  # 与SMTP服务器通信时，是否启动TLS链接（安�
 # github登录
 GITHUB_APP_ID = '50675d10fab22eba7342'
 GITHUB_KEY = 'af39cde883162c12ce57e69cb078708aba915ccd'
-GITHUB_CALLBACK_URL = 'http://127.0.0.1:8000/oauth/github_check'  # 填写你的回调地址
+GITHUB_CALLBACK_URL = 'https://jzfblog.com/oauth/github_check'  # 填写你的回调地址
 
 # QQ登录
 QQ_APP_ID = '************'

@@ -89,11 +89,11 @@
                         <li class="dropdown hover">
                             <a href="#" style="padding: 8px 0;" class="dropdown-toggle hidden-sm" data-toggle="dropdown" role="button">
                                 {% if user.get_image_url %}
-                                    <img style="width: 32px;height: 32px;" src="{{ user.get_image_url }}" alt="头像">
+                                    <img style="width: 32px;height: 32px;margin-left: 5px;" src="{{ user.get_image_url }}" alt="头像">
                                     {% else %}
                                 <span class="glyphicon glyphicon-user item"></span>
                                 {% endif %}
-                                &nbsp;{{ user.get_nickname_or_username }}<span class="caret"></span></a>
+                                {{ user.get_nickname_or_username }}<span class="caret"></span></a>
                             <ul class="dropdown-menu">
                                 <li><a href="{% url 'user:user_info' %}">用户中心</a></li>
                                 <li><a href="{% url 'user:change_password' %}">修改密码</a></li>
@@ -106,10 +106,17 @@
                     {% endif %}
                     <!--搜索框-->
                     <form method='get' class="navbar-form navbar-left" action="/search/" onsubmit="return check()">
-                        <input type="text" name="q" class="form-control" placeholder="搜点啥?" id="find">
+                        <input type="text" name="q" class="form-control" autocomplete="off" placeholder="搜点啥?" id="key">
+
                         <button type="submit" class="btn btn-default" id="btn">
                             <span class="glyphicon glyphicon-search" style="line-height:1;"></span>
                         </button>
+                        <div class="clearfix"></div>
+                        <div class="blog-search" style="display: none;" id="blog-search">
+                            <ul id="titles">
+
+                            </ul>
+                        </div>
                     </form>
                 </ul>
             </div>
@@ -189,8 +196,73 @@
     <!--蜘蛛丝效果-->
     <script color="160,32,240" opacity='0.6' zIndex="-2" count="50" src="//cdn.bootcss.com/canvas-nest.js/1.0.1/canvas-nest.min.js"></script>
 
+     <!--检查搜索框-->
+    <script type="text/javascript">
+
+        function check() {
+            var key = $("#key").val();
+
+            if(key == null || key == ""){
+                // alert("搜索内容不能为空！");
+                window.location.href = '/blog';
+                return false;
+            }
+
+            return true;
+        }
+
+        $(function(){
+
+            // 使得输入框与提醒框宽度一致
+            var inWidth = $("#key").outerWidth();
+            $("#blog-search").outerWidth(inWidth);
+
+            // 按键弹起，自动加载相关标题
+           $("#key").keyup(function(){
+               // 获取搜索关键词
+               var key = $("#key").val();
+               // alert(key);
+               if(key == ""){
+                   $("#blog-search").hide();
+               }else{
+                   //3. 请求数据。
+                   $.post("{% url 'blog:findWords' %}",{key:key} ,function(data , status){
+                       //alert(data);
+                       $("#blog-search").show();
+                       $("#titles").empty();
+                       $(data).each(function(index , c) {
+
+                           if(c.title.length > 20){
+                               title = c.title.substring(0, 15);
+                               $("#titles").append("<li>" + title + "...</li>")
+                           }else{
+                               title = c.title
+                               $("#titles").append("<li>" + title + "</li>")
+                           }
+
+                       });
+
+                   }, "json");
+               }
+           })
+
+            // 自动提交，查找
+            // 动态绑定事件
+            $("#titles").on("click","li", function(){
+
+                var word = $(this).text();
+                word = word.substring(0, word.length -3);
+                $("#key").val(word);
+            });
+
+
+        });
+    </script>
+
     <!--轮播图配置-->
     <script>
+
+
         //轮播
         $(function() {
             //$("#toright").hide();
@@ -399,23 +471,6 @@
             var s = document.getElementsByTagName("script")[0];
             s.parentNode.insertBefore(bp, s);
         })();
-    </script>
-
-    <!--检查搜索框-->
-    <script type="text/javascript">
-
-        function check() {
-            var find = $("#find").val();
-
-            if(find == null || find == ""){
-                //alert("搜索内容不能为空！");
-                window.location.href = '/';
-                return false;
-            }
-
-            return true;
-        }
-
     </script>
 
     {% block script_extends %}{% endblock %}
