@@ -11,8 +11,8 @@
 {% block header_extend %}
     <link rel="stylesheet" href="{% static 'blog/css/blog.css' %}">
     <!--图片缩放-->
-    <link rel="stylesheet" href="{% static 'blog/css/zoom.css' %}">
-    <script type="text/javascript" src="{% static 'blog/js/zoom.min.js' %}"></script>
+{#    <link rel="stylesheet" href="{% static 'blog/css/zoom.css' %}">#}
+{#    <script type="text/javascript" src="{% static 'blog/js/zoom.min.js' %}"></script>#}
 
     {# highlight代码高亮 #}
     {# <link rel="stylesheet" href="{% static 'blog/css/code.css' %}"> #}
@@ -31,13 +31,13 @@
     <link rel="stylesheet" href="{% static 'blog/css/prettify.css' %}">
     <script type="text/javascript" src="{% static 'blog/js/prettify.js' %}"></script>
     <!-- ckeditor编辑框 -->
-    <script type="text/javascript" src="{% static "ckeditor/ckeditor-init.js" %}"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/ckeditor/4.9.2/ckeditor.js"></script>
+{#    <script type="text/javascript" src="{% static "ckeditor/ckeditor-init.js" %}"></script>#}
+{#    <script src="https://cdnjs.cloudflare.com/ajax/libs/ckeditor/4.9.2/ckeditor.js"></script>#}
     {# <script type="text/javascript" src="{% static "ckeditor/ckeditor/ckeditor.js" %}"></script>#}
 
     <!-- ueditor编辑框 -->
-{#    <script type="text/javascript" charset="utf-8" src="{% static 'ueditor/ueditor.config.js' %}"></script>#}
-{#    <script type="text/javascript" charset="utf-8" src="{% static 'ueditor/ueditor.all.js' %}"> </script>#}
+    <script type="text/javascript" charset="utf-8" src="{% static 'ueditor/ueditor.config.js' %}"></script>
+    <script type="text/javascript" charset="utf-8" src="{% static 'ueditor/ueditor.all.js' %}"> </script>
 {% endblock %}
 
 {% block nav_blog_active %}active{% endblock %}
@@ -111,10 +111,11 @@
 
                 <div class="comment-area">
                     <h3 class="comment-area-title">提交评论</h3>
-                    {% if user.is_authenticated %}
-                        <form id="comment_form" action="{% url 'comment:update_comment' %}" method="POST" style="overflow: hidden">{% csrf_token %}
+                        <form id="comment_form" action="{% url 'comment:update_comment' %}" onsubmit="return false;" method="POST" style="overflow: hidden">{% csrf_token %}
 {#                            多行文本输入#}
-                            <label for="comment-text">{{ user.get_nickname_or_username }}，欢迎评论</label>
+                            {% if user.is_authenticated %}
+                                <label for="comment-text">{{ user.get_nickname_or_username }}，欢迎评论</label>
+                            {% endif %}
                             <div id="reply_content_container" style="display: none">
                                 <p id="reply_title">回复:</p>
                                 <div id="reply_content"></div>
@@ -123,21 +124,10 @@
                             {%  for field in comment_form %}
                                 {{ field }}
                             {% endfor %}
-                                <span id="comment_error" class="text-danger pull-left"></span>
-{#                            <div class="form-group">#}
-{#                                <label for="comment-text">{{ user.username }},欢迎评论</label>#}
-{#                                <textarea class="form-control" id="comment-text" name="text" rows="4"></textarea>#}
-{#                            </div>#}
-{#                            <input type="hidden" name="object_id" value="{{ post_id }}">#}
-{#                            <input type="hidden" name="content_type" value="post">#}
-                            <input class="btn btn-primary pull-right" type="submit" value="评论">
+                                <input class="btn btn-primary pull-right" type="submit" value="评论">
+                                <span id="comment_error" class="text-danger pull-right"></span>
                         </form>
-                    {% else %}
-                        您尚未登录,登录之后方可评论
-                        <a class="btn btn-primary" href="{% url 'user:login' %}?from={{ request.path }}">登录</a>
-                        <span> or </span>
-                        <a class="btn btn-danger" href="{% url 'user:register' %}?from={{ request.path }}">注册</a>
-                    {% endif %}
+
                 </div>
                 <div class="comment-area">
                     <h3 class="comment-area-title">评论列表</h3>
@@ -255,8 +245,17 @@
                             {{ field }}
                         {% endfor %}
                         <span id="login_medal_tip" class="text-danger"></span>
-                    </div>
+                        <div id="account" class="pull-right" style="margin: 0.5em 0;">
 
+                            <a href="{% url 'oauth:github_login' %}" title="Github登录">
+                                <img src="{% static 'blog/media/github.ico' %}" alt="Github登录">
+                            </a>
+                            <img src="{% static 'blog/media/qq.ico' %}" alt="QQ登录">
+                            &nbsp;<img src="{% static 'blog/media/weibo.ico' %}" alt="微博登录">
+
+                        </div>
+                    </div>
+                    <div class="clearfix"></div>
                     <div class="modal-footer">
                         <button type="submit" class="btn btn-primary">登录</button>
                         <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
@@ -277,6 +276,8 @@
         $(window).load(function () {
             $("pre").addClass("prettyprint linenums");
             prettyPrint();
+            id_text.placeholder("为了防止垃圾评论，您需要登录后才可以评论哦～");
+
         });
 
 
@@ -325,13 +326,113 @@
             return year + '-' + month + '-' + day + ' ' + hour + ':' + minute + ':' + second;
         }
 
+        UE.Editor.prototype.placeholder = function (justPlainText) {
+            var _editor = this;
+            _editor.addListener("focus", function () {
+                var localHtml = _editor.getPlainTxt();
+                if ($.trim(localHtml) === $.trim(justPlainText)) {
+                    _editor.setContent(" ");
+                }
+            });
+            _editor.addListener("blur", function () {
+                var localHtml = _editor.getContent();
+                if (!localHtml) {
+                    _editor.setContent("<span>" + justPlainText + "</span>");
+                }
+            });
+            _editor.ready(function () {
+                _editor.fireEvent("blur");
+            });
+        };
+
+        // ueditor编辑框提交
         $("#comment_form").submit(function(){
             // 判断是否为空
-            $("#comment_error").text('');
-            if(CKEDITOR.instances["id_text"].document.getBody().getText().trim()==''){
-                $("#comment_error").text('评论内容不能为空');
+
+            if(id_text.getContent() == '' ){
+                $("#comment_error").text('您尚未写任何评论内容');
+
                 return false;
             }
+            if(id_text.getContent().includes("为了防止垃圾评论，您需要登录后才可以评论哦～") ){
+                $("#comment_error").text('您尚未写任何评论内容');
+
+                return false;
+            }
+
+            // 更新数据到textarea
+            {#id_text.updateElement();#}
+            // 异步提交
+            $.ajax({
+                url: "{% url 'comment:update_comment' %}",
+                type: 'POST',
+                data: $(this).serialize(),
+                cache: false,
+                success: function(data){
+                    console.log(data);
+                    if(data['status']=="SUCCESS"){
+                        if($('#reply_comment_id').val()=='0'){
+                            // 插入评论
+                            var comment_html = '<div id="root_{0}" class="comment">' +
+                                '<span>{1}</span>' +
+                                '<span>({2})：</span>' +
+                                '<div id="comment_{0}">{3}</div>' +
+                                '<div class="like" onclick="likeChange(this, \'{4}\', {0})">' +
+                                    '<span class="glyphicon glyphicon-thumbs-up"></span> ' +
+                                    '<span class="liked-num">0</span>' +
+                                '</div>' +
+                                '<a href="javascript:reply({0});">回复</a>' +
+                                '</div>';
+                            comment_html = comment_html.format(data['pk'], data['username'], timeFormat(data['comment_time']), data['text'], data['content_type']);
+                            $("#comment_list").prepend(comment_html);
+                        }else{
+                            // 插入回复
+                            var reply_html = '<div class="reply">' +
+                                        '<span>{1}</span>' +
+                                        '<span>({2})</span>' +
+                                        '<span>回复</span>' +
+                                        '<span>{3}：</span>' +
+                                        '<div id="comment_{0}">{4}</div>' +
+                                        '<div class="like" onclick="likeChange(this, \'{5}\', {0})">' +
+                                            '<span class="glyphicon glyphicon-thumbs-up\"></span> ' +
+                                            '<span class="liked-num">0</span>' +
+                                        '</div>' +
+                                        '<a href="javascript:reply({0});">回复</a>' +
+                                    '</div>';
+                            reply_html = reply_html.format(data['pk'], data['username'], timeFormat(data['comment_time']), data['reply_to'], data['text'], data['content_type']);
+                            $("#root_" + data['root_pk']).append(reply_html);
+                        }
+
+                        // 清空编辑框的内容
+                        id_text.setContent('');
+                        $('#reply_content_container').hide();
+                        $('#reply_comment_id').val('0');
+                        $('#no_comment').remove();
+                        window.location.reload();
+                        $("#comment_error").text('评论成功');
+                    }else{
+                        // 显示错误信息
+                        $("#comment_error").text(data['message']);
+                    }
+                },
+                error: function(xhr){
+                    console.log(xhr);
+                }
+            });
+            return false;
+        });
+
+        /**
+         * ckeditor编辑框的提交
+        $("#comment_form").submit(function(){
+            // 判断是否为空
+
+            if(CKEDITOR.instances["id_text"].document.getBody().getText().trim()==''){
+                $("#comment_error").text('您尚未写任何评论内容');
+
+                return false;
+            }
+
             // 更新数据到textarea
             CKEDITOR.instances['id_text'].updateElement();
             // 异步提交
@@ -342,7 +443,6 @@
                 cache: false,
                 success: function(data){
                     console.log(data);
-                    window.location.reload();
                     if(data['status']=="SUCCESS"){
                         if($('#reply_comment_id').val()=='0'){
                             // 插入评论
@@ -381,6 +481,7 @@
                         $('#reply_content_container').hide();
                         $('#reply_comment_id').val('0');
                         $('#no_comment').remove();
+                        window.location.reload();
                         $("#comment_error").text('评论成功');
                     }else{
                         // 显示错误信息
@@ -393,6 +494,8 @@
             });
             return false;
         });
+        **/
+
         //更新点赞状态
         function likeChange(obj, content_type, object_id){
             var is_like = obj.getElementsByClassName('active').length == 0

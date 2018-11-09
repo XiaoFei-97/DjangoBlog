@@ -53,7 +53,7 @@ ul{
     color: #337ab7;
     /*鼠标设置为箭头*/
     cursor: pointer;
-    padding: 0.2em 1em;
+    padding: 0.2em 0.5em;
     display: inline-block;
 }
 
@@ -89,6 +89,15 @@ ul{
     padding-bottom: 0.4em;
 }
 
+#comment_error{
+    font-weight: 700;
+    margin-right: 2em;
+    color: #d9534f;
+}
+
+#id_text{
+    width: 100%;
+}
 
 /*首页的标志栏*/
 
@@ -255,7 +264,7 @@ ul{
 /*文章段落*/
 #post-body p{
     line-height: 25px;
-    font-size: 15px;
+    font-size: 14px;
     word-break: break-all;
 }
 

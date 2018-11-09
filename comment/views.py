@@ -62,7 +62,6 @@ def update_comment(request):
 
         # Post.objects.get(pk=object_id)
         comment.content_object = comment_form.cleaned_data['content_object']
-
         parent = comment_form.cleaned_data['parent']
         if not parent is None:
             comment.root = parent.root if not parent.root is None else parent

@@ -196,6 +196,7 @@ def get_blog_list_common_data(request, post_all_list):
                'random_recommend': random_recommend,
                'new_recommend': new_recommend,
                'all_hot_posts': all_hot_posts,
+               'LoginModalForm': LoginModalForm(),
                }
     return context
 

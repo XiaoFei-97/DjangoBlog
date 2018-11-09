@@ -38,6 +38,7 @@ ul{
 .blog-describe{
     color: #666;
     margin-bottom: 0.5em;
+    word-break: break-all;
 }
 
 .blog-tags{
@@ -129,7 +130,7 @@ ul{
     display: block;
     border: 1px solid #d1d1d1;
     border-bottom: none;
-    background-color: #f8f8f8;
+    background-color: #fff;
     overflow: hidden;
     padding: 1em 1em 0.5em;
 }

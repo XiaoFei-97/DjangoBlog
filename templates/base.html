@@ -251,8 +251,11 @@
             $("#titles").on("click","li", function(){
 
                 var word = $(this).text();
-                word = word.substring(0, word.length -3);
+                if(word.includes("...")){
+                    word = word.substring(0, word.length -3);
+                }
                 $("#key").val(word);
+
             });
 
 

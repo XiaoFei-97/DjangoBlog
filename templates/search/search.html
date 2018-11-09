@@ -174,7 +174,42 @@
                 </div>
             </div>
         </div>
+         <!-- Modal -->
+        <div class="modal fade" id="login_modal" tabindex="-1" role="dialog">
+        <div class="modal-dialog modal-sm" role="document">
+            <div class="modal-content">
+                <form id="login_medal_form" action="" method="POST">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <h4 class="modal-title">登录</h4>
+                    </div>
 
+                    <div class="modal-body">
+                        {% csrf_token %}
+                        {% for field in LoginModalForm %}
+                            <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+                            {{ field }}
+                        {% endfor %}
+                        <span id="login_medal_tip" class="text-danger"></span>
+                        <div id="account" class="pull-right" style="margin: 0.5em 0;">
+
+                            <a href="{% url 'oauth:github_login' %}" title="Github登录">
+                                <img src="{% static 'blog/media/github.ico' %}" alt="Github登录">
+                            </a>
+                            <img src="{% static 'blog/media/qq.ico' %}" alt="QQ登录">
+                            &nbsp;<img src="{% static 'blog/media/weibo.ico' %}" alt="微博登录">
+
+                        </div>
+                    </div>
+                    <div class="clearfix"></div>
+                    <div class="modal-footer">
+                        <button type="submit" class="btn btn-primary">登录</button>
+                        <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+        </div>
     {% endif %}
     <script>
             // 翻页

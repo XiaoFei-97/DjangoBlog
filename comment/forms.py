@@ -12,17 +12,17 @@ class CommentForm(forms.Form):
     """
     content_type = forms.CharField(widget=forms.HiddenInput)
     object_id = forms.IntegerField(widget=forms.HiddenInput)
-    # text = forms.CharField(widget=UEditorWidget(
-    #     attrs={"width": 800, "height": 200,
-    #            "toolbars": [['fullscreen', 'source', 'undo', 'redo', 'bold', 'italic',
-    #                          'underline', 'fontborder', 'strikethrough', 'superscript',
-    #                          'subscript', 'removeformat', 'formatmatch', 'autotypeset',
-    #                          'blockquote', 'pasteplain', '|', 'forecolor', 'backcolor',
-    #                          'insertorderedlist', 'insertunorderedlist','selectall',
-    #                         'cleardoc']]}),
-    #     error_messages={'required': '评论内容不能为空'})
-    text = forms.CharField(widget=CKEditorWidget(config_name='comment_ckeditor'),
-                           error_messages={'required': '评论内容不能为空'})
+    text = forms.CharField(widget=UEditorWidget(
+        attrs={"width": 'auto', "height": 180,
+               "toolbars": [['fullscreen', 'source', 'undo', 'redo', 'bold', 'italic',
+                             'underline', 'fontborder', 'strikethrough', 'superscript',
+                             'subscript', 'removeformat', 'formatmatch', 'autotypeset',
+                             'blockquote', 'pasteplain', '|', 'forecolor', 'backcolor',
+                             'insertorderedlist', 'insertunorderedlist','selectall',
+                            'cleardoc', 'emotion']]}),
+        error_messages={'required': '评论内容不能为空'})
+    # text = forms.CharField(widget=CKEditorWidget(config_name='comment_ckeditor'),
+    #                        error_messages={'required': '您尚未写任何评论内容'})
 
     reply_comment_id = forms.IntegerField(widget=forms.HiddenInput(attrs={'id': 'reply_comment_id'}))
 
@@ -36,7 +36,7 @@ class CommentForm(forms.Form):
         if self.user.is_authenticated:
             self.cleaned_data['user'] = self.user
         else:
-            raise forms.ValidationError('用户尚未登录')
+            raise forms.ValidationError('您尚未登录，请先登录才能评论')
 
         # 评论对象验证
         content_type = self.cleaned_data['content_type']

@@ -22,7 +22,7 @@ def login_for_modal(request):
     :param request: 请求对象
     :return: json数据
     """
-    login_form = LoginForm(request.POST)
+    login_form = LoginModalForm(request.POST)
     if login_form.is_valid():
         # cleaned_data是一个字典,包含了字段的信息
         # 表示清理过或者整理过的数据,比较干净的数据
