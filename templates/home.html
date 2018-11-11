@@ -16,41 +16,57 @@
 {% block nav_home_active %}active{% endblock %}
 
 {% block home_content %}
-    <a href="#">
-        <div class="home_content" style="background: url({% static 'blog/media/banner2.jpg' %});background-size: 100% 100%;">
-            <div class="home_show">Jzf Blog</div>
-            <div class="word_info">欢迎阅读评论，喜欢就点个赞吧</div>
-            <div class="motto_name">—一万年太久，只争朝夕</div>
+
+    <div class="home_content">
+        <div id="myCarousel" class="carousel slide" data-ride="carousel" data-interval="4000">
+
+            <!-- 轮播（Carousel）项目 -->
+            <div class="carousel-inner">
+                <div class="item active">
+                    <img src="{% static 'blog/media/banner1.jpg' %}" alt="banner1">
+                    <div class="carousel-caption info">
+                        <div class="home_show">Jzf Blog</div>
+                        <div class="word_info">坚持发表个人原创技术笔记</div>
+                        <div class="motto_name">蒋振飞的博客</div>
+                    </div>
+                </div>
+                <div class="item">
+                    <img src="{% static 'blog/media/banner2.jpg' %}" alt="banner2">
+                    <div class="carousel-caption info">
+                        <div class="home_show">Jzf Blog</div>
+                        <div class="word_info">欢迎阅读评论，喜欢就点个赞吧</div>
+                        <div class="motto_name">—勿谓寸阴短，既过难再获</div>
+                    </div>
+                </div>
+                <div class="item">
+                    <img src="{% static 'blog/media/banner3.jpg' %}" alt="banner3">
+                    <div class="carousel-caption info">
+                        <div class="home_show">Jzf Blog</div>
+                        <div class="word_info">觉得有帮助，就打赏我吧</div>
+                        <div class="motto_name">—你可以平凡，但不能平庸</div>
+                    </div>
+                </div>
+                <div class="item">
+                    <img src="{% static 'blog/media/banner4.jpg' %}" alt="banner4">
+                    <div class="carousel-caption info">
+                        <div class="home_show">Jzf Blog</div>
+                        <div class="word_info">欢迎来访，博主动态请查看公告</div>
+                        <div class="motto_name">—不比起步，比进步</div>
+                    </div>
+                </div>
+                <div class="item">
+                    <img src="{% static 'blog/media/banner5.jpg' %}" alt="banner5">
+                    <div class="carousel-caption info">
+                        <div class="home_show">Jzf Blog</div>
+                        <div class="word_info">欢迎阅读评论，评论需注册登录</div>
+                        <div class="motto_name">—一万年太久，只争朝夕</div>
+                    </div>
+                </div>
+            </div>
+
         </div>
-    </a>
-    <a href="#">
-        <div class="home_content" style="background: url({% static 'blog/media/banner3.jpg' %});background-size: 100% 100%;">
-            <div class="home_show">Jzf Blog</div>
-            <div class="word_info">欢迎阅读评论，交个朋友吧</div>
-            <div class="motto_name">—勿谓寸阴短，既过难再获</div>
-        </div>
-    </a>
-    <a href="#">
-        <div class="home_content" style="background: url({% static 'blog/media/banner5.jpg' %});background-size: 100% 100%;">
-            <div class="home_show">Jzf Blog</div>
-            <div class="word_info">觉得有帮助，就打赏我吧</div>
-            <div class="motto_name">—你可以平凡，但不能平庸</div>
-        </div>
-    </a>
-    <a href="#">
-        <div class="home_content" style="background: url({% static 'blog/media/banner4.jpg' %});background-size: 100% 100%;">
-            <div class="home_show">Jzf Blog</div>
-            <div class="word_info">欢迎来访，博主动态请查看公告</div>
-            <div class="motto_name">—不比起步，比进步</div>
-        </div>
-    </a>
-    <a href="#">
-        <div class="home_content" style="background: url({% static 'blog/media/banner1.jpg' %});background-size: 100% 100%;">
-            <div class="home_show">Jzf Blog</div>
-            <div class="word_info">坚持发表个人原创技术笔记</div>
-            <div class="motto_name">蒋振飞的博客</div>
-        </div>
-    </a>
+    </div>
+
 
 {% endblock %}
 
@@ -361,7 +377,10 @@
         // 图表初始化函数
         var chart = Highcharts.chart('container2', options2);
 
-        /*绑定切换排行榜页面*/
+     </script>
+
+    <!--绑定切换排行榜页面-->
+    <script>
          $('#read-nav li').click(function(){
 
              $(this).blur(); //消除焦点
@@ -377,7 +396,6 @@
                  $('#read-nav').focus()
              });
          });
-
-     </script>
+    </script>
 
 {% endblock %}

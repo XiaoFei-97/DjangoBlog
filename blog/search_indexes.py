@@ -5,6 +5,7 @@ from django.contrib.contenttypes.fields import ContentType
 from .models import Post
 from django.core.paginator import *   # 导入分页功能
 from blogproject.settings import *
+from user.forms import LoginModalForm
 
 
 class PostIndex(indexes.SearchIndex, indexes.Indexable):
@@ -83,5 +84,6 @@ class MySeachView(SearchView):
                 'new_recommend': new_recommend,
                 'all_hot_posts': all_hot_posts,
                 'key': key,
+                'LoginModalForm': LoginModalForm(),
             }
         return context

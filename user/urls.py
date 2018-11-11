@@ -2,15 +2,15 @@ from django.conf.urls import url
 from . import views
 
 urlpatterns = [
-    url(r'^login/', views.login, name='login'),  # 访问地址:主机名+端口号/login
-    url(r'^register/', views.register, name='register'),  # 访问地址:主机名+端口号/register
+    url(r'^user/login/', views.login, name='login'),  # 访问地址:主机名+端口号/login
+    url(r'^user/register/', views.register, name='register'),  # 访问地址:主机名+端口号/register
     url(r'^login_for_modal/', views.login_for_modal, name='login_for_modal'),
-    url(r'^logout/', views.logout, name='logout'),
-    url(r'^user_info/', views.user_info, name='user_info'),
+    url(r'^user/logout/', views.logout, name='logout'),
+    url(r'^user/profile/', views.profile, name='profile'),
     url(r'^about/', views.about, name='about'),
-    url(r'^change_name/', views.change_name, name='change_name'),
-    url(r'^change_password/', views.change_password, name='change_password'),
-    url(r'^forgot_password/', views.forgot_password, name='forgot_password'),
-    url(r'^bind_email/', views.bind_email, name='bind_email'),
+    url(r'^user/chname/', views.chname, name='chname'),
+    url(r'^user/chpwd/', views.chpwd, name='chpwd'),
+    url(r'^user/forgotpwd/', views.forgot_password, name='forgot_password'),
+    url(r'^user/email/', views.bind_email, name='bind_email'),
     url(r'^send_verification_code/', views.send_verification_code, name='send_verification_code'),
 ]

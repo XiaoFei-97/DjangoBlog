@@ -11,8 +11,8 @@
 {% block header_extend %}
     <link rel="stylesheet" href="{% static 'blog/css/blog.css' %}">
     <!--图片缩放-->
-{#    <link rel="stylesheet" href="{% static 'blog/css/zoom.css' %}">#}
-{#    <script type="text/javascript" src="{% static 'blog/js/zoom.min.js' %}"></script>#}
+    <link rel="stylesheet" href="{% static 'blog/css/zoom.css' %}">
+    <script type="text/javascript" src="{% static 'blog/js/zoom.min.js' %}"></script>
 
     {# highlight代码高亮 #}
     {# <link rel="stylesheet" href="{% static 'blog/css/code.css' %}"> #}
@@ -245,15 +245,15 @@
                             {{ field }}
                         {% endfor %}
                         <span id="login_medal_tip" class="text-danger"></span>
-                        <div id="account" class="pull-right" style="margin: 0.5em 0;">
-
-                            <a href="{% url 'oauth:github_login' %}" title="Github登录">
-                                <img src="{% static 'blog/media/github.ico' %}" alt="Github登录">
-                            </a>
-                            <img src="{% static 'blog/media/qq.ico' %}" alt="QQ登录">
-                            &nbsp;<img src="{% static 'blog/media/weibo.ico' %}" alt="微博登录">
-
-                        </div>
+{#                        <div id="account" class="pull-right" style="margin: 0.5em 0;">#}
+{##}
+{#                            <a href="{% url 'oauth:github_login' %}" title="Github登录">#}
+{#                                <img src="{% static 'blog/media/github.ico' %}" alt="Github登录">#}
+{#                            </a>#}
+{#                            <img src="{% static 'blog/media/qq.ico' %}" alt="QQ登录">#}
+{#                            &nbsp;<img src="{% static 'blog/media/weibo.ico' %}" alt="微博登录">#}
+{##}
+{#                        </div>#}
                     </div>
                     <div class="clearfix"></div>
                     <div class="modal-footer">

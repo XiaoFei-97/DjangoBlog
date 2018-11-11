@@ -70,6 +70,7 @@ def login(request):
         # 判断是否有效
         # 验证通过
         if login_form.is_valid():
+            referer = request.POST.get("referer")
             # cleaned_data是一个字典,包含了字段的信息
             # 表示清理过或者整理过的数据,比较干净的数据
             # username = login_form.cleaned_data['username']
@@ -80,7 +81,7 @@ def login(request):
             user = login_form.cleaned_data['user']
             auth.login(request, user)
             # 如果没有获取到源页面就返回到首页
-            referer = request.GET.get('from', reverse('blog:blog'))
+            # referer = request.GET.get('from', reverse('blog:blog'))
             return redirect(referer)
 
     # 验证失败
@@ -88,7 +89,10 @@ def login(request):
         # login_form对象会自动创建表单
         login_form = LoginForm()
 
-    context = {'login_form': login_form}
+    referer = request.META.get('HTTP_REFERER', '/')
+    context = {'login_form': login_form,
+               'referer': referer,
+               }
     return render(request, 'user/login.html', context)
 
 
@@ -103,6 +107,8 @@ def register(request):
         # 判断是否有效
         # 验证通过
         if reg_form.is_valid():
+            # 获取上一次请求路径
+            referer = request.POST.get("referer")
             # 第一种注册方法
             username = reg_form.cleaned_data['username']
             email = reg_form.cleaned_data['email']
@@ -115,7 +121,8 @@ def register(request):
             auth.login(request, user)
             # 清除session
             del request.session['register_code']
-            return redirect(request.GET.get('from', reverse('blog:home')))
+            # return redirect(request.GET.get('from', reverse('blog:home')))
+            return redirect(referer)
 
         '''
             # 第二种注册方法
@@ -131,8 +138,11 @@ def register(request):
     else:
         # login_form对象会自动创建表单
         reg_form = RegForm()
+    referer = request.META.get('HTTP_REFERER', '/')
 
-    context = {'reg_form': reg_form}
+    context = {'reg_form': reg_form,
+               'referer': referer,
+               }
     return render(request, 'user/register.html', context)
 
 
@@ -141,9 +151,9 @@ def logout(request):
     return redirect(request.GET.get('from', reverse('blog:home')))
 
 
-def user_info(request):
+def profile(request):
     context = {}
-    return render(request, 'user/user_info.html', context)
+    return render(request, 'user/profile.html', context)
 
 
 def about(request):
@@ -151,25 +161,32 @@ def about(request):
     return render(request, 'user/about.html',   context)
 
 
-def change_name(request):
+def chname(request):
     """修改昵称"""
     if request.method == 'POST':
         name_form = ChangeNameForm(request.POST, user=request.user)
         if name_form.is_valid():
+            # 获取上次访问地址
+            referer = request.POST.get("referer")
+
             new_nickname = name_form.cleaned_data['new_nickname']
             profile, created = Profile.objects.get_or_create(user=request.user)
             profile.nickname = new_nickname
             profile.save()
-            return redirect(request.GET.get('from', reverse('blog:home')))
+            # return redirect(request.GET.get('from', reverse('blog:home')))
+            return redirect(referer)
 
     else:
         name_form = ChangeNameForm()
 
-    context = {'name_form': name_form}
-    return render(request, 'user/change_name.html', context)
+    referer = request.META.get('HTTP_REFERER', '/')
+    context = {'name_form': name_form,
+               'referer': referer,
+               }
+    return render(request, 'user/chname.html', context)
 
 
-def change_password(request):
+def chpwd(request):
     """修改密码"""
     if request.method == 'POST':
         password_form = ChangePasswordForm(request.POST, user=request.user)
@@ -188,7 +205,7 @@ def change_password(request):
         password_form = ChangePasswordForm()
 
     context = {'password_form': password_form}
-    return render(request, 'user/change_password.html', context)
+    return render(request, 'user/chpwd.html', context)
 
 
 def forgot_password(request):
@@ -218,17 +235,22 @@ def bind_email(request):
     if request.method == 'POST':
         email_form = BindEmailForm(request.POST, request=request)
         if email_form.is_valid():
+            # 获取上次访问地址
+            referer = request.POST.get("referer")
             email = email_form.cleaned_data['email']
             request.user.email = email
             request.user.save()
             # 清除session
             del request.session['bind_eamil_code']
-            return redirect(request.GET.get('from', reverse('blog:home')))
+            # return redirect(request.GET.get('from', reverse('blog:home')))
+            return redirect(referer)
 
     else:
         email_form = BindEmailForm()
-
-    context = {'email_form': email_form}
+    referer = request.META.get('HTTP_REFERER', '/')
+    context = {'email_form': email_form,
+               'referer': referer,
+               }
     return render(request, 'user/bind_email.html', context)
 
 
@@ -245,7 +267,7 @@ def send_verification_code(request):
         code = ''.join(random.sample(string.ascii_letters + string.digits, 4))
         now = int(time.time())
         send_code_time = request.session.get('send_code_time', 0)
-        if now - send_code_time < 60:
+        if now - send_code_time < 30:
             data["status"] = 'ERROR'
         else:
             # session默认有效期是两星期

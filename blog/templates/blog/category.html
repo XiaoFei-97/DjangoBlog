@@ -9,44 +9,58 @@
 {% block nav_blog_active %}{% endblock %}
 {% block nav_category_active %}active{% endblock %}
 
+
 {% block home_content %}
 
-    <a href="#">
-        <div class="home_content" style="background: url({% static 'blog/media/banner2.jpg' %});background-size: 100% 100%;">
-            <div class="home_show">博客分类</div>
-            <div class="word_info">欢迎阅读评论，喜欢就点个赞吧</div>
-            <div class="motto_name">—光景不待人，须叟发成丝</div>
-        </div>
-    </a>
-    <a href="#">
-        <div class="home_content" style="background: url({% static 'blog/media/banner5.jpg' %});background-size: 100% 100%;">
-            <div class="home_show">博客分类</div>
-            <div class="word_info">坚持发表个人原创技术笔记</div>
-            <div class="motto_name">—不可压倒一切，但也不能被一切压倒</div>
-        </div>
-    </a>
-    <a href="#">
-        <div class="home_content" style="background: url({% static 'blog/media/banner4.jpg' %});background-size: 100% 100%;">
-            <div class="home_show">博客分类</div>
-            <div class="word_info">觉得有帮助，就打赏我吧</div>
-            <div class="motto_name">—真正的快乐来源于宽容和帮助</div>
-        </div>
-    </a>
-     <a href="#">
-        <div class="home_content" style="background: url({% static 'blog/media/banner1.jpg' %});background-size: 100% 100%;">
-            <div class="home_show">博客分类</div>
-            <div class="word_info">欢迎阅读评论，评论需注册登录</div>
-            <div class="motto_name">—不怕路远，就怕志短</div>
-        </div>
-    </a>
-    <a href="#">
-        <div class="home_content" style="background: url({% static 'blog/media/banner3.jpg' %});background-size: 100% 100%;">
-            <div class="home_show">博客分类</div>
-            <div class="word_info">欢迎来访，博主动态请查看公告</div>
-            <div class="motto_name">—一万年太久，只争朝夕</div>
-        </div>
-    </a>
+    <div class="home_content">
+        <div id="myCarousel" class="carousel slide" data-ride="carousel" data-interval="4000">
 
+            <!-- 轮播（Carousel）项目 -->
+            <div class="carousel-inner">
+                <div class="item active">
+                    <img src="{% static 'blog/media/banner3.jpg' %}" alt="banner2">
+                    <div class="carousel-caption info">
+                        <div class="home_show">我的博客</div>
+                        <div class="word_info">欢迎阅读评论，评论需注册登录</div>
+                        <div class="motto_name">—光景不待人，须叟发成丝</div>
+                    </div>
+                </div>
+                <div class="item">
+                    <img src="{% static 'blog/media/banner4.jpg' %}" alt="banner1">
+                    <div class="carousel-caption info">
+                        <div class="home_show">博客分类</div>
+                        <div class="word_info">欢迎阅读评论，喜欢就点个赞吧</div>
+                        <div class="motto_name">—不可压倒一切，但也不能被一切压倒</div>
+                    </div>
+                </div>
+                <div class="item">
+                    <img src="{% static 'blog/media/banner5.jpg' %}" alt="banner3">
+                    <div class="carousel-caption info">
+                        <div class="home_show">博客分类</div>
+                        <div class="word_info">觉得有帮助，就打赏我吧</div>
+                        <div class="motto_name">—浮光掠影，不即不离</div>
+                    </div>
+                </div>
+                <div class="item">
+                    <img src="{% static 'blog/media/banner1.jpg' %}" alt="banner4">
+                    <div class="carousel-caption info">
+                        <div class="home_show">博客分类</div>
+                        <div class="word_info">欢迎来访，博主动态请查看公告</div>
+                        <div class="motto_name">—不怕路远，就怕志短</div>
+                    </div>
+                </div>
+                <div class="item">
+                    <img src="{% static 'blog/media/banner2.jpg' %}" alt="banner5">
+                    <div class="carousel-caption info">
+                        <div class="home_show">博客分类</div>
+                        <div class="word_info">欢迎阅读评论，评论需注册登录</div>
+                        <div class="motto_name">—敏而好学，不耻下问</div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
 
 {% endblock %}
 

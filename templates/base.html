@@ -6,9 +6,9 @@
 <head>
     <!--- the site is designed jzfblog.com 05/2018 --->
     <meta charset="UTF-8">
-    {# 兼容IE浏览器#}
+    {# 兼容IE浏览器 #}
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    {# 响应式布局#}
+    {# 响应式布局 #}
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!-- 百度收录标识 -->
     <meta name="baidu-site-verification" content="5RbnZ7cZ7F" />
@@ -29,8 +29,8 @@
     <script src="https://code.jquery.com/jquery-1.12.4.js" integrity="sha256-Qw82+bXyGq6MydymqBxNPYTaUXXq7c8v3CwiYwLLNXU=" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
 
-    {# <link rel="stylesheet" href="{% static 'blog/css/prism.css' %}"> #}
-    {# <script src="{% static 'ckeditor/ckeditor/plugins/prism/lib/prism/prism_patched.min.js' %}"></script> #}
+    <!--公告侧边栏-->
+    <script src="{% static 'blog/js/tctip.min.js' %}"></script>
     {% block header_extend %}{% endblock %}
 </head>
 
@@ -68,7 +68,7 @@
                      </li>
                      <!--归档-->
                      <li class="{% block nav_date_active %}{% endblock %}">
-                         <a href="{% url 'blog:date' 2018 10 %}"><span class="glyphicon glyphicon-book item">归档</span></a>
+                         <a href="{% url 'blog:date' 2018 11 %}"><span class="glyphicon glyphicon-book item">归档</span></a>
                      </li>
                      <!--关于-->
                     <li class="{% block nav_about_active %}{% endblock %}">
@@ -79,11 +79,13 @@
                     {% if not user.is_authenticated %}
                         <!--登录-->
                         <li class="{% block nav_login_active %}{% endblock %}">
-                            <a class="item glyphicon hidden-sm" href="{% url 'user:login' %}?from={{ request.get_full_path }}">登录</a>
+                            {# ?from={{ request.get_full_path }} #}
+                            <a class="item glyphicon hidden-sm" href="{% url 'user:login' %}">登录</a>
                         </li>
                         <!--注册-->
                         <li class="hidden-sm {% block nav_register_active %}{% endblock %}">
-                            <a class="item glyphicon" href="{% url 'user:register' %}?from={{ request.get_full_path }}">注册</a>
+                            {# ?from={{ request.get_full_path } #}
+                            <a class="item glyphicon" href="{% url 'user:register' %}">注册</a>
                         </li>
                     {% else %}
                         <li class="dropdown hover">
@@ -95,8 +97,8 @@
                                 {% endif %}
                                 {{ user.get_nickname_or_username }}<span class="caret"></span></a>
                             <ul class="dropdown-menu">
-                                <li><a href="{% url 'user:user_info' %}">用户中心</a></li>
-                                <li><a href="{% url 'user:change_password' %}">修改密码</a></li>
+                                <li><a href="{% url 'user:profile' %}">用户中心</a></li>
+                                <li><a href="{% url 'user:chpwd' %}">修改密码</a></li>
                                 {% if user.is_staff or user.is_superuser %}
                                     <li><a href="{% url 'xadmin:index' %}">后台管理</a></li>
                                 {% endif %}
@@ -124,29 +126,7 @@
     </div>
 
     <!--轮播图-->
-    {% block lunbobox %}
-    <div id="lunbobox" style="margin-top: 40px">
-        {# <div id="toleft"> #}
-        {# &lt; #}
-        {# </div> #}
-
-        <div class="lunbo">
-            {% block home_content %}{% endblock %}
-        </div>
-
-        {# <div id="toright"> #}
-        {# &gt; #}
-        {# </div> #}
-
-        {# <ul class="hidden-xs"> #}
-            {# <li></li> #}
-            {# <li></li> #}
-            {# <li></li> #}
-            {# <li></li> #}
-            {# <li></li> #}
-        {# </ul>#}
-    </div>
-    {% endblock %}
+    {% block home_content %}{% endblock %}
 
     <!--页面内容-->
     {% block content %}{% endblock %}
@@ -255,147 +235,15 @@
                     word = word.substring(0, word.length -3);
                 }
                 $("#key").val(word);
-
+                window.location.href = "/search/?q="+word
             });
 
 
         });
     </script>
 
-    <!--轮播图配置-->
+    <!-- 公告栏配置 -->
     <script>
-
-
-        //轮播
-        $(function() {
-            //$("#toright").hide();
-            //$("#toleft").hide();
-            $('#toright').hover(function() {
-                $("#toleft").hide()
-            }, function() {
-                $("#toleft").show()
-            });
-            $('#toleft').hover(function() {
-                $("#toright").hide()
-            }, function() {
-                $("#toright").show()
-            })
-        });
-
-        var t;
-        var index = 0;
-        //自动播放
-        t = setInterval(play, 5000);
-
-        function play() {
-            index++;
-            if (index > 4) {
-                index = 0
-            }
-            //console.log(index)
-            $("#lunbobox ul li").eq(index).css({
-                "background": "#999",
-                "border": "1px solid #ffffff"
-            }).siblings().css({
-                "background": "#cccccc",
-                "border": ""
-            });
-
-            $(".lunbo a ").eq(index).fadeIn(2000).siblings().fadeOut(2000);
-        };
-
-        //点击鼠标 图片切换
-        $("#lunbobox ul li").click(function() {
-
-            //添加 移除样式
-            //$(this).addClass("lito").siblings().removeClass("lito"); //给当前鼠标移动到的li增加样式 且其余兄弟元素移除样式   可以在样式中 用hover 来对li 实现
-            $(this).css({
-                "background": "#999",
-                "border": "1px solid #ffffff"
-            }).siblings().css({
-                "background": "#cccccc"
-            });
-            var index = $(this).index(); //获取索引 图片索引与按钮的索引是一一对应的
-            console.log(index);
-
-            $(".lunbo a ").eq(index).fadeIn(2000).siblings().fadeOut(2000); //siblings  找到 兄弟节点(不包括自己）
-        });
-
-        //上一张、下一张切换
-        $("#toleft").click(function() {
-            index--;
-            if (index < 0) //判断index<0的情况为：开始点击#toright  index=0时  再点击 #toleft 为负数了 会出错
-            {
-                index = 4
-            }
-            console.log(index);
-            $("#lunbobox ul li").eq(index).css({
-                "background": "#999",
-                "border": "1px solid #ffffff"
-            }).siblings().css({
-                "background": "#cccccc"
-            });
-
-            $(".lunbo a ").eq(index).fadeIn(2000).siblings().fadeOut(2000); //siblings  找到 兄弟节点(不包括自己）必须要写
-        }); //$("#imgbox a ")获取到的是一个数组集合 。所以可以用index来控制切换
-
-        $("#toright").click(function() {
-            index++;
-            if (index > 4) {
-                index = 0
-            }
-            console.log(index);
-            $(this).css({
-                "opacity": "0.5"
-            });
-            $("#lunbobox ul li").eq(index).css({
-                "background": "#999",
-                "border": "1px solid #ffffff"
-            }).siblings().css({
-                "background": "#cccccc"
-            });
-            $(".lunbo a ").eq(index).fadeIn(2000).siblings().fadeOut(2000); //siblings  找到 兄弟节点(不包括自己）
-        });
-        $("#toleft,#toright").hover(function() {
-                $(this).css({
-                    "color": "black"
-                })
-            },
-            function() {
-                $(this).css({
-                    "opacity": "0.3",
-                    "color": ""
-                })
-            });
-
-        //鼠标移进  移出
-        $("#lunbobox ul li,.lunbo a div,#toright,#toleft ").hover(
-            //鼠标移进
-            function() {
-                $('#toright,#toleft').show();
-                clearInterval(t);
-
-            },
-            //鼠标移开
-            function() {
-                //$('#toright,#toleft').hide()
-                //alert('aaa')
-                t = setInterval(play, 5000);
-
-                function play() {
-                    index++;
-                    if (index > 4) {
-                        index = 0
-                    }
-                    $("#lunbobox ul li").eq(index).css({
-                        "background": "#999",
-                        "border": "1px solid #ffffff"
-                    }).siblings().css({
-                        "background": "#cccccc"
-                    });
-                    $(".lunbo a ").eq(index).fadeIn(2000).siblings().fadeOut(2000);
-                }
-            });
 
         window.tctipConfig = {
         	//最上面的文字
@@ -446,8 +294,17 @@
 
     </script>
 
-    <!--公告侧边栏-->
-    <script src="{% static 'blog/js/tctip.min.js' %}"></script>
+    <!--轮播图配置-->
+    <script>
+         // 轮播图操作
+        $(function(){
+            // 初始化轮播
+            $("#myCarousel").carousel('cycle');
+            $('#myCarousel').carousel({
+                interval: 3000
+            });
+        });
+    </script>
 
     <!--新版百度统计-->
     <script>

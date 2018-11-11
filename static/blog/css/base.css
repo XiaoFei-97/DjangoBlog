@@ -100,104 +100,40 @@ ul{
 }
 
 /*首页的标志栏*/
-
-#lunbobox {
-	/*width:100%;*/
-	/*height:300px;*/
-	position:relative;
-}
-.lunbo {
-	width:100%;
-	height:280px;
-}
-.lunbo div {
-	width:100%;
-	height:280px;
-	position:absolute;
-	top:0px;
-	left:0px;
-}
-#lunbobox ul {
-	width:53%;
-	position:absolute;
-	bottom:10px;
-	right:0px;
-	z-index:5;
-}
-#lunbobox ul li {
-	cursor:pointer;
-	width:10px;
-	height:4px;
-	border:1px solid #cccccc;
-	float:left;
-	list-style:none;
-	background:#cccccc;
-	text-align:center;
-	margin:0px 5px 0px 0px;
-}
-#toleft {
-	display:none;
-	width:30px;
-	height:100px;
-	font-size:40px;
-	line-height:100px;
-	text-align:center;
-	color:#f4f4f4;
-	/*background:#cccccc;
-	*/
-    /*background:url("../images/toleft.jpg")no-repeat center;
-	*/
-    position:absolute;
-	top:90px;
-	left:12px;
-	cursor:pointer;
-	z-index:99;
-	opacity:0.4;
-}
-#toright {
-	display:none;
-	width:30px;
-	height:100px;
-	font-size:40px;
-	line-height:100px;
-	text-align:center;
-	color:#f4f4f4;
-	/*background:#cccccc;
-	*/
-    position:absolute;
-	top:90px;
-	right:0px;
-	cursor:pointer;
-	z-index:99;
-	opacity:0.4;
-}
-
 .home_content{
-    /*background-color: #4F5893;*/
-    /*#374498;*/
-    min-height: 280px;
+    margin-top: 50px;
     text-align: center;
-    margin-bottom: 1em;
     width: 100%;
+    position: relative;
+    height: 280px;
 }
 
-.home_content .home_show{
+.home_content img{
+    width: 100%;
+    height: 280px!important;
+}
+
+.info{
+    z-index: 2;
+    position:absolute;
+    left: 0;
+    right: 0;
+    top: 4em;
+    bottom: 0;
+    margin:auto;
+}
+
+.info .home_show{
     font-size: 3.5em;
     display: inline-block;
-    margin-top: 1.5em;
     color: #fff;
 }
 
-.home_content .motto_name,.word_info{
+.info .motto_name,.word_info{
     color: #B9BFE4;
     font-size: 1.5em;
-    margin-top: 9em;
+    margin-top: 0.3em;
 }
-
-.home_content .word_info{
-    margin-top: 7em;
-}
-
 
 /*登录页面响应式布局*/
 @media screen and (max-width: 800px) {
@@ -367,10 +303,13 @@ ul{
 }
 
 .no-find{
-    font-size: 2em;
-    margin-top: 4em;
+    margin-top: 5em;
     text-align: center;
     color:red;
+}
+
+.no-find p{
+    font-size: 1.5em;
 }
 
 .no-find a{
@@ -692,9 +631,11 @@ ul{
         font-size: 0.8em;
     }
     .no-find{
-        font-size: 1em;
-        margin-top: 4em;
+        margin-top: 1em;
         text-align: center;
+    }
+    .no-find p{
+        font-size: 1.2em;
     }
     .login{
         margin-bottom: 20px;

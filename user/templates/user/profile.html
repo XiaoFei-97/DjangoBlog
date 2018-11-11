@@ -14,21 +14,21 @@
                     <p>
                         昵称：{{ user.get_nickname }}
                         {% if user.get_nickname %}
-                            <a style="margin-left: 0.5em" href="{% url 'user:change_name' %}?from={{ request.get_full_path }}">修改昵称</a>
+                            <a style="margin-left: 0.5em" href="{% url 'user:chname' %}">修改昵称</a>
                         {% else %}
-                            <a href="{% url 'user:change_name' %}?from={{ request.get_full_path }}">添加昵称</a>
+                            <a href="{% url 'user:chname' %}">添加昵称</a>
                         {% endif %}
                     </p>
                     <p>注册邮箱：
                         {% if user.email %}
                             {{ user.email }} (已绑定)
                         {% else %}
-                            未绑定 <a href="{% url 'user:bind_email' %}?from={{ request.get_full_path }}">绑定邮箱</a>
+                            未绑定 <a href="{% url 'user:bind_email' %}">绑定邮箱</a>
                         {% endif %}
                     </p>
                     <p>加入时间：{{ user.date_joined }}</p>
                     <p>上次登录时间：{{ user.last_login}}</p>
-                    <p><a href="{% url 'user:change_password' %}">修改密码</a></p>
+                    <p><a href="{% url 'user:chpwd' %}">修改密码</a></p>
                 </div>
             {% else %}
                 <div style="width: 500px;margin:auto;margin-top: 150px;">

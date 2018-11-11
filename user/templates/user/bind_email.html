@@ -19,6 +19,7 @@
             <div class="bind_email">
                 <form action="" method="POST" class="clearfix">
                      {% csrf_token %}
+                    <input name="referer" type="hidden" value="{{ referer }}">
                      {% for field in email_form %}
                          <label for="{{ field.id_for_label }}">{{ field.label }}:</label>
                          {{ field }}
@@ -35,12 +36,9 @@
             </div>
         {% else %}
             <div style="width: 500px;margin:auto;margin-top: 150px;">
-                <p class="text-center">
-                <h2 class="text-center">未登录</h2>
-                    <p class="text-center">
-                        <span>您尚未登录，<span id="time_left">5</span>秒后跳转到首页...</span>
-                    </p>
-                </p>
+                <h4 class="text-center">
+                    <span>您尚未登录，<span id="time_left">3</span>秒后跳转到首页...</span>
+                </h4>
             </div>
             <script type="text/javascript">
                 $(function(){
@@ -88,7 +86,7 @@
            //把按钮变灰
             $(this).addClass('disabled');
             $(this).attr('disabled', true);
-            var time = 60;
+            var time = 30;
             $(this).text(time + 's');
             var interval = setInterval(() => {
                 if(time <= 0){
