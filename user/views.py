@@ -40,110 +40,46 @@ def login_for_modal(request):
     return JsonResponse(data)
 
 
-def login(request):
-    """
-    用户登录逻辑处理
-    :param request:
-    :return: 登录视图
-    """
-    '''
-    # 利用request的POST方法获取form表单中的post数据
-    username = request.POST.get('username')
-    password = request.POST.get('password')
-    # 通过用户名和密码构造用户连接
-    user = auth.authenticate(username=username, password=password)
-    # 获取源页面
-    # 如果获取不到源页面,就使用反向解析到首页
-    referer = request.META.get('HTTP_REFERER', reverse('blog:home'))
-
-    # 判断用户是否存在
-    if user is not None:
-        auth.login(request, user)
-        # 如果没有获取到源页面就返回到首页
-        return redirect(referer)
-    else:
-        context = {'message': '用户名或密码错误'}
-        return render(request, 'blog/error.html', context)
-    '''
-    if request.method == 'POST':
-        login_form = LoginForm(request.POST)
-        # 判断是否有效
-        # 验证通过
-        if login_form.is_valid():
-            referer = request.POST.get("referer")
-            # cleaned_data是一个字典,包含了字段的信息
-            # 表示清理过或者整理过的数据,比较干净的数据
-            # username = login_form.cleaned_data['username']
-            # password = login_form.cleaned_data['password']
-            # user = auth.authenticate(username=username, password=password)
-            # 判断用户是否存在
-            # if user is not None:
-            user = login_form.cleaned_data['user']
-            auth.login(request, user)
-            # 如果没有获取到源页面就返回到首页
-            # referer = request.GET.get('from', reverse('blog:blog'))
-            return redirect(referer)
-
-    # 验证失败
-    else:
-        # login_form对象会自动创建表单
-        login_form = LoginForm()
-
-    referer = request.META.get('HTTP_REFERER', '/')
-    context = {'login_form': login_form,
-               'referer': referer,
-               }
-    return render(request, 'user/login.html', context)
-
-
-def register(request):
+def register_for_modal(request):
     """
     用户注册功能相关处理
     :param request: 请求对象
     :return: 注册成功返回首页，失败返回注册表单
     """
-    if request.method == 'POST':
-        reg_form = RegForm(request.POST, request=request)
-        # 判断是否有效
-        # 验证通过
-        if reg_form.is_valid():
-            # 获取上一次请求路径
-            referer = request.POST.get("referer")
-            # 第一种注册方法
-            username = reg_form.cleaned_data['username']
-            email = reg_form.cleaned_data['email']
-            password = reg_form.cleaned_data['password']
-            # 创建用户
-            user = User.objects.create_user(username, email, password)
-            user.save()
-            # 登录用户
-            user = auth.authenticate(username=username, password=password)
-            auth.login(request, user)
-            # 清除session
-            del request.session['register_code']
-            # return redirect(request.GET.get('from', reverse('blog:home')))
-            return redirect(referer)
-
-        '''
-            # 第二种注册方法
-            user = User()
-            user.username = username
-            user.email = email
-            user.set_password(password)
-            user.save()
-    
-        '''
-
+    reg_form = RegModalForm(request.POST, request=request)
+    # 判断是否有效
+    # 验证通过
+    if reg_form.is_valid():
+        # 第一种注册方法
+        username = reg_form.cleaned_data['username']
+        email = reg_form.cleaned_data['email']
+        password = reg_form.cleaned_data['password']
+        verification_code = reg_form.cleaned_data['verification_code'].lower()
+        # 增加ajax的判断
+        if User.objects.filter(username=username).exists():
+            data = {'status': '100'}
+            return JsonResponse(data)
+        if User.objects.filter(email=email).exists():
+            data = {'status': '200'}
+            return JsonResponse(data)
+        code = request.session.get('register_code', '').lower()
+        if not (code != '' and code == verification_code):
+            data = {'status': '300'}
+            return JsonResponse(data)
+        # 创建用户
+        user = User.objects.create_user(username, email, password)
+        user.save()
+        # 登录用户
+        user = auth.authenticate(username=username, password=password)
+        auth.login(request, user)
+        # 清除session
+        del request.session['register_code']
+        # return redirect(request.GET.get('from', reverse('blog:home')))
+        data = {'status': 'SUCCESS'}
     # 验证失败
     else:
-        # login_form对象会自动创建表单
-        reg_form = RegForm()
-    referer = request.META.get('HTTP_REFERER', '/')
-
-    context = {'reg_form': reg_form,
-               'referer': referer,
-               }
-    return render(request, 'user/register.html', context)
+        data = {'status': 'ERROR'}
+    return JsonResponse(data)
 
 
 def logout(request):
@@ -157,7 +93,10 @@ def profile(request):
 
 
 def about(request):
-    context = {}
+    context = {'LoginModalForm': LoginModalForm(),
+               "RegModalForm": RegModalForm(),
+               'ForgotPasswordModalForm': ForgotPasswordModalForm(),
+               }
     return render(request, 'user/about.html',   context)
 
 
@@ -198,8 +137,8 @@ def chpwd(request):
             # 直接赋值是没办法加密的
             user.set_password(new_password)
             user.save()
-            auth.logout(request)
-            return redirect('user:login')
+            auth.login(request, user)
+            return redirect('blog:blog')
 
     else:
         password_form = ChangePasswordForm()
@@ -208,26 +147,31 @@ def chpwd(request):
     return render(request, 'user/chpwd.html', context)
 
 
-def forgot_password(request):
+def forgot_password_modal(request):
     """忘记密码"""
-    if request.method == 'POST':
-        forgot_form = ForgotPasswordForm(request.POST, request=request)
-        if forgot_form.is_valid():
-            new_password = forgot_form.cleaned_data['new_password']
-            email = forgot_form.cleaned_data['email']
-            user = User.objects.get(email=email)
-            user.set_password(new_password)
-            user.save()
+    forgot_form = ForgotPasswordModalForm(request.POST, request=request)
+    if forgot_form.is_valid():
+        new_password = forgot_form.cleaned_data['new_password']
+        email = forgot_form.cleaned_data['password_email']
+        verification_code = forgot_form.cleaned_data['password_verification_code'].lower()
+        # 增加ajax判断
+        if not User.objects.filter(email=email).exists():
+            data = {'status': '100'}
+            return JsonResponse(data)
+        code = request.session.get('forgot_password_code', '').lower()
+        if not (code != '' and code == verification_code):
+            data = {'status': '200'}
+            return JsonResponse(data)
+        user = User.objects.get(email=email)
+        user.set_password(new_password)
+        user.save()
 
-            # 情书session
-            del request.session['forgot_password_code']
-            return redirect('user:login')
-
+        # 情书session
+        del request.session['forgot_password_code']
+        data = {'status': 'SUCCESS'}
     else:
-        forgot_form = ForgotPasswordForm()
-
-    context = {'forgot_form': forgot_form}
-    return render(request, 'user/forgot_password.html', context)
+        data = {'status': 'ERROR'}
+    return JsonResponse(data)
 
 
 def bind_email(request):
@@ -282,10 +226,18 @@ def send_verification_code(request):
             #     [email],
             #     fail_silently=False,
             # )
-
-            send_email_by_celery.delay(code, email)
-
-            data["status"] = 'SUCCESS'
+            send_for_subject = '邮件发送'
+            if send_for == 'register_code':
+                send_for_subject = '账号注册'
+            if send_for == 'bind_eamil_code':
+                send_for_subject = '邮箱绑定'
+            if send_for == 'forgot_password_code':
+                send_for_subject = '找回密码'
+            flag = send_email_by_celery.delay(code, email, send_for_subject)
+            if flag:
+                data["status"] = 'SUCCESS'
+            else:
+                data["status"] = '100'
     else:
         data["status"] = 'ERROR'
     return JsonResponse(data)

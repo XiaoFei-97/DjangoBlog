@@ -80,22 +80,27 @@
                         <!--登录-->
                         <li class="{% block nav_login_active %}{% endblock %}">
                             {# ?from={{ request.get_full_path }} #}
-                            <a class="item glyphicon hidden-sm" href="{% url 'user:login' %}">登录</a>
+                            <a id="login_button" class="item glyphicon hidden-sm" href="#">登录</a>
                         </li>
                         <!--注册-->
                         <li class="hidden-sm {% block nav_register_active %}{% endblock %}">
                             {# ?from={{ request.get_full_path } #}
-                            <a class="item glyphicon" href="{% url 'user:register' %}">注册</a>
+                            <a id="register_button" class="item glyphicon" href="#">注册</a>
                         </li>
                     {% else %}
                         <li class="dropdown hover">
-                            <a href="#" style="padding: 8px 0;" class="dropdown-toggle hidden-sm" data-toggle="dropdown" role="button">
-                                {% if user.get_image_url %}
+                            {% if user.get_image_url %}
+                                <a href="#" style="padding: 8px 0;" class="dropdown-toggle hidden-sm" data-toggle="dropdown" role="button">
                                     <img style="width: 32px;height: 32px;margin-left: 5px;" src="{{ user.get_image_url }}" alt="头像">
-                                    {% else %}
-                                <span class="glyphicon glyphicon-user item"></span>
-                                {% endif %}
-                                {{ user.get_nickname_or_username }}<span class="caret"></span></a>
+                                    {{ user.get_nickname_or_username }}<span class="caret"></span>
+                                </a>
+                            {% else %}
+                                <a href="#" class="dropdown-toggle hidden-sm" data-toggle="dropdown" role="button">
+                                    <span class="glyphicon glyphicon-user item"></span>
+                                    {{ user.get_nickname_or_username }}<span class="caret"></span>
+                                </a>
+                            {% endif %}
+
                             <ul class="dropdown-menu">
                                 <li><a href="{% url 'user:profile' %}">用户中心</a></li>
                                 <li><a href="{% url 'user:chpwd' %}">修改密码</a></li>
@@ -124,7 +129,112 @@
             </div>
         </div>
     </div>
+     <!-- Modal -->
+    <div class="modal fade" id="login_modal" tabindex="-1" role="dialog">
+        <div class="modal-dialog modal-sm" role="document">
+            <div class="modal-content">
+                <form id="login_modal_form" action="" method="POST">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <h4 class="modal-title">登录</h4>
+                    </div>
 
+                    <div class="modal-body">
+                        {% csrf_token %}
+                        {% for field in LoginModalForm %}
+                            <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+                            {{ field }}
+                        {% endfor %}
+                        <span id="login_modal_tip" class="text-danger"></span>
+                        <div class="pull-right" style=" margin: 0.5em 0;">
+
+                            <span style="font-weight: 700;">其他账号登录 :</span> <a href="{% url 'oauth:github_login' %}" title="Github登录">
+                                <img src="{% static 'blog/media/github.ico' %}" alt="Github登录">
+                            </a>
+                            <img src="{% static 'blog/media/qq.ico' %}" alt="QQ登录">
+                            &nbsp;<img src="{% static 'blog/media/weibo.ico' %}" alt="微博登录">
+
+                        </div>
+
+                    </div>
+                    <div class="clearfix"></div>
+                    <div class="modal-footer">
+                        <button id="forgot_password_button" type="button" class="btn btn-danger pull-left">忘记密码</button>
+                        <button type="submit" class="btn btn-primary">登录</button>
+                        <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+        </div>
+    <div class="modal fade" id="register_modal" tabindex="-1" role="dialog">
+        <div class="modal-dialog modal-sm" role="document">
+            <div class="modal-content">
+                <form id="register_modal_form" action="" method="POST">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <h4 class="modal-title">注册</h4>
+                    </div>
+
+                    <div class="modal-body">
+                        {% csrf_token %}
+                        {% for field in RegModalForm %}
+                            <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+                            {{ field }}
+                            <p class="text-danger">{{ field.errors.as_text }}</p>
+                        {% endfor %}
+                        <span class="pull-left text-danger">{{ RegModalForm.non_field_errors }}</span>
+                        <span id="register_modal_tip" class="text-danger"></span>
+                        <div class="pull-right">
+
+                            <span style="font-weight: 700;">其他账号登录 :</span> <a href="{% url 'oauth:github_login' %}" title="Github登录">
+                                <img src="{% static 'blog/media/github.ico' %}" alt="Github登录">
+                            </a>
+                            <img src="{% static 'blog/media/qq.ico' %}" alt="QQ登录">
+                            &nbsp;<img src="{% static 'blog/media/weibo.ico' %}" alt="微博登录">
+
+                        </div>
+
+                    </div>
+                    <div class="clearfix"></div>
+                    <div class="modal-footer">
+                        <button type="submit" class="btn btn-primary">注册</button>
+                        <button id="send_register_code" class="btn btn-primary pull-left">发送验证码</button>
+                        <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+        </div>
+    <div class="modal fade" id="forgot_password_modal" tabindex="-1" role="dialog">
+        <div class="modal-dialog modal-sm" role="document">
+            <div class="modal-content">
+                <form id="forgot_password_modal_form" action="" method="POST">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <h4 class="modal-title">找回密码</h4>
+                    </div>
+
+                    <div class="modal-body">
+                        {% csrf_token %}
+                        {% for field in ForgotPasswordModalForm %}
+                            <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+                            {{ field }}
+                            <p class="text-danger">{{ field.errors.as_text }}</p>
+                        {% endfor %}
+                        <span class="pull-left text-danger">{{ ForgotPasswordModalForm.non_field_errors }}</span>
+                        <span id="forgot_password__modal_tip" class="text-danger"></span>
+                    </div>
+                    <div class="clearfix"></div>
+                    <div class="modal-footer">
+                        <button type="submit" class="btn btn-primary">找回</button>
+                        <button id="send_forgot_password_code" class="btn btn-primary pull-left">发送验证码</button>
+                        <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+        </div>
     <!--轮播图-->
     {% block home_content %}{% endblock %}
 
@@ -176,7 +286,219 @@
     <!--蜘蛛丝效果-->
     <script color="160,32,240" opacity='0.6' zIndex="-2" count="50" src="//cdn.bootcss.com/canvas-nest.js/1.0.1/canvas-nest.min.js"></script>
 
-     <!--检查搜索框-->
+    <!-- 模态框 -->
+    <script>
+        $(function () {
+            // 登录按钮
+            $("#login_button").click(function () {
+               $('#login_modal').modal('show');
+            });
+            // 注册按钮
+            $("#register_button").click(function () {
+               $('#register_modal').modal('show');
+            });
+            // 找回密码
+            $("#forgot_password_button").click(function () {
+               $('#login_modal').modal('hide');
+               $('#forgot_password_modal').modal('show');
+            });
+            // 登录模态框提交
+            $('#login_modal_form').submit(function()    {
+
+                {#阻止原代码提交#}
+                event.preventDefault();
+                $.ajax({
+                    url: '{% url 'user:login_for_modal' %}',
+                    type: 'POST',
+                    data: $(this).serialize(),
+                    cache: false,
+                    success: function (data) {
+                        if(data['status']=='SUCCESS'){
+                              {#刷新加载#}
+                            window.location.reload();
+                            $('#login_modal_tip').text('登录成功')
+                        }else{
+                            $('#login_modal_tip').text('用户名或密码不正确')
+                        }
+                    }
+                });
+                {#阻止提交#}
+                return false
+            });
+            // 注册模态框提交
+            $('#register_modal_form').submit(function(){
+
+                {#阻止原代码提交#}
+                event.preventDefault();
+                $.ajax({
+                    url: '{% url 'user:register_for_modal' %}',
+                    type: 'POST',
+                    data: $(this).serialize(),
+                    cache: false,
+                    success: function (data) {
+                        if(data['status']=='SUCCESS'){
+                              {#刷新加载#}
+                            $('#register_modal_tip').text('注册成功')
+                            window.location.reload();
+                        }else if(data['status']=='100'){
+                            $('#register_modal_tip').text('用户名已存在')
+
+                        }else if(data['status']=='200'){
+                            $('#register_modal_tip').text('邮箱已存在')
+
+                        }else if(data['status']=='300'){
+                            $('#register_modal_tip').text('验证码不正确')
+                        }
+                        else{
+                            $('#register_modal_tip').text('注册失败')
+                        }
+                    }
+                });
+                {#阻止提交#}
+                return false
+            });
+            // 找回密码模态框提交
+            $('#forgot_password_modal_form').submit(function(){
+
+                var new_password = $("#id_new_password").val();
+                // 判断密码是否为空
+                if(new_password==""){
+                   $("#forgot_password__modal_tip").text('密码不能为空');
+                   return false;
+                }
+                var verification_code = $("#id_password_verification_code").val();
+                // 判断验证码是否为空
+                if(verification_code==""){
+                   $("#forgot_password__modal_tip").text('验证码不能为空');
+                   return false;
+                }
+                {#阻止原代码提交#}
+                event.preventDefault();
+                $.ajax({
+                    url: '{% url 'user:forgot_password_modal' %}',
+                    type: 'POST',
+                    data: $(this).serialize(),
+                    cache: false,
+                    success: function (data) {
+                        if(data['status']=='SUCCESS'){
+                              {#刷新加载#}
+                            $('#forgot_password__modal_tip').text('修改成功');
+                            window.location.reload();
+                        }else if(data['status']=='100'){
+                            $('#forgot_password__modal_tip').text('邮箱不存在');
+
+                        }else if(data['status']=='200'){
+                            $('#forgot_password__modal_tip').text('验证码不正确');
+
+                        }else{
+                            $('#forgot_password__modal_tip').text('修改失败');
+                        }
+                    },
+                    error:function(){
+                        alert('服务器超时，请重试！');
+                    }
+                });
+                {#阻止提交#}
+                return false
+            });
+            // 发送注册验证码
+            $("#send_register_code").click(function () {
+               var email = $("#id_email").val();
+                //判断邮箱是否为空
+                if(email==""){
+                   $("#register_modal_tip").text('邮箱不能为空');
+                   return false;
+                }
+                //发送验证码
+                $.ajax({
+                    url: '{% url 'user:send_verification_code' %}',
+                    type: 'GET',
+                    data: {
+                        'email': email,
+                        'send_for': 'register_code'
+                    },
+                    cache: false,
+                    success: function (data) {
+                        if(data['status']=='SUCCESS'){
+                            $("#register_modal_tip").text('邮件发送成功');
+                        }
+                        if(data['status']=='ERROR'){
+                            alert('当前请求过于频繁！');
+                        }
+                        if(data['status']=='100'){
+                            $("#register_modal_tip").text('邮件发送失败');
+                        }
+                    }
+                });
+               //把按钮变灰
+                $(this).addClass('disabled');
+                $(this).attr('disabled', true);
+                var time = 30;
+                $(this).text(time + 's');
+                var interval = setInterval(() => {
+                    if(time <= 0){
+                        clearInterval(interval);
+                        $(this).removeClass('disabled');
+                        $(this).attr('disabled', false);
+                        $(this).text('发送验证码');
+                        return false;
+                    }
+
+                    time --;
+                    $(this).text(time + 's');
+                }, 1000);
+            });
+            // 发送找回密码验证码
+            $("#send_forgot_password_code").click(function () {
+               var email = $("#id_password_email").val();
+                //判断邮箱是否为空
+                if(email==""){
+                   $("#forgot_password__modal_tip").text('邮箱不能为空');
+                   return false;
+                }
+                //发送验证码
+                $.ajax({
+                    url: '{% url 'user:send_verification_code' %}',
+                    type: 'GET',
+                    data: {
+                        'email': email,
+                        'send_for': 'forgot_password_code'
+                    },
+                    cache: false,
+                    success: function (data) {
+                        if(data['status']=='SUCCESS'){
+                            $("#forgot_password__modal_tip").text('邮件发送成功');
+                        }
+                        if(data['status']=='ERROR'){
+                            alert('当前请求过于频繁！');
+                        }
+                        if(data['status']=='100'){
+                            $("#forgot_password__modal_tip").text('邮件发送失败');
+                        }
+                    }
+                });
+               //把按钮变灰
+                $(this).addClass('disabled');
+                $(this).attr('disabled', true);
+                var time = 30;
+                $(this).text(time + 's');
+                var interval = setInterval(() => {
+                    if(time <= 0){
+                        clearInterval(interval);
+                        $(this).removeClass('disabled');
+                        $(this).attr('disabled', false);
+                        $(this).text('发送验证码');
+                        return false;
+                    }
+
+                    time --;
+                    $(this).text(time + 's');
+                }, 1000);
+            });
+        });
+    </script>
+
+    <!--检查搜索框-->
     <script type="text/javascript">
 
         function check() {

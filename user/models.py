@@ -28,8 +28,8 @@ def get_nickname_or_username(self):
         profile = Profile.objects.get(user=self)
         if profile.nickname:
             return profile.nickname
-        else:
-            return self.username
+    else:
+        return self.username
 
 
 def has_nickname(self):

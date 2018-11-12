@@ -4,7 +4,7 @@ from celery import shared_task
 
 
 @shared_task
-def send_email_by_celery(code, email):
+def send_email_by_celery(code, email, send_for_subject):
     """
     作用：使用celery异步发送邮件
     :param code: 验证码
@@ -12,12 +12,13 @@ def send_email_by_celery(code, email):
     """
     try:
         send_mail(
-            '绑定邮箱',
-            '验证码: %s' % code,
-            'XiaoFei-97@outlook.com',
+            send_for_subject,
+            '【蒋振飞的博客】尊敬的用户：您的验证码: %s，请妥善保管。' % code,
+            '652380120@qq.com',
             [email],
             fail_silently=False,
         )
     except Exception:
         # 出错尝试重新执行1次任务
-        send_email_by_celery(code, email)
+        return False
+    return True

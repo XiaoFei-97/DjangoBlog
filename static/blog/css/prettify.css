@@ -15,7 +15,7 @@ pre {
     word-break: break-all;
     word-wrap: break-word;
     white-space:normal;
-    font-size: 14px;
+    font-size: 13px;
 }
 @media screen and (max-width: 768px) {
     pre {

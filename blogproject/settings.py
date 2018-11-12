@@ -239,12 +239,12 @@ HAYSTACK_SEARCH_RESULTS_PER_PAGE = 10
 # https://doc.djangoproject.com/en/2.0/ref/settings/#email
 # https://doc.djangoproject.com/en/2.0/topics/email
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-EMAIL_HOST = 'smtp-mail.outlook.com'
-EMAIL_PORT = 587
-EMAIL_HOST_USER = 'XiaoFei-97@outlook.com'
-EMAIL_HOST_PASSWORD = os.environ.get('DJANGO_EMAIL_PASSWORD')
-EMAIL_SUBJECT_PREFIX = '[蒋振飞的博客]'
-EMAIL_USE_TLS = True  # 与SMTP服务器通信时，是否启动TLS链接（安全链接）
+EMAIL_HOST = 'smtp.qq.com'
+EMAIL_PORT = 25
+EMAIL_HOST_USER = '652380120@qq.com'
+EMAIL_HOST_PASSWORD = 'ygrwfejppgoxbfac'  # 授权码
+EMAIL_SUBJECT_PREFIX = '[蒋振飞的博客] '
+EMAIL_USE_TLS = True  # 与SMTP服务器通信时，是否启动TLS链接(安全链接)
 
 # github登录
 GITHUB_APP_ID = '50675d10fab22eba7342'

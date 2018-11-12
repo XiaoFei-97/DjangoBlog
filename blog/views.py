@@ -3,7 +3,7 @@ from .models import Post, Category  # ReadNum
 from django.core.paginator import *   # 导入分页功能
 from django.conf import settings   # 导入settings,可以使用其中自定义的全局变量
 # contenttypes 是Django内置的一个应用，可以追踪项目中所有app和model的对应关系，并记录在ContentType表中
-from user.forms import LoginModalForm  # 导入登录模态框表单
+from user.forms import *  # 导入登录模态框表单
 from .tasks import *
 from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
@@ -86,7 +86,8 @@ def home(request):
         'seven_read_nums': seven_read_nums, 'thirty_dates': thirty_dates,
         'thirty_read_nums': thirty_read_nums, 'year': str(year),
         'last_7_days_hot_data': last_7_days_hot_data, 'last_30_days_hot_data': last_30_days_hot_data,
-        'all_hot_posts': all_hot_posts,
+        'all_hot_posts': all_hot_posts, 'LoginModalForm': LoginModalForm(), "RegModalForm": RegModalForm(),
+        'ForgotPasswordModalForm': ForgotPasswordModalForm(),
         # 'today_hot_data': today_hot_data,
     }
     return render(request, 'home.html', context)
@@ -197,6 +198,8 @@ def get_blog_list_common_data(request, post_all_list):
                'new_recommend': new_recommend,
                'all_hot_posts': all_hot_posts,
                'LoginModalForm': LoginModalForm(),
+               "RegModalForm": RegModalForm(),
+               'ForgotPasswordModalForm': ForgotPasswordModalForm(),
                }
     return context
 
