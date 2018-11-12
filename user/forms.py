@@ -3,6 +3,45 @@ from django.contrib import auth
 from django.contrib.auth.models import User
 
 
+class LoginModalForm(forms.Form):
+    """
+    用户登录表单
+    """
+    # 用户名
+    username_or_email = forms.CharField(label='帐号',
+                                        widget=forms.TextInput(
+                                            attrs={'class': 'form-control', 'placeholder': '请输入用户名或邮箱'}))
+
+    # 密码
+    password = forms.CharField(label='密码',
+                               widget=forms.PasswordInput(
+                                   attrs={'class': 'form-control', 'placeholder': '请输入密码'}))
+
+    def clean(self):
+        """
+        清洗输入不合格的表单
+        :return: 清洗后的数据
+        """
+        username_or_email = self.cleaned_data['username_or_email']
+        password = self.cleaned_data['password']
+        user = auth.authenticate(username=username_or_email, password=password)
+        # 判断用户是否存在
+        if user is None:
+            if User.objects.filter(email=username_or_email).exists():
+                username = User.objects.get(email=username_or_email).username
+                user = auth.authenticate(username=username, password=password)
+                if not user is None:
+                    self.cleaned_data['user'] = user
+                    return self.cleaned_data
+                else:
+                    raise forms.ValidationError('用户名或密码不正确,请重试')
+
+            raise forms.ValidationError('用户名或密码不正确,请重试')
+        else:
+            self.cleaned_data['user'] = user
+        return self.cleaned_data
+
+
 class LoginForm(forms.Form):
     """
     用户登录表单
@@ -36,36 +75,6 @@ class LoginForm(forms.Form):
                 else:
                     raise forms.ValidationError('用户名或密码不正确,请重试')
 
-            raise forms.ValidationError('用户名或密码不正确,请重试')
-        else:
-            self.cleaned_data['user'] = user
-        return self.cleaned_data
-
-
-class LoginModalForm(forms.Form):
-    """
-    用户登录模态框
-    """
-    # 用户名
-    username = forms.CharField(label='帐号',
-                               widget=forms.TextInput(
-                                   attrs={'class': 'form-control', 'placeholder': '请输入用户名'}))
-
-    # 密码
-    password = forms.CharField(label='密码',
-                               widget=forms.PasswordInput(
-                                   attrs={'class': 'form-control', 'placeholder': '请输入密码'}))
-
-    def clean(self):
-        """
-        清洗输入不合格的表单
-        :return: 清洗后的数据
-        """
-        username = self.cleaned_data['username']
-        password = self.cleaned_data['password']
-        user = auth.authenticate(username=username, password=password)
-        # 判断用户是否存在
-        if user is None:
             raise forms.ValidationError('用户名或密码不正确,请重试')
         else:
             self.cleaned_data['user'] = user

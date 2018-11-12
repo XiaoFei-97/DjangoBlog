@@ -105,7 +105,7 @@
 
                                 评论：{% get_comment_count post %}&nbsp;&nbsp;&nbsp;
 
-                                <span style="color:#c93756;">推荐:</span><a class="like"  onclick="likeChange(this, '{% get_content_type post %}', {{ post.id }})">
+                                <span style="color:#c93756;">推荐</span><a class="like"  onclick="likeChange(this, '{% get_content_type post %}', {{ post.id }})">
                                     <span class="glyphicon glyphicon-thumbs-up {% get_like_status post %}"></span>
                                     <span class="liked-num">{% get_like_count post %}</span>
                                 </a>
@@ -221,7 +221,7 @@
     <div class="modal fade" id="login_modal" tabindex="-1" role="dialog">
         <div class="modal-dialog modal-sm" role="document">
             <div class="modal-content">
-                <form id="login_medal_form" action="" method="POST">
+                <form id="login_modal_form" action="" method="POST">
                     <div class="modal-header">
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                         <h4 class="modal-title">登录</h4>
@@ -233,10 +233,10 @@
                             <label for="{{ field.id_for_label }}">{{ field.label }}</label>
                             {{ field }}
                         {% endfor %}
-                        <span id="login_medal_tip" class="text-danger"></span>
-                        <div class="pull-right" style="margin: 0.5em 0;">
+                        <span id="login_modal_tip" class="text-danger"></span>
+                        <div class="pull-right" style=" margin: 0.5em 0;">
 
-                            <a href="{% url 'oauth:github_login' %}" title="Github登录">
+                            <span style="font-weight: 700;">其他账号登录 :</span> <a href="{% url 'oauth:github_login' %}" title="Github登录">
                                 <img src="{% static 'blog/media/github.ico' %}" alt="Github登录">
                             </a>
                             <img src="{% static 'blog/media/qq.ico' %}" alt="QQ登录">
@@ -259,7 +259,7 @@
 {% block script_extends %}
     <!-- 模态框显示 -->
     <script>
-        $('#login_medal_form').submit(function(){
+        $('#login_modal_form').submit(function(){
 
             {#阻止原代码提交#}
             event.preventDefault();
@@ -273,7 +273,7 @@
                           {#刷新加载#}
                         window.location.reload();
                     }else{
-                        $('#login_medal_tip').text('用户名或密码不正确')
+                        $('#login_modal_tip').text('用户名或密码不正确')
                     }
                 }
             });
