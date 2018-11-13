@@ -14,7 +14,7 @@ def send_email_by_celery(code, email, send_for_subject):
         send_mail(
             send_for_subject,
             '【蒋振飞的博客】尊敬的用户：您的验证码: %s，请妥善保管。' % code,
-            '652380120@qq.com',
+            'jzfblog@outlook.com',
             [email],
             fail_silently=False,
         )

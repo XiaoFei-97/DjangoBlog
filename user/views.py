@@ -211,7 +211,7 @@ def send_verification_code(request):
         code = ''.join(random.sample(string.ascii_letters + string.digits, 4))
         now = int(time.time())
         send_code_time = request.session.get('send_code_time', 0)
-        if now - send_code_time < 30:
+        if now - send_code_time < 60:
             data["status"] = 'ERROR'
         else:
             # session默认有效期是两星期
@@ -233,7 +233,7 @@ def send_verification_code(request):
                 send_for_subject = '邮箱绑定'
             if send_for == 'forgot_password_code':
                 send_for_subject = '找回密码'
-            flag = send_email_by_celery.delay(code, email, send_for_subject)
+            flag = send_email_by_celery(code, email, send_for_subject)
             if flag:
                 data["status"] = 'SUCCESS'
             else:

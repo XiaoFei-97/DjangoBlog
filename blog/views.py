@@ -367,3 +367,4 @@ def findWords(request):
     # print(search_list)
     # 错误In order to allow non-dict objects to be serialized
     return JsonResponse(search_list, safe=False)
+

@@ -29,8 +29,6 @@
     <script src="https://code.jquery.com/jquery-1.12.4.js" integrity="sha256-Qw82+bXyGq6MydymqBxNPYTaUXXq7c8v3CwiYwLLNXU=" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
 
-    <!--公告侧边栏-->
-    <script src="{% static 'blog/js/tctip.min.js' %}"></script>
     {% block header_extend %}{% endblock %}
 </head>
 
@@ -227,7 +225,7 @@
                     </div>
                     <div class="clearfix"></div>
                     <div class="modal-footer">
-                        <button type="submit" class="btn btn-primary">找回</button>
+                        <button type="submit" class="btn btn-danger">找回</button>
                         <button id="send_forgot_password_code" class="btn btn-primary pull-left">发送验证码</button>
                         <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
                     </div>
@@ -433,7 +431,7 @@
                //把按钮变灰
                 $(this).addClass('disabled');
                 $(this).attr('disabled', true);
-                var time = 30;
+                var time = 60;
                 $(this).text(time + 's');
                 var interval = setInterval(() => {
                     if(time <= 0){
@@ -480,7 +478,7 @@
                //把按钮变灰
                 $(this).addClass('disabled');
                 $(this).attr('disabled', true);
-                var time = 30;
+                var time = 60;
                 $(this).text(time + 's');
                 var interval = setInterval(() => {
                     if(time <= 0){
@@ -534,11 +532,11 @@
                        $(data).each(function(index , c) {
 
                            if(c.title.length > 20){
-                               title = c.title.substring(0, 15);
-                               $("#titles").append("<li>" + title + "...</li>")
+                               title = c.title.substring(0, 19);
+                               $("#titles").append("<li data-id="+ c.id + ">" + title + "...</li>")
                            }else{
-                               title = c.title
-                               $("#titles").append("<li>" + title + "</li>")
+                               title = c.title;
+                               $("#titles").append("<li data-id="+ c.id + ">" + title + "</li>")
                            }
                        });
                        $("#titles").slideDown();
@@ -551,12 +549,8 @@
             // 动态绑定事件
             $("#titles").on("click","li", function(){
 
-                var word = $(this).text();
-                if(word.includes("...")){
-                    word = word.substring(0, word.length -3);
-                }
-                $("#key").val(word);
-                window.location.href = "/search/?q="+word
+                var cid = $(this).attr("data-id");
+                window.location.href = "/detail/"+cid
             });
 
 
@@ -572,7 +566,7 @@
             //侧边栏文本
             siderText: "公告 & 打赏",
             //侧边栏文本高度调整
-            siderTextTop: "-30px",
+            siderTextTop: "-35px",
             //侧边栏背景颜色
             siderBgcolor: "#323d45",
             //整个侧边栏的高度设置可以px，em，或百分比
@@ -614,7 +608,8 @@
         };
 
     </script>
-
+    <!--公告侧边栏-->
+    <script src="{% static 'blog/js/tctip.min.js' %}"></script>
     <!--轮播图配置-->
     <script>
          // 轮播图操作
