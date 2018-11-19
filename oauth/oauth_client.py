@@ -124,7 +124,7 @@ class OAuth_QQ(OAuth_Base):
             'code': code,
             'redirect_uri': self.redirect_url
         }
-        response = self._get('https://graph.qq.com/oauth2.0/token',params)
+        response = self._get('https://graph.qq.com/oauth2.0/token', params)
         result = urllib.parse.parse_qs(response, True)
         self.access_token = result[b'access_token'][0]      
         return self.access_token

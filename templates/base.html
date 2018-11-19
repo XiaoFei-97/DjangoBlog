@@ -146,11 +146,14 @@
                         <span id="login_modal_tip" class="text-danger"></span>
                         <div class="pull-right" style=" margin: 0.5em 0;">
 
-                            <span style="font-weight: 700;">其他账号登录 :</span> <a href="{% url 'oauth:github_login' %}" title="Github登录">
+                            <span style="font-weight: 700;">其他账号登录 :</span>
+                            <a href="{% url 'oauth:github_login' %}" title="Github登录">
                                 <img src="{% static 'blog/media/github.ico' %}" alt="Github登录">
                             </a>
-                            <img src="{% static 'blog/media/qq.ico' %}" alt="QQ登录">
-                            &nbsp;<img src="{% static 'blog/media/weibo.ico' %}" alt="微博登录">
+                            <a href="{% url 'oauth:qq_login' %}" title="QQ登录">
+                                <img src="{% static 'blog/media/qq.ico' %}" alt="QQ登录">
+                            </a>
+                            &nbsp;<img src="{% static 'blog/media/logo_sina.png' %}" alt="微博登录">
 
                         </div>
 
@@ -188,8 +191,10 @@
                             <span style="font-weight: 700;">其他账号登录 :</span> <a href="{% url 'oauth:github_login' %}" title="Github登录">
                                 <img src="{% static 'blog/media/github.ico' %}" alt="Github登录">
                             </a>
-                            <img src="{% static 'blog/media/qq.ico' %}" alt="QQ登录">
-                            &nbsp;<img src="{% static 'blog/media/weibo.ico' %}" alt="微博登录">
+                             <a href="{% url 'oauth:qq_login' %}" title="QQ登录">
+                                <img src="{% static 'blog/media/qq.ico' %}" alt="QQ登录">
+                            </a>
+                            &nbsp;<img src="{% static 'blog/media/logo_sina.png' %}" alt="微博登录">
 
                         </div>
 

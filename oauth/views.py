@@ -60,58 +60,66 @@ def github_check(request):
         # 否则尝试获取用户邮箱用于绑定账号
         # email = oauth_git.get_email()
         email = infos.get('email', '')
-    if email:
-        # 若获取到邮箱，则查询是否存在本站用户
-        users = User.objects.filter(email=email)
-        if users:
-            # 若存在，则直接绑定
-            user = users[0]
+        if email:
+            # 若获取到邮箱，则查询是否存在本站用户
+            users = User.objects.filter(email=email)
+            if users:
+                # 若存在，则直接绑定
+                user = users[0]
+            else:
+                # 若不存在，则新建本站用户
+                # 防止用户名重复
+                while User.objects.filter(username=username):
+                    username = username + '*'
+                user = User(username=username, email=email)
+                # 随机设置用户密码
+                pwd = str(uuid.uuid1())
+                user.set_password(pwd)
+                user.is_active = True
+                user.save()
+            oauth_ex = OAuth_ex(user=user, openid=open_id, oauth_type=type)
+            oauth_ex.save()
+            profile, created = Profile.objects.get_or_create(user=user)
+            profile.image_url = image_url
+            profile.save()
+            auth_login(request, user, backend='django.contrib.auth.backends.ModelBackend')
         else:
-            # 若不存在，则新建本站用户
-            # 防止用户名重复
             while User.objects.filter(username=username):
                 username = username + '*'
-            user = User(username=username, email=email)
+            user = User(username=username)
             # 随机设置用户密码
             pwd = str(uuid.uuid1())
             user.set_password(pwd)
             user.is_active = True
             user.save()
-        oauth_ex = OAuth_ex(user=user, openid=open_id, oauth_type=type)
-        oauth_ex.save()
-        profile, created = Profile.objects.get_or_create(user=user)
-        profile.image_url = image_url
-        profile.save()
-        auth_login(request, user, backend='django.contrib.auth.backends.ModelBackend')
-    else:
-        while User.objects.filter(username=username):
-            username = username + '*'
-        user = User(username=username)
-        # 随机设置用户密码
-        pwd = str(uuid.uuid1())
-        user.set_password(pwd)
-        user.is_active = True
-        user.save()
-        oauth_ex = OAuth_ex(user=user, openid=open_id, oauth_type=type)
-        oauth_ex.save()
-        profile, created = Profile.objects.get_or_create(user=user)
-        profile.image_url = image_url
-        profile.save()
-        auth_login(request, user, backend='django.contrib.auth.backends.ModelBackend')
-        referer = request.GET.get('from', reverse('blog:home'))
-        return redirect(referer)    # 保存后登陆
-    # 反馈登陆结果
-    data = {}
-    data['goto_url'] = '/'
-    data['goto_time'] = 10000
-    data['goto_page'] = True
-    data['message_title'] = '绑定用户成功'
-    data['message'] = u'绑定成功！您的用户名为：<b>%s</b>。您现在可以同时使用本站账号和此第三方账号登录本站了！' % username
-    return render_to_response('message.html', data)
+            oauth_ex = OAuth_ex(user=user, openid=open_id, oauth_type=type)
+            oauth_ex.save()
+            profile, created = Profile.objects.get_or_create(user=user)
+            profile.image_url = image_url
+            profile.save()
+            auth_login(request, user, backend='django.contrib.auth.backends.ModelBackend')
+            referer = request.GET.get('from', reverse('blog:home'))
+            return redirect(referer)    # 保存后登陆
+        # 反馈登陆结果
+        data = {}
+        data['goto_url'] = '/'
+        data['goto_time'] = 10000
+        data['goto_page'] = True
+        data['message_title'] = '绑定用户成功'
+        data['message'] = u'绑定成功！您的用户名为：<b>%s</b>。您现在可以同时使用本站账号和此第三方账号登录本站了！' % username
+        return render_to_response('message.html', data)
 
 
 def qq_login(request):
-    oauth_qq = OAuth_QQ(settings.QQ_APP_ID,settings.QQ_KEY, settings.QQ_CALLBACK_URL)
+    if request.user.is_authenticated:
+        data = {}
+        data['goto_url'] = '/'
+        data['goto_time'] = 10000
+        data['goto_page'] = True
+        data['message_title'] = '登录失败'
+        data['message'] = '您已登录，当前登录取消！'
+        return render_to_response('message.html', data)
+    oauth_qq = OAuth_QQ(settings.QQ_APP_ID, settings.QQ_KEY, settings.QQ_CALLBACK_URL)
     url = oauth_qq.get_auth_url()
     return HttpResponseRedirect(url)
 
@@ -124,15 +132,15 @@ def qq_check(request):
         access_token = oauth_qq.get_access_token(code)
         time.sleep(0.1)
     except:
-        data={}
+        data = {}
         data['goto_url'] = '/'
         data['goto_time'] = 10000
         data['goto_page'] = True
         data['message_title'] = '登录失败'
         data['message'] = '获取授权失败，请确认是否允许授权，并重试。若问题无法解决，请联系网站管理人员'
         return render_to_response('message.html', data)
-    openid = oauth_qq.get_open_id()
-    qqs = OAuth_ex.objects.filter(openid=openid, type=type)
+    open_id = oauth_qq.get_open_id()
+    qqs = OAuth_ex.objects.filter(openid=open_id, type=type)
     if qqs:
         auth_login(request, qqs[0].user, backend='django.contrib.auth.backends.ModelBackend')
         return HttpResponseRedirect('/')
@@ -140,10 +148,33 @@ def qq_check(request):
         infos = oauth_qq.get_user_info()
         nickname = infos.get('nickname', '')
         image_url = infos.get('figureurl_qq_1', '')
-        sex = '1' if infos.get('gender', '') == '男' else '2'
-        signature = '无个性签名'
-        url = "%s?nickname=%s&openid=%s&type=%s&signature=%s&image_url=%s&sex=%s" % (reverse('oauth:bind_email'), nickname, openid, type, signature, image_url, sex)
-        return HttpResponseRedirect(url)
+
+        while User.objects.filter(username=nickname):
+            nickname = nickname + '*'
+        user = User(username=nickname)
+
+        # 随机设置用户密码
+        pwd = str(uuid.uuid1())
+        user.set_password(pwd)
+        user.is_active = True
+        user.save()
+
+        oauth_ex = OAuth_ex(user=user, openid=open_id, oauth_type=type)
+        oauth_ex.save()
+        profile, created = Profile.objects.get_or_create(user=user)
+        profile.image_url = image_url
+        profile.save()
+
+        auth_login(request, user, backend='django.contrib.auth.backends.ModelBackend')
+
+        # 反馈登陆结果
+        data = {}
+        data['goto_url'] = '/'
+        data['goto_time'] = 10000
+        data['goto_page'] = True
+        data['message_title'] = '绑定用户成功'
+        data['message'] = u'绑定成功！您的用户名为：<b>%s</b>。您现在可以同时使用本站账号和此第三方账号登录本站了！' % username
+        return render_to_response('message.html', data)
 
 
 def weibo_login(request):

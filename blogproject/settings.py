@@ -260,9 +260,9 @@ GITHUB_KEY = 'af39cde883162c12ce57e69cb078708aba915ccd'
 GITHUB_CALLBACK_URL = 'https://jzfblog.com/oauth/github_check'  # 填写你的回调地址
 
 # QQ登录
-QQ_APP_ID = '************'
-QQ_KEY = '*******************8'
-QQ_CALLBACK_URL = 'http://127.0.0.1:8000/oauth/qq_check'    # 填写你的回调地址
+QQ_APP_ID = '101519581'
+QQ_KEY = '46bfa713b314748e60938dcd8c0d936c'
+QQ_CALLBACK_URL = 'https://jzfblog.com/oauth/qq_check'    # 填写你的回调地址
 
 # 新浪微博登录
 WEIBO_APP_ID = '************'

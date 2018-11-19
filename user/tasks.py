@@ -13,7 +13,7 @@ def send_email_by_celery(code, email, send_for_subject):
     try:
         send_mail(
             send_for_subject,
-            '【蒋振飞的博客】尊敬的用户：您的验证码: %s，请妥善保管。' % code,
+            '【蒋振飞的博客】尊敬的用户：您正在进行"%s"操作，验证码: %s，请于30分钟内输入，网站人员不会向您索取，请勿泄露！' % (send_for_subject, code),
             'jzfblog@outlook.com',
             [email],
             fail_silently=False,
