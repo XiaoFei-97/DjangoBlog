@@ -140,7 +140,7 @@ def qq_check(request):
         data['message'] = '获取授权失败，请确认是否允许授权，并重试。若问题无法解决，请联系网站管理人员'
         return render_to_response('message.html', data)
     open_id = oauth_qq.get_open_id()
-    qqs = OAuth_ex.objects.filter(openid=open_id, type=type)
+    qqs = OAuth_ex.objects.filter(openid=open_id, oauth_type=type)
     if qqs:
         auth_login(request, qqs[0].user, backend='django.contrib.auth.backends.ModelBackend')
         return HttpResponseRedirect('/')
@@ -173,7 +173,7 @@ def qq_check(request):
         data['goto_time'] = 10000
         data['goto_page'] = True
         data['message_title'] = '绑定用户成功'
-        data['message'] = u'绑定成功！您的用户名为：<b>%s</b>。您现在可以同时使用本站账号和此第三方账号登录本站了！' % username
+        data['message'] = u'绑定成功！您的用户名为：<b>%s</b>。您现在可以同时使用本站账号和此第三方账号登录本站了！' % nickname
         return render_to_response('message.html', data)
 
 

@@ -139,12 +139,12 @@ class OAuth_QQ(OAuth_Base):
         return self.openid
 
     def get_user_info(self):
-        params ={
+        params = {
             'access_token': self.access_token,
             'openid': self.openid,
             'oauth_consumer_key': self.client_id,
         }
-        response = self._get('https://graph.qq.com/user/get_user_info',params)
+        response = self._get('https://graph.qq.com/user/get_user_info', params)
         result = json.loads(response.decode('utf-8'))    
         return result
 

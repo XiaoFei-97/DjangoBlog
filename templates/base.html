@@ -78,12 +78,12 @@
                         <!--登录-->
                         <li class="{% block nav_login_active %}{% endblock %}">
                             {# ?from={{ request.get_full_path }} #}
-                            <a id="login_button" class="item glyphicon hidden-sm" href="#">登录</a>
+                            <a id="login_button" class="item glyphicon hidden-sm" href="javascript:void(0)">登录</a>
                         </li>
                         <!--注册-->
                         <li class="hidden-sm {% block nav_register_active %}{% endblock %}">
                             {# ?from={{ request.get_full_path } #}
-                            <a id="register_button" class="item glyphicon" href="#">注册</a>
+                            <a id="register_button" class="item glyphicon" href="javascript:void(0)">注册</a>
                         </li>
                     {% else %}
                         <li class="dropdown hover">
@@ -161,7 +161,7 @@
                     <div class="clearfix"></div>
                     <div class="modal-footer">
                         <button id="forgot_password_button" type="button" class="btn btn-danger pull-left">忘记密码</button>
-                        <button type="submit" class="btn btn-primary">登录</button>
+                        <input id="login_button" type="submit" class="btn btn-primary" value="登录">
                         <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
                     </div>
                 </form>
@@ -307,7 +307,7 @@
             });
             // 登录模态框提交
             $('#login_modal_form').submit(function()    {
-
+                $("#login_button").val("登录中");
                 {#阻止原代码提交#}
                 event.preventDefault();
                 $.ajax({
