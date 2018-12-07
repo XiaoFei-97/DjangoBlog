@@ -1,0 +1,65 @@
+{% extends 'blog/category.html' %}
+{% load post_tags %}
+{% load staticfiles %}
+{#页面标题#}
+{% block title %}
+    归档: {{ post_time }}
+{% endblock title %}
+
+{% block nav_blog_active %}{% endblock %}
+{% block nav_category_active %}{% endblock %}
+{% block nav_date_active %}active{% endblock %}
+
+{% block home_content %}
+
+    <div class="home_content">
+        <div id="myCarousel" class="carousel slide" data-ride="carousel" data-interval="4000">
+
+            <!-- 轮播（Carousel）项目 -->
+            <div class="carousel-inner">
+                <div class="item active">
+                    <img src="{% static 'blog/img/banner4.jpg' %}" alt="banner2">
+                    <div class="carousel-caption info">
+                        <div class="home_show">日期归档</div>
+                        <div class="word_info">欢迎来访，博主动态请查看公告</div>
+                        <div class="motto_name">—勿谓寸阴短，既过难再获</div>
+                    </div>
+                </div>
+                <div class="item">
+                    <img src="{% static 'blog/img/banner5.jpg' %}" alt="banner1">
+                    <div class="carousel-caption info">
+                        <div class="home_show">日期归档</div>
+                        <div class="word_info">欢迎阅读评论，喜欢就点个赞吧</div>
+                        <div class="motto_name">—路的尽头，仍然是路</div>
+                    </div>
+                </div>
+                <div class="item">
+                    <img src="{% static 'blog/img/banner1.jpg' %}" alt="banner3">
+                    <div class="carousel-caption info">
+                        <div class="home_show">日期归档</div>
+                        <div class="word_info">欢迎阅读评论，评论需注册登录</div>
+                        <div class="motto_name">—善不可失，恶不可长</div>
+                    </div>
+                </div>
+                <div class="item">
+                    <img src="{% static 'blog/img/banner2.jpg' %}" alt="banner4">
+                    <div class="carousel-caption info">
+                        <div class="home_show">日期归档</div>
+                        <div class="word_info">觉得有帮助，就打赏我吧</div>
+                        <div class="motto_name">—世界是真的，付出都是值得的</div>
+                    </div>
+                </div>
+                <div class="item">
+                    <img src="{% static 'blog/img/banner3.jpg' %}" alt="banner5">
+                    <div class="carousel-caption info">
+                        <div class="home_show">日期归档</div>
+                        <div class="word_info">觉得有帮助，就打赏我吧</div>
+                        <div class="motto_name">—留一份不足，可得无限美好</div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+{% endblock %}
