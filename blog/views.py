@@ -272,7 +272,7 @@ def detail(request, pk):
     response = render(request, 'blog/detail.html', context)
 
     # 第一个参数是键,键值,和过期时间
-    response.set_cookie(read_cookie_key, 'true', domain="jzfblog.com")  # 阅读cookie标记
+    response.set_cookie(read_cookie_key, 'True', domain="jzfblog.com")  # 阅读cookie标记
     return response
 
 

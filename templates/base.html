@@ -15,8 +15,8 @@
 
     <!--网站信息-->
     <meta name="author" content="蒋振飞,XiaoFei-97@outlook.com">
-    <meta name="keywords" content="蒋振飞,技术博客,原创">
-    <meta name="description" content="蒋振飞的个人博客，坚持发表个人原创技术笔记，内容涵盖前端、后端、数据库、人工智能等，博文不定期更新。">
+    <meta name="keywords" content="蒋振飞,个人博客,技术笔记,前端,后端,数据库,java,python">
+    <meta name="description" content="一个互联网草根站长的个人博客网站,关注互联网、Python全栈、JavaEE等技术。本站主要用来分享互联网、教程、学习笔记等，一个有情怀值得收藏的个人博客!">
     <title>{% block title %}{% endblock%}</title>
     <link type="text/css" rel="shortcut icon" href="{% static 'blog/media/favicon.ico' %}">
 
@@ -26,7 +26,7 @@
 
     <!--使用bootstrap框架-->
     <link type="text/css" rel="stylesheet" href="{% static 'bootstrap-3.3.7/css/bootstrap.min.css' %}">
-    <script src="https://code.jquery.com/jquery-1.12.4.js" integrity="sha256-Qw82+bXyGq6MydymqBxNPYTaUXXq7c8v3CwiYwLLNXU=" crossorigin="anonymous"></script>
+    <script src="https://cdn.bootcss.com/jquery/1.12.4/jquery.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
 
     {% block header_extend %}{% endblock %}
@@ -58,6 +58,7 @@
                      </li>
                      <!--博客-->
                      <li class="{% block nav_blog_active %}{% endblock %}">
+                     <img data-v-07578fd8="" src="data:image/gif;base64,R0lGODlhGwATAOZnAP/7+v/39v5IMP/Cuv/z8f/SzP6Kev+uo/+ajP/f2v+mmv/Ox//a1f5NNf++tv/u7P/j3/44Hv4oC/+hlf5ROv+ekf/n4/6Fdf+yqP/Gv/+6sf/r6P4xFf4sEP5IAv5AJ/48Iv5UPv+KAv55Z/42Av+qn/+jl/5+bP49Av5tWf5eAv9qAv4kB/5pVP5lUP51Yv5FLP5ZQv5BAv46Av92Av4jAv/Wl/5ZAv5hS/43Av/Nxv4iAv+mAv93Av/X0f/Lw/9kAv+2rf9hAv+HAv5fAv6BcP5dAv5AAv4pAv/Pl/+YAv+mm/5RAv+tl//fl/9/Av5dR/5xXv41Av+uAv4wAv5bAv+cAv+lAv+Sg/9jAv42B//Xl/+FAv+yl/+1l/+BAv5OAv/El//Yl/45Av4gAv4CCP///////wAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACH/C05FVFNDQVBFMi4wAwEAAAAh+QQFCgBnACwAAAAAGwATAAAHmYBmgoOEhYaHiImKi4yNGwmNjA0DkYoFZJSViFhkDpqDGoQNZAeDBJURKRZmGGRkE4IAFACROGQSAq5kCIIGZAyLp2ZBrjNERlIwGQquPoslFxBmUDk9Vko0R7octIoAuQIcQjaCYoJdJpEZukBmZWXu8PHv8+/yva4k8fv0+/6FE3LVg9ev4D1D0ugplGdw0UJB9u71+7QoEAAh+QQFCgBnACwBAAAAFQARAAAHloBmgoOEgwABhYmKDAKIio9mASAxkJAIZAaVjw1kB5qJD2RkA4afZgOiFWYFBgCmFaKiEgyPGwWDARGxLA6QIyeCAS1kKEiduAiugxQsCAcCZGAqWhUEBRhFERSFLrEoKyJDVTWxohq4ZhdkTYJJgmFehDqEITCiZmVl+Pr7+fuCC0Dc80eQn79CG3rlW/ivoaKCDQ8GAgAh+QQFCgBnACwBAAAAFQAQAAAHlIBngoOEg2ZmhYmKh4iKjmeMj4+RkosBD5WJAyFRAIYLno8GZGcaiGYJLheJFgGCCmSkHTEtH2QcFoUAAgpnBRI7VINkAi8QiQuxsSQ3HhIlCY2Qh5hnyWQeK19cKhE/DgoHDJEZIwkPZEwiPFNXT2OxKRgQlC9ktllbgk6CJkuE0gI0ICUjUyECJzoYVERgwsIzgQAAOw==" alt="hot" class="hot">
                          <a href="{% url 'blog:blog' %}"><span class="glyphicon glyphicon-pencil item">博客</span></a>
                      </li>
                      <!--分类-->
@@ -139,21 +140,40 @@
 
                     <div class="modal-body">
                         {% csrf_token %}
-                        {% for field in LoginModalForm %}
-                            <label for="{{ field.id_for_label }}">{{ field.label }}</label>
-                            {{ field }}
-                        {% endfor %}
-                        <span id="login_modal_tip" class="text-danger"></span>
-                        <div class="pull-right" style=" margin: 0.5em 0;">
+                            {# {% for field in LoginModalForm %} #}
+                            {#  <label for="{{ field.id_for_label }}">{{ field.label }}</label> #}
+                            {##}
+                            {# <div class="input-group"> #}
+                            {#  <span class="input-group-addon glyphicon glyphicon-home item"></span> #}
+                            {#  {{ field }} #}
+                            {# </div>#}
+                            {# {% endfor %} #}
+                        <label>账号</label>
+                        <div class="input-group">
+                            <span class="input-group-addon glyphicon glyphicon glyphicon-user item"></span>
+                            {{ LoginModalForm.username_or_email }}
+                        </div>
 
-                            <span style="font-weight: 700;">其他账号登录 :</span>
-                            <a href="{% url 'oauth:github_login' %}" title="Github登录">
-                                <img src="{% static 'blog/media/github.ico' %}" alt="Github登录">
-                            </a>
-                            <a href="{% url 'oauth:qq_login' %}" title="QQ登录">
-                                <img src="{% static 'blog/media/qq.ico' %}" alt="QQ登录">
-                            </a>
-                            &nbsp;<img src="{% static 'blog/media/logo_sina.png' %}" alt="微博登录">
+                        <label style="margin-top: 5px">密码</label>
+                        <div class="input-group">
+                            <span class="input-group-addon glyphicon glyphicon glyphicon-lock item"></span>
+                            {{ LoginModalForm.password }}
+                        </div>
+
+                        <div style=" margin: 0.5em 0;">
+
+                            <div id="login_modal_tip" class="text-danger"></div>
+                            <span style="font-weight: 700;">其他账号登录：</span>
+
+                            <div class="other_account">
+                                <a href="{% url 'oauth:github_login' %}" title="Github登录">
+                                    <img style="width: 50px;height: 50px;margin-left: 15px" src="{% static 'blog/media/logo_Github.ico' %}" alt="Github登录">
+                                </a>
+                                <a href="{% url 'oauth:qq_login' %}" title="QQ登录">
+                                    <img style="margin-left: 6px" src="{% static 'blog/media/logo_qq.ico' %}" alt="QQ登录">
+                                </a>
+                                <img style="margin-left: 13px" src="{% static 'blog/media/logo_sina.ico' %}" alt="微博登录">
+                            </div>
 
                         </div>
 
@@ -179,22 +199,49 @@
 
                     <div class="modal-body">
                         {% csrf_token %}
-                        {% for field in RegModalForm %}
-                            <label for="{{ field.id_for_label }}">{{ field.label }}</label>
-                            {{ field }}
-                            <p class="text-danger">{{ field.errors.as_text }}</p>
-                        {% endfor %}
-                        <span class="pull-left text-danger">{{ RegModalForm.non_field_errors }}</span>
-                        <span id="register_modal_tip" class="text-danger"></span>
-                        <div class="pull-right">
+                            {# {% for field in RegModalForm %} #}
+                            {# <label for="{{ field.id_for_label }}">{{ field.label }}</label> #}
+                            {#     {{ field }} #}
+                            {# <p class="text-danger">{{ field.errors.as_text }}</p> #}
+                            {# {% endfor %} #}
+                        <label>账号</label>
+                        <div class="input-group">
+                            <span class="input-group-addon glyphicon glyphicon glyphicon glyphicon-user item"></span>
+                            {{ RegModalForm.username }}
+                        </div>
+                        <label style="margin-top: 5px">邮箱</label>
+                        <div class="input-group">
+                            <span class="input-group-addon glyphicon glyphicon glyphicon glyphicon-envelope item"></span>
+                            {{ RegModalForm.email }}
+                        </div>
+                        <label style="margin-top: 5px">密码</label>
+                        <div class="input-group">
+                            <span class="input-group-addon glyphicon glyphicon glyphicon-lock item"></span>
+                            {{ RegModalForm.password }}
+                        </div>
+                        <label style="margin-top: 5px">验证码</label>
+                        <div class="input-group">
+                            <span class="input-group-addon glyphicon glyphicon glyphicon glyphicon-check item"></span>
+                            {{ RegModalForm.verification_code }}
+                        </div>
 
-                            <span style="font-weight: 700;">其他账号登录 :</span> <a href="{% url 'oauth:github_login' %}" title="Github登录">
-                                <img src="{% static 'blog/media/github.ico' %}" alt="Github登录">
-                            </a>
-                             <a href="{% url 'oauth:qq_login' %}" title="QQ登录">
-                                <img src="{% static 'blog/media/qq.ico' %}" alt="QQ登录">
-                            </a>
-                            &nbsp;<img src="{% static 'blog/media/logo_sina.png' %}" alt="微博登录">
+                        <span class="pull-left text-danger">{{ RegModalForm.non_field_errors }}</span>
+
+                        <div style="margin: 0.5em 0;">
+
+                            <div id="register_modal_tip" class="text-danger"></div>
+
+                            <span style="font-weight: 700;">其他账号登录：</span>
+
+                            <div class="other_account">
+                                <a href="{% url 'oauth:github_login' %}" title="Github登录">
+                                    <img style="width: 50px;height: 50px;margin-left: 15px" src="{% static 'blog/media/logo_Github.ico' %}" alt="Github登录">
+                                </a>
+                                <a href="{% url 'oauth:qq_login' %}" title="QQ登录">
+                                    <img style="margin-left: 6px" src="{% static 'blog/media/logo_qq.ico' %}" alt="QQ登录">
+                                </a>
+                                <img style="margin-left: 13px" src="{% static 'blog/media/logo_sina.ico' %}" alt="微博登录">
+                            </div>
 
                         </div>
 
@@ -208,7 +255,7 @@
                 </form>
             </div>
         </div>
-        </div>
+    </div>
     <div class="modal fade" id="forgot_password_modal" tabindex="-1" role="dialog">
         <div class="modal-dialog modal-sm" role="document">
             <div class="modal-content">
@@ -220,13 +267,29 @@
 
                     <div class="modal-body">
                         {% csrf_token %}
-                        {% for field in ForgotPasswordModalForm %}
-                            <label for="{{ field.id_for_label }}">{{ field.label }}</label>
-                            {{ field }}
-                            <p class="text-danger">{{ field.errors.as_text }}</p>
-                        {% endfor %}
+{#                        {% for field in ForgotPasswordModalForm %}#}
+{#                            <label for="{{ field.id_for_label }}">{{ field.label }}</label>#}
+{#                            {{ field }}#}
+{#                            <p class="text-danger">{{ field.errors.as_text }}</p>#}
+{#                        {% endfor %}#}
+                        <label>邮箱</label>
+                        <div class="input-group">
+                            <span class="input-group-addon glyphicon glyphicon-user item"></span>
+                            {{ ForgotPasswordModalForm.password_email }}
+                        </div>
+                        <label style="margin-top: 5px">密码</label>
+                        <div class="input-group">
+                            <span class="input-group-addon glyphicon glyphicon-envelope item"></span>
+                            {{ ForgotPasswordModalForm.new_password }}
+                        </div>
+                        <label style="margin-top: 5px">验证码</label>
+                        <div class="input-group">
+                            <span class="input-group-addon glyphicon  glyphicon-check item"></span>
+                            {{ ForgotPasswordModalForm.password_verification_code }}
+                        </div>
+
                         <span class="pull-left text-danger">{{ ForgotPasswordModalForm.non_field_errors }}</span>
-                        <span id="forgot_password__modal_tip" class="text-danger"></span>
+                        <div style="margin: 0.5em 0;" id="forgot_password__modal_tip" class="text-danger"></div>
                     </div>
                     <div class="clearfix"></div>
                     <div class="modal-footer">
@@ -279,7 +342,7 @@
             </div>
 
             <div>
-                <a href="http://www.miibeian.gov.cn/">赣ICP备18008471号-2</a>&nbsp;&nbsp;
+                <a href="http://www.miibeian.gov.cn/">赣ICP备18008471号</a>&nbsp;&nbsp;
                 <span class="hidden-xs">Designed by 蒋振飞</span>
             </div>
 
@@ -287,7 +350,7 @@
     </div>
 
     <!--蜘蛛丝效果-->
-    <script color="160,32,240" opacity='0.6' zIndex="-2" count="50" src="//cdn.bootcss.com/canvas-nest.js/1.0.1/canvas-nest.min.js"></script>
+    <script color="160,32,240" opacity='0.5' zIndex="-2" count="30" src="//cdn.bootcss.com/canvas-nest.js/1.0.1/canvas-nest.min.js"></script>
 
     <!-- 模态框 -->
     <script>
