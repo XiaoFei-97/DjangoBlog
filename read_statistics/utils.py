@@ -19,14 +19,13 @@ def read_statistics_once_read(request, obj):
     ct = ContentType.objects.get_for_model(obj)
     key = "%s_%s_read" % (ct.model, obj.pk)
     if not request.COOKIES.get(key):
-
         '''
         # 第一种办法：新增阅读计数功能
         post.read_num += 1
         post.save()
 
         # 第二种办法：新增阅读计数功能
-        
+
         if ReadNum.objects.filter(post=post).count():
             # 存在记录
             readnum = ReadNum.objects.get(post=post)
@@ -37,10 +36,10 @@ def read_statistics_once_read(request, obj):
         # 计数+1
         readnum.read_num += 1
         readnum.save()
-        
+
 
         # 第三种办法：创建应用型
-        
+
         if ReadNum.objects.filter(content_type=ct, object_id=obj.pk).count():
             # 存在记录
             readnum = ReadNum.objects.get(content_type=ct, object_id=obj.pk)
@@ -57,15 +56,19 @@ def read_statistics_once_read(request, obj):
 
         # 当天阅读数+1
         date = timezone.now().date()
+        # 获取当前访问来源IP
+        ip_address = request.META.get("HTTP_X_FORWARDED_FOR", request.META.get("REMOTE_ADDR", None))
+        # 当前访问者
         '''
         if ReadDetail.objects.filter(content_type=ct, object_id=obj.pk, date=date).count():
             readDetail = ReadDetail.objects.get(content_type=ct, object_id=obj.pk, date=date)
-       
+
         else:
             readDetail = ReadDetail(content_type=ct, object_id=obj.pk, date=date)
         '''
 
-        readdetail, created = ReadDetail.objects.get_or_create(content_type=ct, object_id=obj.pk, date=date)
+        readdetail, created = ReadDetail.objects.get_or_create(
+            content_type=ct, object_id=obj.pk, date=date, ip_address=ip_address)
         readdetail.read_num += 1
         readdetail.save()
     return key
@@ -130,7 +133,8 @@ def get_new_recommend_post(content_type):
     today = timezone.now().date()
     yesterday = today - datetime.timedelta(days=1)
     read_detail = ReadDetail.objects.filter(content_type=content_type, date=yesterday).order_by('-read_num')
-    return read_detail[0:15]  # 前十五条
+    list = [detail.content_object for detail in read_detail if detail.content_object.category.status == 0 and detail.content_object.display == 0]
+    return list[0:15]  # 前十五条
 
 
 def get_random_recomment():
@@ -143,7 +147,8 @@ def get_random_recomment():
 
     post_list = cache.get('post_list')
     if post_list is None:
-        post_list = Post.objects.filter(Q(display=0) | Q(display__isnull=True))
+        post_list = Post.objects.filter(Q(display=0) | Q(display__isnull=True)).filter(category__status=0)
+        print(post_list)
         # 60*60表示60秒*60,也就是1小时
         cache.set('post_list', post_list, 30 * 60)
 
@@ -164,7 +169,7 @@ def get_7_days_read_posts():
     today = timezone.now().date()
     date = today - datetime.timedelta(days=7)
     posts = Post.objects \
-        .filter(Q(display=0) | Q(display__isnull=True), read_detail__date__lt=today, read_detail__date__gte=date) \
+        .filter(Q(display=0) | Q(display__isnull=True), category__status=0, read_detail__date__lt=today, read_detail__date__gte=date) \
         .values('id', 'title') \
         .annotate(read_num_sum=Sum('read_detail__read_num')) \
         .order_by('-read_num_sum')
@@ -179,7 +184,7 @@ def get_30_days_read_posts():
     today = timezone.now().date()
     date = today - datetime.timedelta(days=30)
     posts = Post.objects \
-        .filter(Q(display=0) | Q(display__isnull=True), read_detail__date__lt=today, read_detail__date__gte=date) \
+        .filter(Q(display=0) | Q(display__isnull=True), category__status=0, read_detail__date__lt=today, read_detail__date__gte=date) \
         .values('id', 'title') \
         .annotate(read_num_sum=Sum('read_detail__read_num')) \
         .order_by('-read_num_sum')
@@ -193,7 +198,7 @@ def get_all_read_posts():
     """
     today = timezone.now().date()
     posts = Post.objects \
-        .filter(Q(display=0) | Q(display__isnull=True), read_detail__date__lt=today) \
+        .filter(Q(display=0) | Q(display__isnull=True), category__status=0, read_detail__date__lt=today) \
         .values('id', 'title') \
         .annotate(read_num_sum=Sum('read_detail__read_num')) \
         .order_by('-read_num_sum')

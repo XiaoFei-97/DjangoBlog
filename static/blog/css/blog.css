@@ -32,7 +32,7 @@ ul{
 
 
 .blog-title a:hover{
-    color: #f2618c;
+    color: #0000FF;
 }
 
 .blog-describe{
@@ -65,7 +65,7 @@ ul{
 }
 
 .properties a:hover{
-    color: #f2618c;
+    color: #3690cf;
 }
 
 .list-type{
@@ -87,10 +87,10 @@ ul{
         padding: 0 1em 0 1.5em;
     }
     .blog-border1{
+        padding: 10px;
         border: 1px solid #ccc;
         border-radius: 6px;
-        margin-bottom: 1em;
-        padding-bottom: 1em;
+        margin-bottom: 2em;
     }
     .blog-border2{
     }
@@ -105,7 +105,7 @@ ul{
         border: 1px solid #ccc;
         border-radius: 6px;
         margin-bottom: 1em;
-        padding-bottom: 1em;
+        padding-bottom: 0.5em;
     }
 }
 

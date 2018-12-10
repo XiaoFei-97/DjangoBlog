@@ -32,7 +32,7 @@ class CategoryAdmin(object):
         admin.ModelAdmin:继承admin.ModelAdmin类
     """
     # 在后台显示id值和分类名
-    list_display = ['id', 'name']
+    list_display = ['id', 'name', 'status']
     # 增加过滤框,且以文章分类作过滤器
     list_filter = ['name']
     # 增加文章标题搜索字段

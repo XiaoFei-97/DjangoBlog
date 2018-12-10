@@ -16,13 +16,13 @@ def home(request):
     :return: 首页模板视图
     """
     # 所有分类
-    category_list = Category.objects.all()
+    category_list = Category.objects.filter(status=0)
 
     # 所有博客列表
     # post_list = Post.objects.filter(Q(display=0) | Q(display__isnull=True))
     post_list = cache.get('post_list')
     if post_list is None:
-        post_list = Post.objects.filter(Q(display=0) | Q(display__isnull=True))
+        post_list = Post.objects.filter(Q(display=0) | Q(display__isnull=True)).filter(category__status=0)
         # 60*60表示60秒*60,也就是1小时
         cache.set('post_list', post_list, 30 * 60)
 
@@ -30,7 +30,7 @@ def home(request):
     # new_publish = Post.objects.filter(Q(display=0) | Q(display__isnull=True))[:15]
     new_publish = cache.get('new_publish')
     if new_publish is None:
-        new_publish = Post.objects.filter(Q(display=0) | Q(display__isnull=True))[:15]
+        new_publish = Post.objects.filter(Q(display=0) | Q(display__isnull=True)).filter(category__status=0)[:15]
         # 60*60表示60秒*60,也就是1小时
         cache.set('new_publish', new_publish, 30 * 60)
 
@@ -144,7 +144,7 @@ def get_blog_list_common_data(request, post_all_list):
     # post_count = Post.objects.all().count()
 
     # 获取所有的分类
-    category_list = Category.objects.all()
+    category_list = Category.objects.filter(status=0)
 
     # 获取博客分类对应的博客数量
     # 给每个category对象绑定post_count字段
@@ -157,7 +157,7 @@ def get_blog_list_common_data(request, post_all_list):
     # post_dates = Post.objects.dates('created_time', 'month', order='DESC')
     post_dates = cache.get('post_dates')
     if post_dates is None:
-        post_dates = Post.objects.dates('created_time', 'month', order='DESC')
+        post_dates = Post.objects.filter(category__status=0).dates('created_time', 'month', order='DESC')
         # 60*60表示60秒*60,也就是1小时
         cache.set('post_dates', post_dates, 30 * 60)
 
@@ -165,7 +165,7 @@ def get_blog_list_common_data(request, post_all_list):
     # 利用字典
     post_date_dict = {}
     for post_date in post_dates:
-        post_date_count = Post.objects.filter(Q(display=0) | Q(display__isnull=True), created_time__year=post_date.year, created_time__month=post_date.month).count()
+        post_date_count = Post.objects.filter(Q(display=0) | Q(display__isnull=True), category__status=0, created_time__year=post_date.year, created_time__month=post_date.month).count()
         post_date_dict[post_date] = post_date_count
 
     # 随机推荐的15篇博客
@@ -213,7 +213,7 @@ def blog(request):
     # post_all_list = Post.objects.all().filter(Q(display=0) | Q(display__isnull=True))
     post_list = cache.get('post_list')
     if post_list is None:
-        post_list = Post.objects.all().filter(Q(display=0) | Q(display__isnull=True))
+        post_list = Post.objects.filter(Q(display=0) | Q(display__isnull=True)).filter(category__status=0)
         # 60*60表示60秒*60,也就是1小时
         cache.set('post_list', post_list, 30 * 60)
 
@@ -237,7 +237,7 @@ def detail(request, pk):
     # post_all_list = Post.objects.filter(Q(display=0) | Q(display__isnull=True))
     post_list = cache.get('post_list')
     if post_list is None:
-        post_list = Post.objects.all().filter(Q(display=0) | Q(display__isnull=True))
+        post_list = Post.objects.filter(Q(display=0) | Q(display__isnull=True)).filter(category__status=0)
         # 60*60表示60秒*60,也就是1小时
         cache.set('post_list', post_list, 30 * 60)
 
@@ -253,11 +253,11 @@ def detail(request, pk):
     # 在django中不能使用>=或<=,所以django自定义了__gt和__lt
     # 目的:得出创建时间比当前博客创建时间较晚的所有博客列表的最后一篇博客,也就是当前博客的上一篇
     # 因为博客是按照创建时间的先后来排序的:即先创建的靠后,那么上一篇博客创建时间晚于当前博客
-    previous_post = Post.objects.filter(created_time__gt=post.created_time, display=0).last()
+    previous_post = Post.objects.filter(created_time__gt=post.created_time, display=0).filter(category__status=0).last()
 
     # 目的:得出创建时间比当前博客创建时间较早的所有博客列表的第一篇博客,也就是当前博客的下一篇
     # 因为博客是按照创建时间的先后来排序的:即先创建的靠后,那么上一篇博客创建时间早于当前博客
-    next_post = Post.objects.filter(created_time__lt=post.created_time, display=0).first()
+    next_post = Post.objects.filter(created_time__lt=post.created_time, display=0).filter(category__status=0).first()
 
     context.update({'article': post.body, 'title': post.title,
                     'author': post.author, 'created_time': post.created_time,
@@ -266,13 +266,14 @@ def detail(request, pk):
                     'user': request.user, 'post_id': post.id, 'post': post,
                     'LoginModalForm': LoginModalForm(),
                     # 'comments': comments.order_by('-comment_time'),
-                    # 'comment_form': CommentForm(initial={'content_type': post_content_type.model, 'object_id': pk, 'reply_comment_id': 0}),
+                    # 'comment_form': CommentForm(initial={
+                    #   'content_type': post_content_type.model, 'object_id': pk, 'reply_comment_id': 0}),
                     # 'comment_count':Comment.objects.filter(content_type=post_content_type, object_id=post.pk).count()
                })
     response = render(request, 'blog/detail.html', context)
 
     # 第一个参数是键,键值,和过期时间
-    response.set_cookie(read_cookie_key, 'True', domain="jzfblog.com")  # 阅读cookie标记
+    response.set_cookie(read_cookie_key, 'True', domain="jzfblog.com", secure=True, httponly=True)  # 阅读cookie标记
     return response
 
 
@@ -290,11 +291,11 @@ def category(request, pk):
 
     date_list = cache.get('date_list')
     if date_list is None:
-        date_list = Post.objects.dates('created_time', 'month', order='DESC')
+        date_list = Post.objects.filter(category__status=0).dates('created_time', 'month', order='DESC')
         # 60*60表示60秒*60,也就是1小时
         cache.set('date_list', date_list, 30 * 60)
 
-    post_count = Post.objects.filter(Q(display=0) | Q(display__isnull=True)).count()
+    post_count = Post.objects.filter(Q(display=0) | Q(display__isnull=True), category__status=0).count()
 
     # 使用公共部分的 get_blog_list_common_data方法
     context = get_blog_list_common_data(request, post_list)
@@ -318,17 +319,18 @@ def date(request, year, month):
     # 在这里采用的方法是先将月份转化为字符串的形式，然后再使用，发现可行
     month = str(month)
 
-    post_list = Post.objects.all().filter(Q(display=0) | Q(display__isnull=True), created_time__year=year, created_time__month=month)
+    post_list = Post.objects.all().filter(
+        Q(display=0) | Q(display__isnull=True), created_time__year=year, created_time__month=month, category__status=0)
     # 将年月拼接一下
     post_time = year+'年'+month+'月'
 
     date_list = cache.get('date_list')
     if date_list is None:
-        date_list = Post.objects.dates('created_time', 'month', order='DESC')
+        date_list = Post.objects.dates('created_time', 'month', order='DESC').filter(category__status=0)
         # 60*60表示60秒*60,也就是1小时
         cache.set('date_list', date_list, 30 * 60)
 
-    post_count = Post.objects.filter(Q(display=0) | Q(display__isnull=True)).count()
+    post_count = Post.objects.filter(Q(display=0) | Q(display__isnull=True)).filter(category__status=0).count()
 
     context = get_blog_list_common_data(request, post_list)
     context.update({'post_time': post_time, 'date_list': date_list, 'post_count': post_count})
@@ -355,7 +357,7 @@ def findWords(request):
     key = request.POST.get('key', '')
     # print(key)
     # list = Post.objects.filter(Q(display=0) | Q(display__isnull=True), title__istartswith=key)[:2]
-    list = Post.objects.filter(Q(display=0) | Q(display__isnull=True), title__icontains=key)[:5]
+    list = Post.objects.filter(Q(display=0) | Q(display__isnull=True), title__icontains=key).filter(category__status=0)[:5]
 
     search_list = []
     for post in list:

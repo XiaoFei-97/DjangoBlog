@@ -33,7 +33,7 @@ def get_date_post(year, month):
         year：模板传递的年份
         month：模板传递的月份
     """
-    post_list = Post.objects.all().filter(Q(display=0) | Q(display__isnull=True), created_time__year=year, created_time__month=month)
+    post_list = Post.objects.all().filter(Q(display=0) | Q(display__isnull=True), category__status=0, created_time__year=year, created_time__month=month)
     return post_list[:15]
 
 
@@ -44,7 +44,7 @@ def get_date_to_month(post_date):
         obj: 对应的post_date
     """
 
-    return (str(post_date.year) +'年' + str(post_date.month) + '月')
+    return str(post_date.year) +'年' + str(post_date.month) + '月'
 
 
 @register.simple_tag
@@ -54,7 +54,7 @@ def get_date_count(year, month):
         year: 模板传递的年份
         month：模板传递的月份
     """
-    return Post.objects.filter(Q(display=0) | Q(display__isnull=True), created_time__year=year, created_time__month=month).count()
+    return Post.objects.filter(Q(display=0) | Q(display__isnull=True), category__status=0, created_time__year=year, created_time__month=month).count()
 
 
 @register.simple_tag

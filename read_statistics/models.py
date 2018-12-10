@@ -3,6 +3,7 @@ from django.contrib.contenttypes.fields import GenericForeignKey
 from django.contrib.contenttypes.models import ContentType
 from django.utils import timezone
 from django.db.models.fields import exceptions
+from django.contrib.auth.models import User
 # from blog.models import Post
 
 
@@ -54,6 +55,12 @@ class ReadDetail(models.Model):
     content_type = models.ForeignKey(ContentType, verbose_name=u'类型', on_delete=models.CASCADE)
     object_id = models.PositiveIntegerField(verbose_name=u'ID')
     content_object = GenericForeignKey('content_type', 'object_id')
+
+    # 记录IP地址
+    ip_address = models.CharField(max_length=15, verbose_name="来源", blank=True, null=True)
+
+    # 记录User，这里可能没有登录用户，所以要允许为空
+    # user = models.ForeignKey(User, verbose_name="浏览者", blank=True, null=True)
 
     class Meta:
         verbose_name = '阅读记录'

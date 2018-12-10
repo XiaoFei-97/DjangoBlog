@@ -13,14 +13,15 @@
     <!-- 百度收录标识 -->
     <meta name="baidu-site-verification" content="5RbnZ7cZ7F" />
 
-    <!--网站信息-->
+   <!--网站信息-->
     <meta name="author" content="蒋振飞,XiaoFei-97@outlook.com">
-    <meta name="keywords" content="蒋振飞,个人博客,技术笔记,前端,后端,数据库,java,python">
+    <meta name="keywords" content="蒋振飞,个人博客,IT技术博客,技术笔记,前端,后端,数据库,开发者,编程,代码,开源,IT网站,Developer,Programmer,Coder,Spring,Spring Boot,Spring Cloud,MongoDB,Jvm">
     <meta name="description" content="一个互联网草根站长的个人博客网站,关注互联网、Python全栈、JavaEE等技术。本站主要用来分享互联网、教程、学习笔记等，一个有情怀值得收藏的个人博客!">
     <title>{% block title %}{% endblock%}</title>
-    <link type="text/css" rel="shortcut icon" href="{% static 'blog/media/favicon.ico' %}">
+    <link type="text/css" rel="shortcut icon" href="{% static 'blog/img/favicon.ico' %}">
 
     <!--全局样式-->
+    <link rel="stylesheet" href="{% static 'blog/css/hover-min.css' %}">
     <link type="text/css" rel="stylesheet" href="{% static 'blog/css/base.css' %}">
     <link type="text/css" rel="stylesheet" href={% static 'blog/css/myRewards.css' %}>
 
@@ -35,10 +36,10 @@
 <body>
     <div class="navbar navbar-default navbar-fixed-top navbar-down" role="navigation">
         <div class="container_fluid">
-            <div class="navbar-header">
+            <div class="navbar-header" id="logo">
                 <!--网站logo-->
                 <a class="navbar-brand" href="{% url 'blog:blog' %}">
-                    <img style="width:100px;" src="{% static 'blog/media/logo.png' %}" alt="logo">
+                    <img style="width:100px;" src="{% static 'blog/img/logo.png' %}" alt="logo">
                 </a>
 
                 <!--下拉菜单-->
@@ -48,7 +49,24 @@
                      <span class="icon-bar"></span>
                      <span class="icon-bar"></span>
                 </button>
+                <span id="mobile-search" class="glyphicon glyphicon-search mobile-search"></span>
             </div>
+            <!--搜索框-->
+            <form method='get' id="search" class="navbar-form navbar-right search" action="/search/" onsubmit="return check()">
+                <div class="mobile-search-box">
+                    <input type="text" name="q" class="form-control pull-left" autocomplete="off" placeholder="搜点啥?" id="key">
+                    &nbsp;<button type="submit" class="btn btn-default" id="btn">
+                            <span class="glyphicon glyphicon-search" style="line-height:1;"></span>
+                        </button>
+                </div>
+
+                <div class="clearfix"></div>
+                <div class="blog-search" id="blog-search">
+                    <ul id="titles" style="display: none;" >
+
+                    </ul>
+                </div>
+            </form>
             <!--nav选项卡-->
             <div id="navbar-collapse" class="collapse navbar-collapse">
                  <ul class="nav navbar-nav base_head">
@@ -58,8 +76,7 @@
                      </li>
                      <!--博客-->
                      <li class="{% block nav_blog_active %}{% endblock %}">
-                     <img data-v-07578fd8="" src="data:image/gif;base64,R0lGODlhGwATAOZnAP/7+v/39v5IMP/Cuv/z8f/SzP6Kev+uo/+ajP/f2v+mmv/Ox//a1f5NNf++tv/u7P/j3/44Hv4oC/+hlf5ROv+ekf/n4/6Fdf+yqP/Gv/+6sf/r6P4xFf4sEP5IAv5AJ/48Iv5UPv+KAv55Z/42Av+qn/+jl/5+bP49Av5tWf5eAv9qAv4kB/5pVP5lUP51Yv5FLP5ZQv5BAv46Av92Av4jAv/Wl/5ZAv5hS/43Av/Nxv4iAv+mAv93Av/X0f/Lw/9kAv+2rf9hAv+HAv5fAv6BcP5dAv5AAv4pAv/Pl/+YAv+mm/5RAv+tl//fl/9/Av5dR/5xXv41Av+uAv4wAv5bAv+cAv+lAv+Sg/9jAv42B//Xl/+FAv+yl/+1l/+BAv5OAv/El//Yl/45Av4gAv4CCP///////wAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACH/C05FVFNDQVBFMi4wAwEAAAAh+QQFCgBnACwAAAAAGwATAAAHmYBmgoOEhYaHiImKi4yNGwmNjA0DkYoFZJSViFhkDpqDGoQNZAeDBJURKRZmGGRkE4IAFACROGQSAq5kCIIGZAyLp2ZBrjNERlIwGQquPoslFxBmUDk9Vko0R7octIoAuQIcQjaCYoJdJpEZukBmZWXu8PHv8+/yva4k8fv0+/6FE3LVg9ev4D1D0ugplGdw0UJB9u71+7QoEAAh+QQFCgBnACwBAAAAFQARAAAHloBmgoOEgwABhYmKDAKIio9mASAxkJAIZAaVjw1kB5qJD2RkA4afZgOiFWYFBgCmFaKiEgyPGwWDARGxLA6QIyeCAS1kKEiduAiugxQsCAcCZGAqWhUEBRhFERSFLrEoKyJDVTWxohq4ZhdkTYJJgmFehDqEITCiZmVl+Pr7+fuCC0Dc80eQn79CG3rlW/ivoaKCDQ8GAgAh+QQFCgBnACwBAAAAFQAQAAAHlIBngoOEg2ZmhYmKh4iKjmeMj4+RkosBD5WJAyFRAIYLno8GZGcaiGYJLheJFgGCCmSkHTEtH2QcFoUAAgpnBRI7VINkAi8QiQuxsSQ3HhIlCY2Qh5hnyWQeK19cKhE/DgoHDJEZIwkPZEwiPFNXT2OxKRgQlC9ktllbgk6CJkuE0gI0ICUjUyECJzoYVERgwsIzgQAAOw==" alt="hot" class="hot">
-                         <a href="{% url 'blog:blog' %}"><span class="glyphicon glyphicon-pencil item">博客</span></a>
+                         <a style="color: #FF0000" href="{% url 'blog:blog' %}"><span id="hot" class="glyphicon glyphicon-pencil item">博客</span></a>
                      </li>
                      <!--分类-->
                      <li class="{% block nav_category_active %}{% endblock %}">
@@ -110,20 +127,6 @@
                             </ul>
                         </li>
                     {% endif %}
-                    <!--搜索框-->
-                    <form method='get' class="navbar-form navbar-left" action="/search/" onsubmit="return check()">
-                        <input type="text" name="q" class="form-control" autocomplete="off" placeholder="搜点啥?" id="key">
-
-                        <button type="submit" class="btn btn-default" id="btn">
-                            <span class="glyphicon glyphicon-search" style="line-height:1;"></span>
-                        </button>
-                        <div class="clearfix"></div>
-                        <div class="blog-search" id="blog-search">
-                            <ul id="titles" style="display: none;" >
-
-                            </ul>
-                        </div>
-                    </form>
                 </ul>
             </div>
         </div>
@@ -167,12 +170,12 @@
 
                             <div class="other_account">
                                 <a href="{% url 'oauth:github_login' %}" title="Github登录">
-                                    <img style="width: 50px;height: 50px;margin-left: 15px" src="{% static 'blog/media/logo_Github.ico' %}" alt="Github登录">
+                                    <img style="width: 50px;height: 50px;margin-left: 15px" src="{% static 'blog/img/logo_Github.ico' %}" alt="Github登录">
                                 </a>
                                 <a href="{% url 'oauth:qq_login' %}" title="QQ登录">
-                                    <img style="margin-left: 6px" src="{% static 'blog/media/logo_qq.ico' %}" alt="QQ登录">
+                                    <img style="margin-left: 6px" src="{% static 'blog/img/logo_qq.ico' %}" alt="QQ登录">
                                 </a>
-                                <img style="margin-left: 13px" src="{% static 'blog/media/logo_sina.ico' %}" alt="微博登录">
+                                <img style="margin-left: 13px" src="{% static 'blog/img/logo_sina.ico' %}" alt="微博登录">
                             </div>
 
                         </div>
@@ -235,12 +238,12 @@
 
                             <div class="other_account">
                                 <a href="{% url 'oauth:github_login' %}" title="Github登录">
-                                    <img style="width: 50px;height: 50px;margin-left: 15px" src="{% static 'blog/media/logo_Github.ico' %}" alt="Github登录">
+                                    <img style="width: 50px;height: 50px;margin-left: 15px" src="{% static 'blog/img/logo_Github.ico' %}" alt="Github登录">
                                 </a>
                                 <a href="{% url 'oauth:qq_login' %}" title="QQ登录">
-                                    <img style="margin-left: 6px" src="{% static 'blog/media/logo_qq.ico' %}" alt="QQ登录">
+                                    <img style="margin-left: 6px" src="{% static 'blog/img/logo_qq.ico' %}" alt="QQ登录">
                                 </a>
-                                <img style="margin-left: 13px" src="{% static 'blog/media/logo_sina.ico' %}" alt="微博登录">
+                                <img style="margin-left: 13px" src="{% static 'blog/img/logo_sina.ico' %}" alt="微博登录">
                             </div>
 
                         </div>
@@ -301,53 +304,87 @@
             </div>
         </div>
         </div>
-    <!--轮播图-->
-    {% block home_content %}{% endblock %}
 
-    <!--页面内容-->
-    {% block content %}{% endblock %}
+    <div id="click-warp">
+         <!--轮播图-->
+        {% block home_content %}{% endblock %}
 
-    <!--页脚-->
-    <div class="footer">
-        <div class="website-info container">
-            <div class="about">
-                <h4>关于本站</h4>
-                <p>1.基于Django+Bootstrap开发</p>
-                <p>2.主要发表本人的技术笔记与随笔</p>
-                <p>3.本站于2018-5-30开始建站</p>
-            </div>
-            <div class="response hidden-xs">
-                <h4>建议反馈</h4>
-                <p>1.欢迎注册评论</p>
-                <p>2.可在相应的博文底下评论</p>
-                <p>3.关注博主动态请查看公告</p>
-            </div>
-            <div class="contact hidden-xs hidden-sm">
-                <h4 style="margin-bottom: 0;">微信公众号</h4>
-                <img src="{% static 'blog/media/wechat.jpg' %}" style="width: 90px;height:85px;" alt="微信二维码">
-            </div>
-            <div class="tools hidden-xs hidden-sm hidden-md">
-                <h4>在线工具</h4>
-                <p><a href="https://www.djangoproject.com/" target="_blank">Django API文档</a></p>
-                <p><a href="https://v3.bootcss.com/" target="_blank">BootStrap 中文网</a></p>
-                <p><a href="https://tool.lu/c/developer" target="_blank">开发在线工具</a></p>
-            </div>
-        </div>
+        <!--页面内容-->
+        {% block content %}{% endblock %}
 
-        <div class="copyright">
-            <div>&nbsp;&nbsp;&nbsp;© 蒋振飞的博客(JzfBlog.COM)&nbsp;&nbsp;
-                <a class="hidden-xs hidden-sm" href="https://www.oschina.net/">开源中国社区</a>&nbsp;&nbsp;
-                <a class="hidden-xs hidden-sm" href="https://www.aliyun.com/">阿里云服务器</a>&nbsp;&nbsp;
-                <a class="hidden-xs hidden-sm hidden-md" href="https://tongji.baidu.com" target="_blank">站长工具-百度统计</a>
+        <!--页脚-->
+        <div class="footer">
+            <a id="scrolltop" class="gotop" href="javascript:void(0)" title="返回顶部" style="display: inline;"></a>
+            <!--<a class="choose-like" href="javascript:void(0)" title="喜爱"></a>-->
+            <div class="website-info container">
+                <div class="about">
+                    <h4>关于本站</h4>
+                    <p>1.基于Django+Bootstrap开发</p>
+                    <p>2.主要发表本人的技术笔记与随笔</p>
+                    <p>3.本站于2018-5-30开始建站</p>
+                </div>
+                <div class="response hidden-xs">
+                    <h4>建议反馈</h4>
+                    <p>1.欢迎注册评论</p>
+                    <p>2.可在相应的博文底下评论</p>
+                    <p>3.关注博主动态请查看公告</p>
+                </div>
+                <div class="contact hidden-xs hidden-sm">
+                    <h4 style="margin-bottom: 0;">微信公众号</h4>
+                    <img src="{% static 'blog/img/wechat.jpg' %}" style="width: 90px;height:85px;" alt="微信二维码">
+                </div>
+                <div class="tools hidden-xs hidden-sm hidden-md">
+                    <h4>在线工具</h4>
+                    <p><a href="https://www.djangoproject.com/" target="_blank">Django API文档</a></p>
+                    <p><a href="https://v3.bootcss.com/" target="_blank">BootStrap 中文网</a></p>
+                    <p><a href="https://tool.lu/c/developer" target="_blank">开发在线工具</a></p>
+                </div>
             </div>
 
-            <div>
-                <a href="http://www.miibeian.gov.cn/">赣ICP备18008471号</a>&nbsp;&nbsp;
-                <span class="hidden-xs">Designed by 蒋振飞</span>
-            </div>
+            <div class="copyright">
+                <div>&nbsp;&nbsp;&nbsp;© 蒋振飞的博客(JzfBlog.COM)&nbsp;&nbsp;
+                    <a class="hidden-xs hidden-sm" href="https://www.oschina.net/">开源中国社区</a>&nbsp;&nbsp;
+                    <a class="hidden-xs hidden-sm" href="https://www.aliyun.com/">阿里云服务器</a>&nbsp;&nbsp;
+                    <a class="hidden-xs hidden-sm hidden-md" href="https://tongji.baidu.com" target="_blank">站长工具-百度统计</a>
+                </div>
 
+                <div>
+                    <a href="http://www.miibeian.gov.cn/">赣ICP备18008471号</a>&nbsp;&nbsp;
+                    <span class="hidden-xs">Designed by 蒋振飞</span>
+                </div>
+
+            </div>
         </div>
     </div>
+
+    <!-- 返回顶部 -->
+    <script>
+        $(function(){
+            //滚动事件
+            $(window).scroll(function(){
+                var top=$(window).scrollTop();
+                var navbar = $(".navbar-fixed-top");
+
+                if(top==0){
+                    $(".navbar-fixed-top").removeClass("navbar-down");
+                }else{
+                    $(".navbar-fixed-top").addClass("navbar-down");
+                }
+
+                if(top>350){
+                    $("#scrolltop").fadeIn();
+                }else{
+                    $("#scrolltop").fadeOut();
+                }
+            });
+
+            //点击返回头部效果
+            $("#scrolltop").click(function(){
+                $("html,body").animate({
+                    scrollTop:0});
+            });
+        })
+    </script>
 
     <!--蜘蛛丝效果-->
     <script color="160,32,240" opacity='0.5' zIndex="-2" count="30" src="//cdn.bootcss.com/canvas-nest.js/1.0.1/canvas-nest.min.js"></script>
@@ -582,8 +619,9 @@
         $(function(){
 
             // 使得输入框与提醒框宽度一致
-            var inWidth = $("#key").outerWidth();
-            $("#blog-search").outerWidth(inWidth);
+            // var inWidth = $("#key").outerWidth();
+            // alert(inWidth);
+            // $("#blog-search").outerWidth(inWidth);
 
             // 按键弹起，自动加载相关标题
             $("#key").keyup(function(){
@@ -619,6 +657,13 @@
 
                 var cid = $(this).attr("data-id");
                 window.location.href = "/detail/"+cid
+            });
+
+            // 小尺寸下的搜索框点击
+            $("#mobile-search").click(function(){
+                $("#search").slideToggle();
+                $("#main-content").toggleClass("click-content");
+                $("#click-warp").toggleClass("click-warp");
             });
 
 
@@ -669,9 +714,9 @@
                     className可以为空，或者传入myR-on；默认显示项。
         	**/
             list:{
-            notice: {icon: "{% static 'blog/media/tip.png' %}", name:"公告栏", className:"myR-on", text: '<p style="text-indent:1em;">Github第三方登录已成功接入，欢迎使用，同时QQ与新浪接入功能尚处在开发阶段，在此期间，用户可正常登录网站。后续更新，敬请期待！</p><p style="text-align:right;">2018-10-14</p>'},
-                alipay: {icon: "{% static 'blog/media/alipay.png' %}", name:"支付宝", desc: '用支付宝给"振飞"打赏\n感谢支持！', qrimg: "{% static 'blog/media/alipay.jpg' %}"},
-                weixin: {icon: "{% static 'blog/media/weixin.png' %}", name:"微信", desc: '用微信给"振飞"打赏\n感谢支持！', qrimg: "{% static 'blog/media/wepay.png' %}"}
+            notice: {icon: "{% static 'blog/img/tip.png' %}", name:"公告栏", className:"myR-on", text: '<p style="text-indent:1em;">Github第三方登录已成功接入，欢迎使用，同时QQ与新浪接入功能尚处在开发阶段，在此期间，用户可正常登录网站。后续更新，敬请期待！</p><p style="text-align:right;">2018-10-14</p>'},
+                alipay: {icon: "{% static 'blog/img/alipay.png' %}", name:"支付宝", desc: '用支付宝给"振飞"打赏\n感谢支持！', qrimg: "{% static 'blog/img/alipay.jpg' %}"},
+                weixin: {icon: "{% static 'blog/img/weixin.png' %}", name:"微信", desc: '用微信给"振飞"打赏\n感谢支持！', qrimg: "{% static 'blog/img/wepay.png' %}"}
             }
         };
 

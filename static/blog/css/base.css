@@ -19,6 +19,42 @@ ul{
     margin: 0!important;
 }
 
+/**logo扫光效果CSS**/
+#logo:before{  /**根据logo外div样式名称修改before前名称**/
+    content:"";
+    position: absolute;
+    left: -665px; /**第一个数字参数控制扫光速度，数字越大越慢**/
+    top: -460px;
+    width: 120px;
+    height: 10px; /**光标的宽度，可根据实际调整**/
+    background-color: rgba(255,255,255,.8);
+    /*background-color: red;*/
+    -webkit-transform: rotate(-45deg);
+    -moz-transform: rotate(-45deg);
+    -ms-transform: rotate(-45deg);
+    -o-transform: rotate(-45deg);
+    transform: rotate(-45deg);
+    -webkit-animation: searchLights 1s ease-in 1s infinite;
+    -o-animation: searchLights 1s ease-in 1s infinite;
+    animation: searchLights 1s ease-in 1s infinite;/**第一个数字参数控制扫光速度，数字越大越慢**/
+}
+@-webkit-keyframes searchLights {
+    0% { left: -100px; top: 0; }
+    to { left: 80px; top: 0px; }
+}
+@-o-keyframes searchLights {
+    0% { left: -100px; top: 0; }
+    to { left: 80px; top: 0px; }
+}
+@-moz-keyframes searchLights {
+    0% { left: -100px; top: 0; }
+    to { left: 80px; top: 0px; }
+}
+@keyframes searchLights {
+    0% { left: -100px; top: 0; }
+    to { left: 80px; top: 0px; }
+}
+
 /*hot图标样式*/
 .hot{
     position: absolute;
@@ -27,13 +63,55 @@ ul{
     z-index: 1;
 }
 
+/*hot图标样式*/
+span#hot{
+    background-image: url(../img/hot.gif);
+    background-repeat: no-repeat;
+    background-position: right top;
+    padding-top: 12px;
+    margin-top: -12px;
+    /*color: #FF0000;*/
+}
+
+.tint{
+     color: #aaa;
+}
+
+/*点击搜索*/
+.click-warp{
+    opacity: 0.5;
+}
+
+/*小屏幕下的搜索功能*/
+.mobile-search{
+    position: absolute!important;
+    padding: 9px 10px;
+    margin-top: 10px;
+    margin-right: 40px;
+    margin-bottom: 8px;
+    right:-30px;
+    display: none!important;
+}
+
 /*博客内容样式*/
+.content{
+    margin-top: 40px!important;
+     transition: margin-top 0.6s;
+    -webkit-transition: margin-top 0.6s; /* Safari */
+}
+
+.cat-action{
+    margin-right: 10em;
+    margin-top: -8px;
+}
+
 .blog-detail{
     margin-top: 2em;
 }
 
 .blog-name{
-    color: #337ab7;
+    color: #0088db;
+    text-align: center;
 }
 
 .blog-content p{
@@ -41,18 +119,42 @@ ul{
     padding: 0;
 }
 
-.blog-info-description{
-    list-style: none;
-    margin-left: 3em!important;
+.detail-info-box{
+    color: #ac5a24;
+    margin-top: 10px;
+    line-height: 30px;
+    border: 1px dashed #999;
+    border-left: 0;
+    border-right: 0;
+    overflow: hidden;
 }
 
-.blog-info-description li{
-    display: inline-block;
-    margin-right:0.5em;
+.detail-info-box ul{
+    width: 690px;
+    margin: 0 auto!important;
 }
 
-.blog-info-description li span{
-    color: #575757;
+.detail-info-box ul li{
+    float: left;
+    width: 150px;
+    text-align: center;
+}
+
+.detail-info-box ul .item-time,.detail-info-box ul .blog-all-tags{
+    width: 320px;
+    text-align: center;
+}
+
+.blog-tag{
+    margin-left: 5px;
+}
+
+.light{
+    color:#f36;
+}
+
+.panel-body{
+    padding-top: 3px!important;
 }
 
 .like{
@@ -112,6 +214,14 @@ ul{
     width: 100%;
     position: relative;
     height: 280px;
+    transition: margin-top 0.6s;
+    -webkit-transition: margin-top 0.6s; /* Safari */
+}
+
+.click-content {
+    margin-top: 100px!important;
+     transition: margin-top 1s;
+    -webkit-transition: margin-top 1s; /* Safari */
 }
 
 .home_content img{
@@ -150,6 +260,38 @@ ul{
 }
 
 /*关于本站等信息*/
+.gotop {
+    display: block;
+    position: fixed;
+    bottom: 40px;
+    right: 0;
+    width: 35px;
+    height: 35px;
+    background-color: #323d45;
+    background-image: url(/static/blog/img/goto_top.png);
+    border-radius: 8px;
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
+    opacity: 0.5;
+    z-index: 1000;
+}
+
+.choose-like{
+    display: block;
+    position: fixed;
+    bottom: 75px;
+    right: 0;
+    width: 35px;
+    height: 35px;
+    background-color: #323d45;
+    background-image: url(/static/blog/img/like.png);
+    border-radius: 8px;
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
+    opacity: 0.5;
+    /*z-index: 1000;*/
+}
+
 .footer{
     width: 100%;
     position: absolute;
@@ -235,26 +377,12 @@ ul{
     margin-bottom: 1em;
 }
 
-.blog-border a:hover{
-    color: #337ab7;
-}
-
-.side-info{
-    margin-left: 1em;
-}
-
 .user-info{
-    margin-left: 1em;
-    margin-right: 1em;
-    margin-top: 10rem;
-}
-
-.side-info a:hover{
-    color: #f2618c;
+    padding: 0 20px;
 }
 
 .introduce-info{
-    margin-left: 2em;
+    padding: 0 1em;
 }
 
 .introduce-info h4, .side-info h4{
@@ -331,17 +459,13 @@ ul{
     color: #333;
 }
 
-.category h4 a:hover{
-    color: #f2618c;
-}
-
 /*搜索结果*/
 .previous_next{
     text-align: center;
 }
 
 .no-find{
-    margin-top: 5em;
+    padding: 2em 0 1em;
     text-align: center;
     color:red;
 }
@@ -361,12 +485,11 @@ ul{
 }
 
 .light-blog a:hover, .light-item a:hover{
-    color: #f2618c;
+    color: #0000FF;
 }
 
 /*loading*/
 .box{
-    padding-left: 5px;
     font-size: 20px;
     display: flex;
     justify-content: center;
@@ -665,16 +788,38 @@ ul{
     .copyright div{
         text-align: center;
     }
-    .navbar-form input{
-        width: 250px;
-        float: left;
+    .form-control{
+        width: 85%!important;
+    }
+    .navbar-form .mobile-search-box{
+        width: 100%!important;
     }
     .navbar-form button{
         margin-left: 3px;
     }
+    .mobile-search{
+        display: inline-block!important;
+    }
+    .navbar-form{
+        margin-top: 0!important;
+        margin-bottom: 0!important;
+    }
+    .search{
+        display: none;
+    }
+    .blog-search{
+        width: 270px!important;
+        border-bottom: 0!important;
+    }
     /*.navbar-default{*/
         /*border-bottom: 61px solid #e7e7e7!important;*/
     /*}*/
+    .comment-area{
+        margin-top: 0;
+        margin-left: 0;
+        padding: 0 1em 1em;
+        border: 0;
+    }
     .category{
         min-height: 0;
     }
@@ -691,10 +836,6 @@ ul{
     }
     .head-login,.head-register span{
         font-size: 0.8em;
-    }
-    .no-find{
-        margin-top: 1em;
-        text-align: center;
     }
     .no-find p{
         font-size: 1.2em;
@@ -730,10 +871,12 @@ ul{
 }
 
 .blog-search{
-    background-color: #f8f8f8;
+    background-color: #fff;
     width: 180px;
     height:auto;
     position: absolute;
+    border-bottom: 1px solid #e7e7e7;
+    border-radius: 6px;
 }
 .blog-search ul, .blog-search li{
     list-style: none;
@@ -747,12 +890,12 @@ ul{
     width: 100%;
 }
 .blog-search li .current{
-    background:#F2F2F2;
+    background:#fff;
     color:#0000FF;
     cursor: pointer;
 }
 .blog-search li:hover{
-    background:#F2F2F2;
+    background:#fff;
     color:#0000FF;
     cursor: pointer;
 }

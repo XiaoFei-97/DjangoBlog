@@ -17,7 +17,13 @@ class Category(models.Model):
     CharField 指定了分类名 name 的数据类型，CharField 是字符型，
     CharField 的 max_length 参数指定其最大长度，超过这个长度的分类名就不能被存入数据库。
     """
+    CATEGORY_DISPALY = (
+        (0, u'展示'),
+        (1, u'隐藏'),
+    )
+
     name = models.CharField(max_length=20, verbose_name=u'分类')
+    status = models.IntegerField(choices=CATEGORY_DISPALY, default=0, verbose_name='是否发表', null=True)
 
     class Meta:
         verbose_name = '分类'
