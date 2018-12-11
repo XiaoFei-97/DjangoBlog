@@ -1,0 +1,543 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+{% load comment_tags %}
+{% load likes_tags %}
+{% load post_tags %}
+{#页面标题#}
+{% block title %}
+    蒋振飞个人博客 - {{ title }}
+{% endblock title %}
+
+{% block header_extend %}
+    <link rel="stylesheet" href="{% static 'blog/css/blog.css' %}">
+    <!--图片缩放-->
+    <link rel="stylesheet" href="{% static 'blog/css/zoom.css' %}">
+    <script type="text/javascript" src="{% static 'blog/js/zoom.min.js' %}"></script>
+
+    {# highlight代码高亮 #}
+    {# <link rel="stylesheet" href="{% static 'blog/css/code.css' %}"> #}
+    {# <link rel="stylesheet" type="text/css" href="{% static 'blog/css/foundation.css' %}"> #}
+    {# <script type="text/javascript" src="{% static 'blog/js/highlight.pack.js' %}"></script> #}
+    {# <script> #}
+    {#   hljs.initHighlightingOnLoad(); #}
+    {# </script>#}
+    {# ueditor自带代码高亮 #}
+    {# <link rel="stylesheet" href="{% static 'ueditor/third-party/SyntaxHighlighter/shCoreDefault.css' %}"> #}
+    {# <script type="text/javascript" src="{% static 'ueditor/third-party/SyntaxHighlighter/shCore.js' %}"></script> #}
+    {# <script type="text/javascript">#}
+    {#   SyntaxHighlighter.all();#}
+    {# </script> #}
+    <!-- 谷歌代码高亮 -->
+    <link rel="stylesheet" href="{% static 'blog/css/prettify.css' %}">
+    <style>
+        .gotop{
+            border-top-left-radius: 0;
+        }
+    </style>
+    <script type="text/javascript" src="{% static 'blog/js/prettify.js' %}"></script>
+    <!-- ckeditor编辑框 -->
+{#    <script type="text/javascript" src="{% static "ckeditor/ckeditor-init.js" %}"></script>#}
+{#    <script src="https://cdnjs.cloudflare.com/ajax/libs/ckeditor/4.9.2/ckeditor.js"></script>#}
+    {# <script type="text/javascript" src="{% static "ckeditor/ckeditor/ckeditor.js" %}"></script>#}
+
+    <!-- ueditor编辑框 -->
+    <script type="text/javascript" charset="utf-8" src="{% static 'ueditor/ueditor.config.js' %}"></script>
+    <script type="text/javascript" charset="utf-8" src="https://ueditor.baidu.com/ueditor/ueditor.all.min.js"> </script>
+{% endblock %}
+
+{% block nav_blog_active %}active{% endblock %}
+{% block lunbobox %}{% endblock %}
+
+{% block content %}
+
+    <div class="container content" id="main-content"">
+        <div class="row blog-detail">
+            {# 适应中等屏幕与大屏幕 #}
+            <div class="col-xs-12 col-md-9" style="margin-bottom: 1em">
+                <div class="panel panel-default">
+                    <!-- Default panel contents -->
+                    <div class="panel-heading">
+                        <h3 class="blog-name">{{ title }}</h3>
+                        <div class="detail-info-box">
+                            <ul class="clearfix">
+                                <li class="item-time">编辑时间:&nbsp;{{ created_time|date:"Y-m-d H:i:s" }}</li>
+                                <li class="blog-view">浏览量:&nbsp;<span class="light">{{ read_num }}</span></li>
+                                <li>作者:&nbsp;<span class="light">{{ post.author.get_nickname_or_username }}</span></li>
+                            </ul>
+                            <ul class="clearfix">
+
+                                <li class="blog-all-tags">
+                                    {% get_post_tags post as tags_list %}
+                                    <span>所有标签:</span>
+                                    {% if tags_list %}
+                                        {% for tag in tags_list %}
+                                            <span class="blog-tag">{{ tag }}</span>
+                                        {% endfor %}
+                                    {% else %}
+                                        <span>暂无标签</span>
+                                    {% endif %}
+                                </li>
+                                 <li>文章分类:<a href="{% url 'blog:category' category.id %}">
+                                    <span class="light">{{ category }}</span></a>
+                                </li>
+                                <li>评论数:<span class="light">
+                                    {% get_comment_count post as comment_num%}
+                                    {% if comment_num %}
+                                        {{ comment_num }}
+                                    {% else %}
+                                        暂无评论
+                                    {% endif %}
+                                </li>
+
+                            </ul>
+                        </div>
+
+                    </div>
+
+                    <div class="panel-body">
+                        {# 使用safe可以关闭转义 #}
+                         <div id="post-body">{{ article|safe }}</div>
+                    </div>
+
+                </div>
+{#                <div class="like" onclick="likeChange(this, '{% get_content_type post %}', {{ post_id }})">#}
+{#                    <span class="glyphicon glyphicon-thumbs-up {% get_like_status post %}"></span>#}
+{#                    <span class="liked-num">{% get_like_count post %}</span>#}
+{#                    <span>喜欢</span>#}
+{#                </div>#}
+
+                <a class="choose-like" href="javascript:void(0)" title="喜爱">
+                    <div class="detail-like" onclick="likeChange(this, '{% get_content_type post %}', {{ post_id }})">
+                        <span style="font-size: 16px" class="glyphicon glyphicon-thumbs-up {% get_like_status post %}"></span>
+                    </div>
+                </a>
+
+                <img class="normal pull-right cat-action hidden-xs" data-loadfunc="0" src="{% static 'blog/img/cat.jpg' %}" data-loaded="0">
+                <div class="post-more">
+                    <p>上一篇:
+                        {% if previous_post %}
+                            <a class="hvr-underline-from-center" href="{% url 'blog:detail' previous_post.id %}">{{ previous_post.title }}</a>
+                        {% else %}
+                            <span class="tint">已到最顶部</span>
+                        {% endif %}
+                    </p>
+                    <p>下一篇:
+                        {% if next_post %}
+                        <a class="hvr-underline-from-center" href="{% url 'blog:detail' next_post.id %}">{{ next_post.title }}</a>
+                        {% else %}
+                        <span class="tint">已到最底部</span>
+                        {% endif %}
+                    </p>
+                </div>
+
+                <div class="share">
+                    <p>(原创博文，转载请注明来自 <a href="https://jzfblog.com/">蒋振飞的博客</a>！本文链接：<a href="javascript:void(0);" id="share_addr" onclick=clickHandler()>点击我获取我的链接</a>)</p>
+                    <p style="margin-top: 1em">若对你有帮助，不妨扫一扫右侧的二维码打赏我一下吧 ^_^</p>
+                </div>
+
+                <div class="comment-area">
+                    <h3 class="comment-area-title">提交评论</h3>
+                        <form id="comment_form" action="{% url 'comment:update_comment' %}" onsubmit="return false;" method="POST" style="overflow: hidden">{% csrf_token %}
+{#                            多行文本输入#}
+                            {% if user.is_authenticated %}
+                                <label for="comment-text">{{ user.get_nickname_or_username }}，欢迎评论</label>
+                            {% endif %}
+                            <div id="reply_content_container" style="display: none">
+                                <p id="reply_title">回复:</p>
+                                <div id="reply_content"></div>
+                            </div>
+                            {% get_comment_form post as comment_form %}
+                            {%  for field in comment_form %}
+                                {{ field }}
+                            {% endfor %}
+                                <input class="btn btn-primary pull-right" type="submit" value="评论">
+                                <span id="comment_error" class="text-danger pull-right"></span>
+                        </form>
+
+                </div>
+                <div class="comment-area">
+                    <h3 class="comment-area-title">评论列表</h3>
+                    <div id="comment_list">
+                        {% get_comment_list post as comments%}
+                        {% for comment in comments %}
+                            <div id="root_{{ comment.pk }}" class="comment-info">
+                                <span>{{ comment.user.get_nickname_or_username }}</span>
+                                <span>({{ comment.comment_time|date:"Y-m-d H:i:s" }})：</span>
+                                <div id="comment_{{ comment.pk }}">
+                                    {{ comment.text|safe }}
+                                </div>
+                                 <div class="like" onclick="likeChange(this, '{% get_content_type comment %}', {{ comment.pk }})">
+                                    <span class="glyphicon glyphicon-thumbs-up {% get_like_status comment %}"></span>
+                                    <span class="liked-num">{% get_like_count comment %}</span>
+                                 </div>
+                                <a href="javascript:reply({{ comment.pk }});">回复</a>
+                                {% for reply in comment.root_comment.all %}
+                                    <div class="reply">
+                                        <span>{{ reply.user.get_nickname_or_username }}</span>
+                                        <span>({{ reply.comment_time|date:"Y-m-d H:i:s" }})</span>
+                                        <span>回复</span>
+                                        <span>{{ reply.reply_to.get_nickname_or_username }}：</span>
+                                        <div id="comment_{{ reply.pk }}">
+                                            {{ reply.text|safe }}
+                                        </div>
+                                        <div class="like" onclick="likeChange(this, '{% get_content_type reply %}', {{ reply.pk }})">
+                                            <span class="glyphicon glyphicon-thumbs-up {% get_like_status reply %}"></span>
+                                            <span class="liked-num">{% get_like_count reply %}</span>
+                                        </div>
+                                        <a href="javascript:reply({{ reply.pk }});">回复</a>
+                                    </div>
+                                {% endfor %}
+                            </div>
+                        {% empty %}
+                            <span id="no_comment">暂无评论</span>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-xs-12 col-md-3 blog-border2">
+                <div class="blog-border1">
+                    <div class="side-list">
+                        <h4><span class="glyphicon glyphicon-fire"></span>&nbsp;热门阅读</h4>
+                        <ul>
+                            {% for hot_data in all_hot_posts %}
+                                <div class="light-item">
+                                    <a class="hvr-underline-from-center" href="{% url 'blog:detail' hot_data.id %}" target="_Blank">{{ hot_data.title }}</a>
+    {#                                ({{ hot_data.read_num_sum }}) 表示该阅读记录次数#}
+                                </div>
+                            {% empty %}
+                                <span class="tint">暂无总榜 !</span>
+                            {% endfor %}
+                        </ul>
+                     </div>
+
+                    {#<div class="side-list">#}
+                    {#<h4><span class="glyphicon glyphicon-globe"></span>&nbsp;猜你喜欢</h4>#}
+                    {#<ul>#}
+                    {#   {% get_like_post post.category post.id as like_list%}#}
+                    {#    {% for post in like_list %}#}
+                    {#        <li class="light-item">#}
+                    {#            <a href="{% url 'blog:detail' post.id %}" target="_Blank">{{ post.title }}</a>#}
+                    {#        </li>#}
+                    {#    {% empty %}#}
+                    {#        正在猜测 ...#}
+                    {#    {% endfor %}#}
+                    {#</ul>#}
+                    {#</div>#}
+
+                    <div class="side-list">
+                        <h4><span class="glyphicon glyphicon-random"></span>&nbsp;&nbsp;随机推荐</h4>
+                        <ul>
+                            {% for post in random_recommend %}
+                                <li class="light-item">
+                                    <a class="hvr-underline-from-center" href="{% url 'blog:detail' post.id %}" target="_Blank">{{ post.title }}</a>
+                                </li>
+                            {% empty %}
+                                <span class="tint">暂无推荐 !</span>
+                            {% endfor %}
+                        </ul>
+                    </div>
+
+                    <div class="side-list">
+                        <h4><span class="glyphicon glyphicon-time"></span>&nbsp;最新推荐</h4>
+                        <ul>
+                           {% for post in new_recommend %}
+                                <li class="light-item">
+                                    <a class="hvr-underline-from-center" href="{% url 'blog:detail' post.id %}" target="_Blank">{{ post.title }}</a>
+                                </li>
+                            {% empty %}
+                                <span class="tint">暂无推荐 !</span>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+{% endblock content %}
+
+
+{% block script_extends %}
+
+    <script type="text/javascript">
+        //开启高亮
+        $(window).load(function () {
+            $("pre").addClass("prettyprint linenums");
+            prettyPrint();
+
+            id_text.placeholder("让评论多一点真诚，少一点套路~");
+
+        });
+
+
+        String.prototype.format = function(){
+            {#因为javascript中没有占位或其他可以方法可以补充,所以需要自己创建一个函数将其实现类似于占位的方式#}
+            var str = this;
+            for (var i=0;i<arguments.length; i++){
+                {#正则全替换#}
+                var str = str.replace(new RegExp('\\{'+ i +'\\}', 'g'), arguments[i])
+            };
+            return str;
+        };
+
+        var clickHandler = function(){
+            $('#share_addr').html(window.location.href);
+
+        };
+
+        {#        // 关闭右键模式#}
+        {#        $('#post-body').contextmenu(function(event) {#}
+        {#                event.preventDefault();#}
+        {#            });#}
+
+        function reply(reply_comment_id){
+            // 设置值
+            $('#reply_comment_id').val(reply_comment_id);
+            var html = $("#comment_" + reply_comment_id).html();
+            $('#reply_content').html(html);
+            $('#reply_content_container').show();
+            $('html').animate({scrollTop: $('#comment_form').offset().top - 60}, 300, function(){
+                CKEDITOR.instances['id_text'].focus();
+            });
+        }
+
+        function numFormat(num){
+            return ('00' + num).substr(-2);
+        }
+
+        function timeFormat(timestamp){
+            {#因为js是的时间戳是以毫秒为单位的,而python是以秒为单位,所以要乘以1000#}
+            var datetime = new Date(timestamp * 1000);
+            var year = datetime.getFullYear();
+            var month = numFormat(datetime.getMonth() + 1);
+            var day = numFormat(datetime.getDate());
+            var hour = numFormat(datetime.getHours());
+            var minute = numFormat(datetime.getMinutes());
+            var second = numFormat(datetime.getSeconds());
+            return year + '-' + month + '-' + day + ' ' + hour + ':' + minute + ':' + second;
+        }
+
+        UE.Editor.prototype.placeholder = function (justPlainText) {
+            var _editor = this;
+            _editor.addListener("focus", function () {
+                var localHtml = _editor.getPlainTxt();
+                if ($.trim(localHtml) === $.trim(justPlainText)) {
+                    _editor.setContent(" ");
+                }
+            });
+            _editor.addListener("blur", function () {
+                var localHtml = _editor.getContent();
+                if (!localHtml) {
+                    {#_editor.setContent("<span>" + justPlainText + "</span>");#}
+                    _editor.setContent("<span style="+"color:#999;"+ ">" + justPlainText + "</span>");
+                }
+            });
+            _editor.ready(function () {
+                _editor.fireEvent("blur");
+            });
+        };
+
+        // ueditor编辑框提交
+        $("#comment_form").submit(function(){
+            // 判断是否为空
+
+            if(id_text.getContent() == '' ){
+                $("#comment_error").text('您尚未写任何评论内容');
+
+                return false;
+            }
+            if(id_text.getContent().includes("让评论多一点真诚，少一点套路~") ){
+                $("#comment_error").text('您尚未写任何评论内容');
+
+                return false;
+            }
+
+            // 更新数据到textarea
+            {#id_text.updateElement();#}
+            // 异步提交
+            $.ajax({
+                url: "{% url 'comment:update_comment' %}",
+                type: 'POST',
+                data: $(this).serialize(),
+                cache: false,
+                success: function(data){
+                    console.log(data);
+                    if(data['status']=="SUCCESS"){
+                        if($('#reply_comment_id').val()=='0'){
+                            // 插入评论
+                            var comment_html = '<div id="root_{0}" class="comment">' +
+                                '<span>{1}</span>' +
+                                '<span>({2})：</span>' +
+                                '<div id="comment_{0}">{3}</div>' +
+                                '<div class="like" onclick="likeChange(this, \'{4}\', {0})">' +
+                                    '<span class="glyphicon glyphicon-thumbs-up"></span> ' +
+                                    '<span class="liked-num">0</span>' +
+                                '</div>' +
+                                '<a href="javascript:reply({0});">回复</a>' +
+                                '</div>';
+                            comment_html = comment_html.format(data['pk'], data['username'], timeFormat(data['comment_time']), data['text'], data['content_type']);
+                            $("#comment_list").prepend(comment_html);
+                        }else{
+                            // 插入回复
+                            var reply_html = '<div class="reply">' +
+                                        '<span>{1}</span>' +
+                                        '<span>({2})</span>' +
+                                        '<span>回复</span>' +
+                                        '<span>{3}：</span>' +
+                                        '<div id="comment_{0}">{4}</div>' +
+                                        '<div class="like" onclick="likeChange(this, \'{5}\', {0})">' +
+                                            '<span class="glyphicon glyphicon-thumbs-up\"></span> ' +
+                                            '<span class="liked-num">0</span>' +
+                                        '</div>' +
+                                        '<a href="javascript:reply({0});">回复</a>' +
+                                    '</div>';
+                            reply_html = reply_html.format(data['pk'], data['username'], timeFormat(data['comment_time']), data['reply_to'], data['text'], data['content_type']);
+                            $("#root_" + data['root_pk']).append(reply_html);
+                        }
+
+                        // 清空编辑框的内容
+                        id_text.setContent('');
+                        $('#reply_content_container').hide();
+                        $('#reply_comment_id').val('0');
+                        $('#no_comment').remove();
+                        window.location.reload();
+                        $("#comment_error").text('评论成功');
+                    }else{
+                        // 显示错误信息
+                        $("#comment_error").text(data['message']);
+                    }
+                },
+                error: function(xhr){
+                    console.log(xhr);
+                }
+            });
+            return false;
+        });
+
+    /**
+     * ckeditor编辑框的提交
+    $("#comment_form").submit(function(){
+        // 判断是否为空
+
+        if(CKEDITOR.instances["id_text"].document.getBody().getText().trim()==''){
+            $("#comment_error").text('您尚未写任何评论内容');
+
+            return false;
+        }
+
+        // 更新数据到textarea
+        CKEDITOR.instances['id_text'].updateElement();
+        // 异步提交
+        $.ajax({
+            url: "{% url 'comment:update_comment' %}",
+            type: 'POST',
+            data: $(this).serialize(),
+            cache: false,
+            success: function(data){
+                console.log(data);
+                if(data['status']=="SUCCESS"){
+                    if($('#reply_comment_id').val()=='0'){
+                        // 插入评论
+                        var comment_html = '<div id="root_{0}" class="comment">' +
+                            '<span>{1}</span>' +
+                            '<span>({2})：</span>' +
+                            '<div id="comment_{0}">{3}</div>' +
+                            '<div class="like" onclick="likeChange(this, \'{4}\', {0})">' +
+                                '<span class="glyphicon glyphicon-thumbs-up"></span> ' +
+                                '<span class="liked-num">0</span>' +
+                            '</div>' +
+                            '<a href="javascript:reply({0});">回复</a>' +
+                            '</div>';
+                        comment_html = comment_html.format(data['pk'], data['username'], timeFormat(data['comment_time']), data['text'], data['content_type']);
+                        $("#comment_list").prepend(comment_html);
+                    }else{
+                        // 插入回复
+                        var reply_html = '<div class="reply">' +
+                                    '<span>{1}</span>' +
+                                    '<span>({2})</span>' +
+                                    '<span>回复</span>' +
+                                    '<span>{3}：</span>' +
+                                    '<div id="comment_{0}">{4}</div>' +
+                                    '<div class="like" onclick="likeChange(this, \'{5}\', {0})">' +
+                                        '<span class="glyphicon glyphicon-thumbs-up\"></span> ' +
+                                        '<span class="liked-num">0</span>' +
+                                    '</div>' +
+                                    '<a href="javascript:reply({0});">回复</a>' +
+                                '</div>';
+                        reply_html = reply_html.format(data['pk'], data['username'], timeFormat(data['comment_time']), data['reply_to'], data['text'], data['content_type']);
+                        $("#root_" + data['root_pk']).append(reply_html);
+                    }
+
+                    // 清空编辑框的内容
+                    CKEDITOR.instances['id_text'].setData('');
+                    $('#reply_content_container').hide();
+                    $('#reply_comment_id').val('0');
+                    $('#no_comment').remove();
+                    window.location.reload();
+                    $("#comment_error").text('评论成功');
+                }else{
+                    // 显示错误信息
+                    $("#comment_error").text(data['message']);
+                }
+            },
+            error: function(xhr){
+                console.log(xhr);
+            }
+        });
+        return false;
+    });
+    **/
+
+    //更新点赞状态
+    function likeChange(obj, content_type, object_id){
+        var is_like = obj.getElementsByClassName('active').length == 0
+        $.ajax({
+            url: "{% url 'likes:like_change' %}",
+            type: 'GET',
+            data: {
+                content_type: content_type,
+                object_id: object_id,
+                is_like: is_like
+            },
+            cache: false,
+            success: function(data){
+                console.log(data)
+                if(data['status']=='SUCCESS'){
+                    // 更新点赞状态
+                    var element = $(obj.getElementsByClassName('glyphicon'));
+                    if(is_like){
+                        element.addClass('active');
+                    }else{
+                        element.removeClass('active');
+                    }
+                    // 更新点赞数量
+                    var liked_num = $(obj.getElementsByClassName('liked-num'));
+                    liked_num.text(data['liked_num']);
+                }else{
+                    if(data['code']==400){
+                        $('#login_modal').modal('show');
+                    }
+                    else{
+                        alert(data['message']);
+                    }
+                }
+            },
+            error: function(xhr){
+                console.log(xhr)
+            }
+        });
+    }
+
+    </script>
+
+    <script>
+        $(function(){
+            $("img").each(function(){
+                $(this).attr("data-action","zoom");
+
+            })
+        })
+    </script>
+{% endblock %}
