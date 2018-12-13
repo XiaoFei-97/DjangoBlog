@@ -118,6 +118,7 @@
                                             <span class="glyphicon glyphicon-thumbs-up {% get_like_status result.object %}"></span>
                                             <span class="liked-num">{% get_like_count result.object %}</span>
                                          </a>
+                                    <a class="read-detail" href="{% url 'blog:detail' result.object.id %}" target="_Blank">阅读全文</a>
                                 </div>
                             </div>
                         </div>
@@ -188,7 +189,7 @@
                         <ul>
                             {% for hot_data in all_hot_posts %}
                                 <div class="light-item">
-                                    <a class="hvr-underline-from-center" href="{% url 'blog:detail' hot_data.id %}" target="_Blank">{{ hot_data.title|striptags|truncatechars:30|safe }}</a>
+                                     <span class="num">{{ forloop.counter }}</span><a class="hvr-underline-from-center" href="{% url 'blog:detail' hot_data.id %}" target="_Blank">{{ hot_data.title|striptags|truncatechars:23|safe }}</a>
                                 </div>
                             {% empty %}
                                 <span class="tint">暂无总榜 !</span>
@@ -201,7 +202,7 @@
                         <ul>
                             {% for post in random_recommend %}
                                 <li class="light-item">
-                                    <a class="hvr-underline-from-center" href="{% url 'blog:detail' post.id %}" target="_Blank">{{ post }}</a>
+                                     <span class="num">{{ forloop.counter }}</span><a class="hvr-underline-from-center" href="{% url 'blog:detail' post.id %}" target="_Blank">{{ post.title|striptags|truncatechars:23|safe }}</a>
                                 </li>
                             {% empty %}
                                 <span class="tint">暂无推荐 !</span>
@@ -214,7 +215,7 @@
                         <ul>
                             {% for post in new_recommend %}
                                 <li class="light-item">
-                                    <a class="hvr-underline-from-center" href="{% url 'blog:detail' post.id %}" target="_Blank">{{ post.title }}</a>
+                                     <span class="num">{{ forloop.counter }}</span><a class="hvr-underline-from-center" href="{% url 'blog:detail' post.id %}" target="_Blank">{{ post.title|striptags|truncatechars:23|safe }}</a>
                                 </li>
                             {% empty %}
                                 <span class="tint">暂无推荐 !</span>

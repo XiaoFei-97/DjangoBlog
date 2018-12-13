@@ -52,6 +52,21 @@
                 <span id="mobile-search" class="glyphicon glyphicon-search mobile-search"></span>
             </div>
             <!--搜索框-->
+{#            <form method='get' id="search" class="navbar-form navbar-right search" action="/search/" onsubmit="return check()">#}
+{#                <div class="mobile-search-box">#}
+{#                    <input type="text" name="q" class="form-control pull-left" autocomplete="off" placeholder="搜点啥?" id="key">#}
+{#                    &nbsp;<button type="submit" class="btn btn-default" id="btn">#}
+{#                            <span class="glyphicon glyphicon-search" style="line-height:1;"></span>#}
+{#                        </button>#}
+{#                </div>#}
+{##}
+{#                <div class="clearfix"></div>#}
+{#                <div class="blog-search" id="blog-search">#}
+{#                    <ul id="titles" style="display: none;" >#}
+{##}
+{#                    </ul>#}
+{#                </div>#}
+{#            </form>#}
             <form method='get' id="search" class="navbar-form navbar-right search" action="/search/" onsubmit="return check()">
                 <div class="mobile-search-box">
                     <input type="text" name="q" class="form-control pull-left" autocomplete="off" placeholder="搜点啥?" id="key">
@@ -67,6 +82,7 @@
                     </ul>
                 </div>
             </form>
+
             <!--nav选项卡-->
             <div id="navbar-collapse" class="collapse navbar-collapse">
                  <ul class="nav navbar-nav base_head">
@@ -665,6 +681,9 @@
                 $("#click-warp").toggleClass("click-warp");
             });
 
+            $(".navbar-toggle").click(function () {
+                $("#titles").slideUp();
+            })
 
         });
     </script>

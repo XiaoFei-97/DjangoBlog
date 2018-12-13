@@ -297,7 +297,7 @@ span#hot{
     border-bottom-right-radius: 0;
     border-bottom-left-radius: 0;
     opacity: 0.5;
-    /*z-index: 1000;*/
+    z-index: 1000;
 }
 
 .footer{
@@ -379,7 +379,7 @@ span#hot{
 }
 
 /*关于我*/
-.blog-border{
+.introduce-border{
     border: 1px solid #ccc;
     border-radius: 6px;
     margin-bottom: 1em;
@@ -487,13 +487,61 @@ span#hot{
 }
 
 .light-blog a{
-    /*display: block;*/
-    /*margin: 0.2em;*/
     color: #555;
+      margin-left: 0;
+     transition: margin-left 0.6s;
+    -webkit-transition: margin-left 0.6s; /* Safari */
+}
+
+.light-blog .num{
+    border-radius: 3px;
+    color: #fff;
+    /*background-color: #c40000;*/
+    background-color: #ccc;
+    padding: 3px 3px 0;
+    margin-right: 5px;
+}
+
+.list .light-blog:nth-child(1) .num{
+    background-color: #c40000;
+}
+.list .light-blog:nth-child(2) .num{
+    background-color: #c40000;
+}
+.list .light-blog:nth-child(3) .num{
+    background-color: #c40000;
+}
+
+.light-item .num{
+    border-radius: 3px;
+    color: #fff;
+    /*background-color: #c40000;*/
+    background-color: #ccc;
+    padding: 3px 3px 0;
+    margin-right: 5px;
+}
+
+.side-list .light-item:nth-child(1) .num{
+    background-color: #c40000;
+}
+.side-list .light-item:nth-child(2) .num{
+    background-color: #c40000;
+}
+.side-list .light-item:nth-child(3) .num{
+    background-color: #c40000;
+}
+
+.light-item a{
+    margin-left: 0;
+     transition: margin-left 0.6s;
+    -webkit-transition: margin-left 0.6s; /* Safari */
 }
 
 .light-blog a:hover, .light-item a:hover{
     color: #1b9dec;
+    margin-left: 10px;
+     transition: margin-left 0.6s;
+    -webkit-transition: margin-left 0.6s; /* Safari */
 }
 
 /*loading*/

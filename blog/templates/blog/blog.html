@@ -80,7 +80,7 @@
                             {# post.id把主键传递出去,在views中就可以找到该post的body,urls中也能规则匹配 #}
                             {# 在反向解析中,注意格式{% url 'namespace:name' para %} #}
                             <div class="blog-title">
-                                <a class="hvr-underline-from-center" href="{% url 'blog:detail' post.id %} " target="_Blank">{{ post.title }}</a>
+                                <a class="hvr-underline-from-center" href="{% url 'blog:detail' post.id %}" target="_Blank">{{ post.title }}</a>
                             </div>
 
                             <div class="blog-describe">{{ post.body|cut:'&nbsp;'|striptags|truncatechars:150|safe}}</div>
@@ -109,6 +109,8 @@
                                     <span class="glyphicon glyphicon-thumbs-up {% get_like_status post %}"></span>
                                     <span class="liked-num">{% get_like_count post %}</span>
                                 </a>
+
+                                 <a class="read-detail" href="{% url 'blog:detail' post.id %}" target="_Blank">阅读全文</a>
 
                             </div>
                         </div>
@@ -177,9 +179,9 @@
                     <h4><span class="glyphicon glyphicon-fire"></span>&nbsp;热门阅读</h4>
                     <ul>
                         {% for hot_data in all_hot_posts %}
-                            <div class="light-item">
-                                <a class="hvr-underline-from-center" href="{% url 'blog:detail' hot_data.id %}" target="_Blank">{{ hot_data.title|striptags|truncatechars:30|safe }}</a>
-                            </div>
+                            <li class="light-item">
+                                <span class="num">{{ forloop.counter }}</span><a class="hvr-underline-from-center" href="{% url 'blog:detail' hot_data.id %}" target="_Blank">{{ hot_data.title|striptags|truncatechars:23|safe }}</a>
+                            </li>
                         {% empty %}
                             <span class="tint">暂无总榜 !</span>
                         {% endfor %}
@@ -191,7 +193,7 @@
                     <ul>
                         {% for post in random_recommend %}
                             <li class="light-item">
-                                <a class="hvr-underline-from-center" href="{% url 'blog:detail' post.id %}" target="_Blank">{{ post.title }}</a>
+                                 <span class="num">{{ forloop.counter }}</span><a class="hvr-underline-from-center" href="{% url 'blog:detail' post.id %}" target="_Blank">{{ post.title|striptags|truncatechars:23|safe }}</a>
                             </li>
                         {% empty %}
                             <span class="tint">暂无推荐 !</span>
@@ -204,7 +206,7 @@
                     <ul>
                        {% for post in new_recommend %}
                             <li class="light-item">
-                                <a class="hvr-underline-from-center" href="{% url 'blog:detail' post.id %}" target="_Blank">{{ post.title }}</a>
+                                 <span class="num">{{ forloop.counter }}</span><a class="hvr-underline-from-center" href="{% url 'blog:detail' post.id %}" target="_Blank">{{ post.title|striptags|truncatechars:23|safe }}</a>
                             </li>
                         {% empty %}
                             <span class="tint">暂无推荐 !</span>

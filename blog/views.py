@@ -346,6 +346,22 @@ def page_not_found(request):
     """
     return render(request, '404.html')
 
+
+def looking(request):
+    """
+    搜索关键字标题
+    :param request:
+    :return:
+    """
+    key = request.GET.get('for', '')
+    list = Post.objects.filter(Q(display=0) | Q(display__isnull=True), title__icontains=key).filter(category__status=0)
+    # 使用公共的get_blog_list_common_data的方法
+    context = get_blog_list_common_data(request, list)
+
+    # 给request返回一个blog.html文件
+    return render(request, 'blog/search.html', context)
+
+
 # 错误：CSRF token missing or incorrect.
 @csrf_exempt
 def findWords(request):

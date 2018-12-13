@@ -202,7 +202,7 @@
                         <ul>
                             {% for hot_data in all_hot_posts %}
                                 <div class="light-item">
-                                    <a class="hvr-underline-from-center" href="{% url 'blog:detail' hot_data.id %}" target="_Blank">{{ hot_data.title }}</a>
+                                     <span class="num">{{ forloop.counter }}</span><a class="hvr-underline-from-center" href="{% url 'blog:detail' hot_data.id %}" target="_Blank">{{ hot_data.title }}</a>
     {#                                ({{ hot_data.read_num_sum }}) 表示该阅读记录次数#}
                                 </div>
                             {% empty %}
@@ -230,7 +230,7 @@
                         <ul>
                             {% for post in random_recommend %}
                                 <li class="light-item">
-                                    <a class="hvr-underline-from-center" href="{% url 'blog:detail' post.id %}" target="_Blank">{{ post.title }}</a>
+                                     <span class="num">{{ forloop.counter }}</span><a class="hvr-underline-from-center" href="{% url 'blog:detail' post.id %}" target="_Blank">{{ post.title }}</a>
                                 </li>
                             {% empty %}
                                 <span class="tint">暂无推荐 !</span>
@@ -243,7 +243,7 @@
                         <ul>
                            {% for post in new_recommend %}
                                 <li class="light-item">
-                                    <a class="hvr-underline-from-center" href="{% url 'blog:detail' post.id %}" target="_Blank">{{ post.title }}</a>
+                                     <span class="num">{{ forloop.counter }}</span><a class="hvr-underline-from-center" href="{% url 'blog:detail' post.id %}" target="_Blank">{{ post.title }}</a>
                                 </li>
                             {% empty %}
                                 <span class="tint">暂无推荐 !</span>

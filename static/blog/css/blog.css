@@ -7,7 +7,7 @@ ul{
 /*博客列表*/
 /*会出现最后一个元素多了一条黑边的情况,所以对最后一个元素不进行重置*/
 .blog-border{
-    border: 1px solid #ccc;
+    /*border: 1px solid #ccc;*/
     border-radius: 6px;
     margin-bottom: 1em;
     padding-bottom: 1em;
@@ -15,14 +15,17 @@ ul{
 
 .blog-item{
     clear: both;
-    /*border-bottom: 1px solid #ddd;*/
+    border: 1px solid #ddd;
     padding: 1.5em 1em 0.8em 1.5em;
     overflow: hidden;
+    position: relative;
+    margin-bottom: 10px;
+    border-radius: 6px;
 }
 
-.blog-item:not(:last-child){
-    border-bottom: 1px solid #ddd;
-}
+/*.blog-item:not(:last-child){*/
+    /*border-bottom: 1px solid #ddd;*/
+/*}*/
 
 .blog-title{
     font-size: 1.2em;
@@ -56,6 +59,23 @@ ul{
     /*margin-bottom: 10px;*/
 }
 
+.read-detail{
+    position: absolute;
+    bottom: 10px;
+    right: 10px;
+    background: #c40000;
+    color: #fff;
+    line-height: 30px;
+    padding: 0 12px;
+    display: block;
+    border-radius: 2px 0 0 2px;
+}
+
+.read-detail:hover{
+    background-color: #3e94a5;
+    color: #fff!important;
+}
+
 .properties{
     font-size: 0.7em;
     color: #777;
@@ -82,12 +102,12 @@ ul{
     width: 100%;
 }
 
-@media screen and (max-width: 991px) {
+@media screen and (max-width: 768px) {
     .side-list {
         padding: 0 1em 0 1.5em;
     }
     .blog-border1{
-        padding: 10px;
+        padding-bottom: 10px;
         border: 1px solid #ccc;
         border-radius: 6px;
         margin-bottom: 2em;
@@ -97,8 +117,19 @@ ul{
     .blog-border3{
         margin-bottom: 2em;
     }
+    .read-detail{
+        /*position: absolute;*/
+        bottom: 3px;
+        right: 20px;
+        background: #c40000;
+        color: #fff;
+        line-height: 25px;
+        padding: 0 5px;
+        display: block;
+        border-radius: 2px 0 0 2px;
+    }
 }
-@media screen and (min-width: 991px) {
+@media screen and (min-width: 768px) {
     .blog-border1{
     }
     .blog-border2{

@@ -107,6 +107,7 @@
                             <li><a class="hvr-underline-from-center" href="https://itbyc.com/" target="_Blank">杨雨博客</a></li>
                             <li><a class="hvr-underline-from-center" href="https://www.yangruolan.com/" target="_Blank">若岚博客</a></li>
                             <li><a class="hvr-underline-from-center" href="https://blog.whezh.com/" target="_Blank">何洲博客</a></li>
+                            <li><a class="hvr-underline-from-center" href="https://zhangge.net/" target="_Blank">张戈博客</a></li>
                             <li><a class="hvr-underline-from-center" href="http://www.jloongking.cn/" target="_Blank">井龙王博客</a></li>
                             <li><a class="hvr-underline-from-center" href="https://www.zhyd.me/" target="_Blank">张亚东博客</a></li>
                             <li><a class="hvr-underline-from-center" href="https://www.liaoxuefeng.com/" target="_Blank">廖雪峰老师</a></li>
@@ -203,7 +204,7 @@
                     <ul class="list">
                         {% for post in new_publish %}
                             <li class="light-blog">
-                                <a class="hvr-underline-from-center" href="{% url 'blog:detail' post.id %}" target="_Blank">{{ post.title }}</a>
+                                 <span class="num">{{ forloop.counter }}</span><a class="hvr-underline-from-center" href="{% url 'blog:detail' post.id %}" target="_Blank">{{ post.title }}</a>
                             </li>
                         {% empty %}
                             <span class="tint">暂无发表 !</span>
@@ -218,7 +219,7 @@
                     <ul class="list">
                         {% for post in new_recommend %}
                             <li class="light-blog">
-                                <a class="hvr-underline-from-center" href="{% url 'blog:detail' post.id %}" target="_Blank">{{ post.title }}</a>
+                                 <span class="num">{{ forloop.counter }}</span><a class="hvr-underline-from-center" href="{% url 'blog:detail' post.id %}" target="_Blank">{{ post.title }}</a>
                             </li>
                         {% empty %}
                             <span class="tint">暂无推荐 !</span>
@@ -233,7 +234,7 @@
                     <ul class="list">
                         {% for post in random_recommend %}
                             <li class="light-blog">
-                                <a class="hvr-underline-from-center" href="{% url 'blog:detail' post.id %}" target="_Blank">{{ post.title }}</a>
+                                 <a class="hvr-underline-from-center" href="{% url 'blog:detail' post.id %}" target="_Blank">{{ post.title }}</a>
                             </li>
                         {% empty %}
                            <span class="tint">暂无推荐 !</span>
@@ -256,7 +257,7 @@
                     <ul class="list">
                         {% for post in last_7_days_hot_data %}
                             <li class="light-blog">
-                                <a class="hvr-underline-from-center" href="{% url 'blog:detail' post.id %}" target="_Blank">{{ post.title }}</a>
+                                 <span class="num">{{ forloop.counter }}</span><a class="hvr-underline-from-center" href="{% url 'blog:detail' post.id %}" target="_Blank">{{ post.title }}</a>
                             </li>
                         {% empty %}
                             <span class="tint">暂无周榜 !</span>
@@ -271,7 +272,7 @@
                     <ul class="list">
                         {% for post in last_30_days_hot_data %}
                             <li class="light-blog">
-                                <a class="hvr-underline-from-center" href="{% url 'blog:detail' post.id %}" target="_Blank">{{ post.title }}</a>
+                                 <span class="num">{{ forloop.counter }}</span><a class="hvr-underline-from-center" href="{% url 'blog:detail' post.id %}" target="_Blank">{{ post.title }}</a>
                             </li>
                         {% empty %}
                             <span class="tint">暂无月榜 !</span>
@@ -286,7 +287,7 @@
                     <ul class="list">
                         {% for post in all_hot_posts %}
                             <li class="light-blog">
-                                <a class="hvr-underline-from-center" href="{% url 'blog:detail' post.id %}" target="_Blank">{{ post.title }}</a>
+                                 <span class="num">{{ forloop.counter }}</span><a class="hvr-underline-from-center" href="{% url 'blog:detail' post.id %}" target="_Blank">{{ post.title }}</a>
                             </li>
                         {% empty %}
                             <span class="tint">暂无总榜 !</span>
