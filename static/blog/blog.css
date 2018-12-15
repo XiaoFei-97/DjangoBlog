@@ -9,8 +9,8 @@ ul{
 .blog-border{
     /*border: 1px solid #ccc;*/
     border-radius: 6px;
-    margin-bottom: 1em;
-    padding-bottom: 1em;
+    /*margin-bottom: 1em;*/
+    /*padding-bottom: 1em;*/
 }
 
 .blog-item{
@@ -29,10 +29,9 @@ ul{
 
 .blog-title{
     font-size: 1.2em;
-    font-weight: bold;
+    font-weight: 700;
     margin-bottom: 0.5em;
 }
-
 
 .blog-title a:hover{
     color: #1b9dec;
@@ -126,7 +125,7 @@ ul{
         line-height: 25px;
         padding: 0 5px;
         display: block;
-        border-radius: 2px 0 0 2px;
+        border-radius: 2px;
     }
 }
 @media screen and (min-width: 768px) {

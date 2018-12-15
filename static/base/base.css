@@ -65,7 +65,7 @@ ul{
 
 /*hot图标样式*/
 span#hot{
-    background-image: url(../img/hot.gif);
+    background-image: url(/static/img/hot.gif);
     background-repeat: no-repeat;
     background-position: right top;
     padding-top: 12px;
@@ -275,7 +275,7 @@ span#hot{
     width: 35px;
     height: 35px;
     background-color: #323d45;
-    background-image: url(/static/blog/img/goto_top.png);
+    background-image: url(/static/img/goto_top.png);
     border-radius: 8px;
     border-top-right-radius: 0;
     border-bottom-right-radius: 0;
@@ -473,7 +473,7 @@ span#hot{
 }
 
 .no-find{
-    padding: 2em 0 1em;
+    padding-top: 2em;
     text-align: center;
     color:red;
 }
@@ -487,7 +487,6 @@ span#hot{
 }
 
 .light-blog a{
-    color: #555;
       margin-left: 0;
      transition: margin-left 0.6s;
     -webkit-transition: margin-left 0.6s; /* Safari */
@@ -511,6 +510,15 @@ span#hot{
 .list .light-blog:nth-child(3) .num{
     background-color: #c40000;
 }
+.list .light-blog:nth-child(4) .num{
+    background-color: #c40000;
+}
+.list .light-blog:nth-child(5) .num{
+    background-color: #c40000;
+}
+.list .light-blog:nth-child(6) .num{
+    background-color: #c40000;
+}
 
 .light-item .num{
     border-radius: 3px;
@@ -528,6 +536,15 @@ span#hot{
     background-color: #c40000;
 }
 .side-list .light-item:nth-child(3) .num{
+    background-color: #c40000;
+}
+.side-list .light-item:nth-child(4) .num{
+    background-color: #c40000;
+}
+.side-list .light-item:nth-child(5) .num{
+    background-color: #c40000;
+}
+.side-list .light-item:nth-child(6) .num{
     background-color: #c40000;
 }
 
@@ -948,7 +965,7 @@ span#hot{
     width: 180px;
     height:auto;
     position: absolute;
-    border-bottom: 1px solid #e7e7e7;
+    /*border-bottom: 1px solid #e7e7e7;*/
     border-radius: 6px;
 }
 .blog-search ul, .blog-search li{
@@ -971,6 +988,21 @@ span#hot{
     background:#fff;
     color:#0000FF;
     cursor: pointer;
+}
+
+/*滚动条样式*/
+::-webkit-scrollbar {
+  width: 5px;
+  height: 5px;
+  background-color: #f5f5f5;
+}
+::-webkit-scrollbar-track {
+  -webkit-box-shadow: inset 0 0 8px rgba(0,0,0,0.3);
+  background-color: #f5f5f5;
+}
+::-webkit-scrollbar-thumb {
+  -webkit-box-shadow: inset 0 0 8px rgba(0,0,0,0.3);
+  background-color: #399c9c;
 }
 
 

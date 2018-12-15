@@ -11,18 +11,17 @@
 {% block nav_blog_active %}active{% endblock %}
 {% block header_extend %}
     <!--其他-->
-    <link rel="stylesheet" href="{% static 'blog/css/blog.css' %}">
+    <link rel="stylesheet" href="{% static 'blog/blog.css' %}">
 {% endblock %}
 
 {% block home_content %}
-
     <div class="home_content" id="main-content">
         <div id="myCarousel" class="carousel slide" data-ride="carousel" data-interval="4000">
 
             <!-- 轮播（Carousel）项目 -->
             <div class="carousel-inner">
                 <div class="item active">
-                    <img src="{% static 'blog/img/banner2.jpg' %}" alt="banner2">
+                    <img src="{% static 'img/banner2.jpg' %}" alt="banner2">
                     <div class="carousel-caption info">
                         <div class="home_show">我的博客</div>
                         <div class="word_info">欢迎阅读评论，喜欢就点个赞吧</div>
@@ -30,7 +29,7 @@
                     </div>
                 </div>
                 <div class="item">
-                    <img src="{% static 'blog/img/banner3.jpg' %}" alt="banner1">
+                    <img src="{% static 'img/banner3.jpg' %}" alt="banner1">
                     <div class="carousel-caption info">
                         <div class="home_show">我的博客</div>
                         <div class="word_info">欢迎阅读评论，评论需注册登录</div>
@@ -38,7 +37,7 @@
                     </div>
                 </div>
                 <div class="item">
-                    <img src="{% static 'blog/img/banner4.jpg' %}" alt="banner3">
+                    <img src="{% static 'img/banner4.jpg' %}" alt="banner3">
                     <div class="carousel-caption info">
                         <div class="home_show">我的博客</div>
                         <div class="word_info">觉得有帮助，就打赏我吧</div>
@@ -46,7 +45,7 @@
                     </div>
                 </div>
                 <div class="item">
-                    <img src="{% static 'blog/img/banner5.jpg' %}" alt="banner4">
+                    <img src="{% static 'img/banner5.jpg' %}" alt="banner4">
                     <div class="carousel-caption info">
                         <div class="home_show">我的博客</div>
                         <div class="word_info">欢迎来访，博主动态请查看公告</div>
@@ -54,7 +53,7 @@
                     </div>
                 </div>
                 <div class="item">
-                    <img src="{% static 'blog/img/banner1.jpg' %}" alt="banner5">
+                    <img src="{% static 'img/banner1.jpg' %}" alt="banner5">
                     <div class="carousel-caption info">
                         <div class="home_show">我的博客</div>
                         <div class="word_info">欢迎阅读评论，喜欢就点个赞吧</div>
@@ -65,7 +64,6 @@
 
         </div>
     </div>
-
 {% endblock %}
 
 {% block content %}
@@ -121,7 +119,7 @@
                     {% endfor %}
                 </div>
 
-                <div class="paginator">
+                <div class="paginator" style="margin-top: 1em">
                     <ul class="pagination">
                         <li>
                             {# 上一页 #}
@@ -219,136 +217,10 @@
 
         </div>
     </div>
-     <!-- Modal -->
-    <div class="modal fade" id="login_modal" tabindex="-1" role="dialog">
-        <div class="modal-dialog modal-sm" role="document">
-            <div class="modal-content">
-                <form id="login_modal_form" action="" method="POST">
-                    <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                        <h4 class="modal-title">登录</h4>
-                    </div>
-
-                    <div class="modal-body">
-                        {% csrf_token %}
-                        {% for field in LoginModalForm %}
-                            <label for="{{ field.id_for_label }}">{{ field.label }}</label>
-                            {{ field }}
-                        {% endfor %}
-                        <span id="login_modal_tip" class="text-danger"></span>
-                        <div class="pull-right" style=" margin: 0.5em 0;">
-
-                            <span style="font-weight: 700;">其他账号登录 :</span> <a href="{% url 'oauth:github_login' %}" title="Github登录">
-                                <img src="{% static 'blog/img/github.ico' %}" alt="Github登录">
-                            </a>
-                            <img src="{% static 'blog/img/qq.ico' %}" alt="QQ登录">
-                            &nbsp;<img src="{% static 'blog/img/weibo.ico' %}" alt="微博登录">
-
-                        </div>
-
-                    </div>
-                    <div class="clearfix"></div>
-                    <div class="modal-footer">
-                        <button type="submit" class="btn btn-primary">登录</button>
-                        <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
-                    </div>
-                </form>
-            </div>
-        </div>
-        </div>
 {% endblock content %}
 
 {% block script_extends %}
-    <!-- 模态框显示 -->
-    <script>
-        $('#login_modal_form').submit(function(){
 
-            {#阻止原代码提交#}
-            event.preventDefault();
-            $.ajax({
-                url: '{% url 'user:login_for_modal' %}',
-                type: 'POST',
-                data: $(this).serialize(),
-                cache: false,
-                success: function (data) {
-                    if(data['status']=='SUCCESS'){
-                          {#刷新加载#}
-                        window.location.reload();
-                    }else{
-                        $('#login_modal_tip').text('用户名或密码不正确')
-                    }
-                }
-            });
-            {#阻止提交#}
-            return false
-        });
-    </script>
+    <script type="text/javascript" rel="stylesheet" src="{% static 'blog/blog.js' %}"></script>
 
-    <!-- 翻页 -->
-    <script>
-        function page_goto(page){
-            if(page==''){
-                page = 1;
-            }
-            var reg = /page=\d{0,2}/;
-            var url = window.location.href;
-
-            //判断是否有参数
-            if(reg.test(window.location.href)){
-                url = url.replace(reg, 'page=' + page);
-            }else if(url.indexOf("?") == -1){
-                url = url + '?page=' + page;
-            }else{
-                url = url + '&page=' + page;
-            }
-            //重定向
-            window.location.href = url;
-        }
-        function page_jump(){
-            var page = $("#page_goto input[type=text]")[0].value;
-            page_goto(page);
-        }
-    </script>
-
-    <!--点赞更新-->
-    <script type="text/javascript">
-        function likeChange(obj, content_type, object_id){
-            var is_like = obj.getElementsByClassName('active').length == 0
-            $.ajax({
-                url: "{% url 'likes:like_change' %}",
-                type: 'GET',
-                data: {
-                    content_type: content_type,
-                    object_id: object_id,
-                    is_like: is_like
-                },
-                cache: false,
-                success: function(data){
-                    console.log(data)
-                    if(data['status']=='SUCCESS'){
-                        // 更新点赞状态
-                        var element = $(obj.getElementsByClassName('glyphicon'));
-                        if(is_like){
-                            element.addClass('active');
-                        }else{
-                            element.removeClass('active');
-                        }
-                         // 更新点赞数量
-                        var liked_num = $(obj.getElementsByClassName('liked-num'));
-                        liked_num.text(data['liked_num']);
-                    }else{
-                        if(data['code']==400){
-                             $('#login_modal').modal('show');
-                        }
-                        else{
-                            alert(data['message']);
-                        }
-                    }
-                },
-                error: function(xhr){
-                    console.log(xhr)
-                }
-            });
-        }
-    </script>
 {% endblock %}

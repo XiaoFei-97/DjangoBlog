@@ -17,7 +17,7 @@
             <!-- 轮播（Carousel）项目 -->
             <div class="carousel-inner">
                 <div class="item active">
-                    <img src="{% static 'blog/img/banner2.jpg' %}" alt="banner2">
+                    <img src="{% static 'img/banner2.jpg' %}" alt="banner2">
                     <div class="carousel-caption info">
                         <div class="home_show">我的博客</div>
                         <div class="word_info">欢迎阅读评论，喜欢就点个赞吧</div>
@@ -25,7 +25,7 @@
                     </div>
                 </div>
                 <div class="item">
-                    <img src="{% static 'blog/img/banner3.jpg' %}" alt="banner1">
+                    <img src="{% static 'img/banner3.jpg' %}" alt="banner1">
                     <div class="carousel-caption info">
                         <div class="home_show">我的博客</div>
                         <div class="word_info">欢迎阅读评论，评论需注册登录</div>
@@ -33,7 +33,7 @@
                     </div>
                 </div>
                 <div class="item">
-                    <img src="{% static 'blog/img/banner4.jpg' %}" alt="banner3">
+                    <img src="{% static 'img/banner4.jpg' %}" alt="banner3">
                     <div class="carousel-caption info">
                         <div class="home_show">我的博客</div>
                         <div class="word_info">觉得有帮助，就打赏我吧</div>
@@ -41,7 +41,7 @@
                     </div>
                 </div>
                 <div class="item">
-                    <img src="{% static 'blog/img/banner5.jpg' %}" alt="banner4">
+                    <img src="{% static 'img/banner5.jpg' %}" alt="banner4">
                     <div class="carousel-caption info">
                         <div class="home_show">我的博客</div>
                         <div class="word_info">欢迎来访，博主动态请查看公告</div>
@@ -49,7 +49,7 @@
                     </div>
                 </div>
                 <div class="item">
-                    <img src="{% static 'blog/img/banner1.jpg' %}" alt="banner5">
+                    <img src="{% static 'img/banner1.jpg' %}" alt="banner5">
                     <div class="carousel-caption info">
                         <div class="home_show">我的博客</div>
                         <div class="word_info">欢迎阅读评论，喜欢就点个赞吧</div>
@@ -67,7 +67,7 @@
     <style>
         span.highlighted { color: #c93756; }
     </style>
-    <link rel="stylesheet" href="{% static 'blog/css/blog.css' %}">
+    <link rel="stylesheet" href="{% static 'blog/blog.css' %}">
 {% endblock %}
 {% block nav_search_active %}active_tag{% endblock %}
 
@@ -227,34 +227,32 @@
                 </div>
             </div>
         </div>
-         <!-- Modal -->
 
-        </div>
     {% endif %}
     <script>
-            // 翻页
-            function page_goto(page){
-                if(page==''){
-                    page = 1;
-                }
-                var reg = /page=\d{0,2}/;
-                var url = window.location.href;
+        // 翻页
+        function page_goto(page){
+            if(page==''){
+                page = 1;
+            }
+            var reg = /page=\d{0,2}/;
+            var url = window.location.href;
 
-                //判断是否有参数
-                if(reg.test(window.location.href)){
-                    url = url.replace(reg, 'page=' + page);
-                }else if(url.indexOf("?") == -1){
-                    url = url + '?page=' + page;
-                }else{
-                    url = url + '&page=' + page;
-                }
-                //重定向
-                window.location.href = url;
+            //判断是否有参数
+            if(reg.test(window.location.href)){
+                url = url.replace(reg, 'page=' + page);
+            }else if(url.indexOf("?") == -1){
+                url = url + '?page=' + page;
+            }else{
+                url = url + '&page=' + page;
             }
-            function page_jump(){
-                var page = $("#page_goto input[type=text]")[0].value;
-                page_goto(page);
-            }
-        </script>
+            //重定向
+            window.location.href = url;
+        }
+        function page_jump(){
+            var page = $("#page_goto input[type=text]")[0].value;
+            page_goto(page);
+        }
+    </script>
 {% endblock %}
 

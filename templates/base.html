@@ -8,25 +8,27 @@
     <meta charset="UTF-8">
     {# 兼容IE浏览器 #}
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
     {# 响应式布局 #}
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <!-- 百度收录标识 -->
+
+    {# 百度收录标识 #}
     <meta name="baidu-site-verification" content="5RbnZ7cZ7F" />
 
-   <!--网站信息-->
+    {# 网站信息 #}
     <meta name="author" content="蒋振飞,XiaoFei-97@outlook.com">
     <meta name="keywords" content="蒋振飞,个人博客,IT技术博客,技术笔记,前端,后端,数据库,开发者,编程,代码,开源,IT网站,Developer,Programmer,Coder,Spring,Spring Boot,Spring Cloud,MongoDB,Jvm">
     <meta name="description" content="一个互联网草根站长的个人博客网站,关注互联网、Python全栈、JavaEE等技术。本站主要用来分享互联网、教程、学习笔记等，一个有情怀值得收藏的个人博客!">
     <title>{% block title %}{% endblock%}</title>
-    <link type="text/css" rel="shortcut icon" href="{% static 'blog/img/favicon.ico' %}">
+    <link type="text/css" rel="shortcut icon" href="{% static 'img/favicon.ico' %}">
 
-    <!--全局样式-->
-    <link rel="stylesheet" href="{% static 'blog/css/hover-min.css' %}">
-    <link type="text/css" rel="stylesheet" href="{% static 'blog/css/base.css' %}">
-    <link type="text/css" rel="stylesheet" href={% static 'blog/css/myRewards.css' %}>
+    {# 全局样式 #}
+    <link rel="stylesheet" href="{% static 'base/hover-min.css' %}">
+    <link type="text/css" rel="stylesheet" href="{% static 'base/base.css' %}">
+    <link type="text/css" rel="stylesheet" href={% static 'base/myRewards.css' %}>
 
-    <!--使用bootstrap框架-->
-    <link type="text/css" rel="stylesheet" href="{% static 'bootstrap-3.3.7/css/bootstrap.min.css' %}">
+    {# 使用bootstrap框架 #}
+    <link type="text/css" rel="stylesheet" href="{% static 'bootstrap/css/bootstrap.min.css' %}">
     <script src="https://cdn.bootcss.com/jquery/1.12.4/jquery.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
 
@@ -37,12 +39,11 @@
     <div class="navbar navbar-default navbar-fixed-top navbar-down" role="navigation">
         <div class="container_fluid">
             <div class="navbar-header" id="logo">
-                <!--网站logo-->
+                {# 网站logo #}
                 <a class="navbar-brand" href="{% url 'blog:blog' %}">
-                    <img style="width:100px;" src="{% static 'blog/img/logo.png' %}" alt="logo">
+                    <img style="width:100px;" src="{% static 'img/logo.png' %}" alt="logo">
                 </a>
-
-                <!--下拉菜单-->
+                {# 下拉菜单 #}
                 <button class="navbar-toggle collapsed nav_bar" data-target="#navbar-collapse" data-toggle="collapse">
                     {# <span class="sr-only"></span> #}
                      <span class="icon-bar"></span>
@@ -51,13 +52,13 @@
                 </button>
                 <span id="mobile-search" class="glyphicon glyphicon-search mobile-search"></span>
             </div>
-            <!--搜索框-->
+            {# 搜索框 #}
 {#            <form method='get' id="search" class="navbar-form navbar-right search" action="/search/" onsubmit="return check()">#}
 {#                <div class="mobile-search-box">#}
 {#                    <input type="text" name="q" class="form-control pull-left" autocomplete="off" placeholder="搜点啥?" id="key">#}
 {#                    &nbsp;<button type="submit" class="btn btn-default" id="btn">#}
-{#                            <span class="glyphicon glyphicon-search" style="line-height:1;"></span>#}
-{#                        </button>#}
+{#                        <span class="glyphicon glyphicon-search"></span>#}
+{#                    </button>#}
 {#                </div>#}
 {##}
 {#                <div class="clearfix"></div>#}
@@ -67,54 +68,54 @@
 {#                    </ul>#}
 {#                </div>#}
 {#            </form>#}
-            <form method='get' id="search" class="navbar-form navbar-right search" action="/search/" onsubmit="return check()">
-                <div class="mobile-search-box">
-                    <input type="text" name="q" class="form-control pull-left" autocomplete="off" placeholder="搜点啥?" id="key">
-                    &nbsp;<button type="submit" class="btn btn-default" id="btn">
-                            <span class="glyphicon glyphicon-search" style="line-height:1;"></span>
+                 <form method='get' id="search" class="navbar-form navbar-right search" action="{% url 'blog:looking' %}" onsubmit="return check()">
+                     <div class="mobile-search-box">
+                        <input type="text" name="wq" class="form-control pull-left" autocomplete="off" placeholder="搜点啥?" id="key">
+                        &nbsp;<button type="submit" class="btn btn-default" id="btn">
+                            <span class="glyphicon glyphicon-search"></span>
                         </button>
-                </div>
+                     </div>
 
-                <div class="clearfix"></div>
-                <div class="blog-search" id="blog-search">
-                    <ul id="titles" style="display: none;" >
+                     <div class="clearfix"></div>
+                     <div class="blog-search" id="blog-search">
+                        <ul id="titles" style="display: none;" >
 
-                    </ul>
-                </div>
-            </form>
+                        </ul>
+                     </div>
+                </form>
 
-            <!--nav选项卡-->
+            {# nav选项卡 #}
             <div id="navbar-collapse" class="collapse navbar-collapse">
                  <ul class="nav navbar-nav base_head">
-                     <!--首页-->
+                    {# 首页 #}
                      <li class="{% block nav_home_active %}{% endblock %}">
                          <a href="{% url 'blog:home' %}"><span class="glyphicon glyphicon-home item">首页</span></a>
                      </li>
-                     <!--博客-->
+                    {# 博客 #}
                      <li class="{% block nav_blog_active %}{% endblock %}">
                          <a style="color: #FF0000" href="{% url 'blog:blog' %}"><span id="hot" class="glyphicon glyphicon-pencil item">博客</span></a>
                      </li>
-                     <!--分类-->
+                    {# 分类 #}
                      <li class="{% block nav_category_active %}{% endblock %}">
                          <a href="{% url 'blog:category' 1 %}"><span class="glyphicon glyphicon-duplicate item">分类</span></a>
                      </li>
-                     <!--归档-->
+                    {# 归档 #}
                      <li class="{% block nav_date_active %}{% endblock %}">
-                         <a href="{% url 'blog:date' 2018 11 %}"><span class="glyphicon glyphicon-book item">归档</span></a>
+                         <a href="{% url 'blog:date' 2018 12 %}"><span class="glyphicon glyphicon-calendar item">归档</span></a>
                      </li>
-                     <!--关于-->
+                    {# 关于 #}
                     <li class="{% block nav_about_active %}{% endblock %}">
                         <a href="{% url 'user:about' %}"><span class="glyphicon glyphicon-education item">关于</span></a>
                      </li>
                 </ul>
                  <ul class="nav navbar-nav navbar-right">
                     {% if not user.is_authenticated %}
-                        <!--登录-->
+                        {# 登录 #}
                         <li class="{% block nav_login_active %}{% endblock %}">
                             {# ?from={{ request.get_full_path }} #}
                             <a id="login_button" class="item glyphicon hidden-sm" href="javascript:void(0)">登录</a>
                         </li>
-                        <!--注册-->
+                        {# 注册 #}
                         <li class="hidden-sm {% block nav_register_active %}{% endblock %}">
                             {# ?from={{ request.get_full_path } #}
                             <a id="register_button" class="item glyphicon" href="javascript:void(0)">注册</a>
@@ -186,12 +187,12 @@
 
                             <div class="other_account">
                                 <a href="{% url 'oauth:github_login' %}" title="Github登录">
-                                    <img style="width: 50px;height: 50px;margin-left: 15px" src="{% static 'blog/img/logo_Github.ico' %}" alt="Github登录">
+                                    <img style="width: 50px;height: 50px;margin-left: 15px" src="{% static 'img/logo_Github.ico' %}" alt="Github登录">
                                 </a>
                                 <a href="{% url 'oauth:qq_login' %}" title="QQ登录">
-                                    <img style="margin-left: 6px" src="{% static 'blog/img/logo_qq.ico' %}" alt="QQ登录">
+                                    <img style="margin-left: 6px" src="{% static 'img/logo_qq.ico' %}" alt="QQ登录">
                                 </a>
-                                <img style="margin-left: 13px" src="{% static 'blog/img/logo_sina.ico' %}" alt="微博登录">
+                                <img style="margin-left: 13px" src="{% static 'img/logo_sina.ico' %}" alt="微博登录">
                             </div>
 
                         </div>
@@ -254,12 +255,12 @@
 
                             <div class="other_account">
                                 <a href="{% url 'oauth:github_login' %}" title="Github登录">
-                                    <img style="width: 50px;height: 50px;margin-left: 15px" src="{% static 'blog/img/logo_Github.ico' %}" alt="Github登录">
+                                    <img style="width: 50px;height: 50px;margin-left: 15px" src="{% static 'img/logo_Github.ico' %}" alt="Github登录">
                                 </a>
                                 <a href="{% url 'oauth:qq_login' %}" title="QQ登录">
-                                    <img style="margin-left: 6px" src="{% static 'blog/img/logo_qq.ico' %}" alt="QQ登录">
+                                    <img style="margin-left: 6px" src="{% static 'img/logo_qq.ico' %}" alt="QQ登录">
                                 </a>
-                                <img style="margin-left: 13px" src="{% static 'blog/img/logo_sina.ico' %}" alt="微博登录">
+                                <img style="margin-left: 13px" src="{% static 'img/logo_sina.ico' %}" alt="微博登录">
                             </div>
 
                         </div>
@@ -322,13 +323,13 @@
         </div>
 
     <div id="click-warp">
-         <!--轮播图-->
+        {# 轮播图 #}
         {% block home_content %}{% endblock %}
 
-        <!--页面内容-->
+        {# 页面内容 #}
         {% block content %}{% endblock %}
 
-        <!--页脚-->
+        {# 页脚 #}
         <div class="footer">
             <a id="scrolltop" class="gotop" href="javascript:void(0)" title="返回顶部" style="display: inline;"></a>
             <div class="website-info container">
@@ -346,7 +347,7 @@
                 </div>
                 <div class="contact hidden-xs hidden-sm">
                     <h4 style="margin-bottom: 0;">微信公众号</h4>
-                    <img src="{% static 'blog/img/wechat.jpg' %}" style="width: 90px;height:85px;" alt="微信二维码">
+                    <img src="{% static 'img/wechat.jpg' %}" style="width: 90px;height:85px;" alt="微信二维码">
                 </div>
                 <div class="tools hidden-xs hidden-sm hidden-md">
                     <h4>在线工具</h4>
@@ -372,54 +373,15 @@
         </div>
     </div>
 
-    <!-- 返回顶部 -->
-    <script>
-        $(function(){
-            //滚动事件
-            $(window).scroll(function(){
-                var top=$(window).scrollTop();
-                var navbar = $(".navbar-fixed-top");
+    <script type="text/javascript" rel="stylesheet" src="{% static 'base/base.js' %}"></script>
 
-                if(top==0){
-                    $(".navbar-fixed-top").removeClass("navbar-down");
-                }else{
-                    $(".navbar-fixed-top").addClass("navbar-down");
-                }
-
-                if(top>350){
-                    $("#scrolltop").fadeIn();
-                }else{
-                    $("#scrolltop").fadeOut();
-                }
-            });
-
-            //点击返回头部效果
-            $("#scrolltop").click(function(){
-                $("html,body").animate({
-                    scrollTop:0});
-            });
-        })
-    </script>
-
-    <!--蜘蛛丝效果-->
+    {# 蜘蛛丝效果 #}
     <script color="160,32,240" opacity='0.5' zIndex="-2" count="30" src="//cdn.bootcss.com/canvas-nest.js/1.0.1/canvas-nest.min.js"></script>
 
-    <!-- 模态框 -->
+    {# 模态框 #}
     <script>
+
         $(function () {
-            // 登录按钮
-            $("#login_button").click(function () {
-               $('#login_modal').modal('show');
-            });
-            // 注册按钮
-            $("#register_button").click(function () {
-               $('#register_modal').modal('show');
-            });
-            // 找回密码
-            $("#forgot_password_button").click(function () {
-               $('#login_modal').modal('hide');
-               $('#forgot_password_modal').modal('show');
-            });
             // 登录模态框提交
             $('#login_modal_form').submit(function()    {
                 $("#login_button").val("登录中");
@@ -614,22 +576,6 @@
                 }, 1000);
             });
         });
-    </script>
-
-    <!--检查搜索框-->
-    <script type="text/javascript">
-
-        function check() {
-            var key = $("#key").val();
-
-            if(key == null || key == ""){
-                // alert("搜索内容不能为空！");
-                window.location.href = '/blog';
-                return false;
-            }
-
-            return true;
-        }
 
         $(function(){
 
@@ -686,9 +632,10 @@
             })
 
         });
+
     </script>
 
-    <!-- 公告栏配置 -->
+    {# 公告栏配置 #}
     <script>
 
         window.tctipConfig = {
@@ -732,28 +679,17 @@
                     className可以为空，或者传入myR-on；默认显示项。
         	**/
             list:{
-            notice: {icon: "{% static 'blog/img/tip.png' %}", name:"公告栏", className:"myR-on", text: '<p style="text-indent:1em;">Github第三方登录已成功接入，欢迎使用，同时QQ与新浪接入功能尚处在开发阶段，在此期间，用户可正常登录网站。后续更新，敬请期待！</p><p style="text-align:right;">2018-10-14</p>'},
-                alipay: {icon: "{% static 'blog/img/alipay.png' %}", name:"支付宝", desc: '用支付宝给"振飞"打赏\n感谢支持！', qrimg: "{% static 'blog/img/alipay.jpg' %}"},
-                weixin: {icon: "{% static 'blog/img/weixin.png' %}", name:"微信", desc: '用微信给"振飞"打赏\n感谢支持！', qrimg: "{% static 'blog/img/wepay.png' %}"}
+            notice: {icon: "{% static 'img/tip.png' %}", name:"公告栏", className:"myR-on", text: '<p style="text-indent:1em;">Github第三方登录已成功接入，欢迎使用，同时QQ与新浪接入功能尚处在开发阶段，在此期间，用户可正常登录网站。后续更新，敬请期待！</p><p style="text-align:right;">2018-10-14</p>'},
+                alipay: {icon: "{% static 'img/alipay.png' %}", name:"支付宝", desc: '用支付宝给"振飞"打赏\n感谢支持！', qrimg: "{% static 'img/alipay.jpg' %}"},
+                weixin: {icon: "{% static 'img/weixin.png' %}", name:"微信", desc: '用微信给"振飞"打赏\n感谢支持！', qrimg: "{% static 'img/wepay.png' %}"}
             }
         };
 
     </script>
-    <!--公告侧边栏-->
-    <script src="{% static 'blog/js/tctip.min.js' %}"></script>
-    <!--轮播图配置-->
-    <script>
-         // 轮播图操作
-        $(function(){
-            // 初始化轮播
-            $("#myCarousel").carousel('cycle');
-            $('#myCarousel').carousel({
-                interval: 3000
-            });
-        });
-    </script>
+    {# 公告侧边栏 #}
+    <script src="{% static 'base/tctip.min.js' %}"></script>
 
-    <!--新版百度统计-->
+    {# 新版百度统计 #}
     <script>
         var _hmt = _hmt || [];
         (function() {
@@ -763,8 +699,7 @@
             s.parentNode.insertBefore(hm, s);
         })();
     </script>
-
-    <!--百度收录-->
+    {# 百度收录 #}
     <script>
         (function(){
             var bp = document.createElement('script');

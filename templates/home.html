@@ -7,9 +7,11 @@
 {% endblock %}
 
 {% block header_extend %}
-    <!--其他-->
-    <link rel="stylesheet" href="{% static 'blog/css/home.css' %}">
-    <!--图表显示-->
+    {# 其他 #}
+    <link rel="stylesheet" href="{% static 'home/home.css' %}">
+    {# 绑定切换排行榜页面 #}
+    <script type="text/javascript" rel="stylesheet" src="{% static 'home/home.js' %}"></script>
+    {# 图表显示 #}
     <script src="https://cdn.hcharts.cn/highcharts/highcharts.js"></script>
 {% endblock %}
 
@@ -23,7 +25,7 @@
             <!-- 轮播（Carousel）项目 -->
             <div class="carousel-inner">
                 <div class="item active">
-                    <img src="{% static 'blog/img/banner1.jpg' %}" alt="banner1">
+                    <img src="{% static 'img/banner1.jpg' %}" alt="banner1">
                     <div class="carousel-caption info">
                         <div class="home_show">Jzf Blog</div>
                         <div class="word_info">坚持发表个人原创技术笔记</div>
@@ -31,7 +33,7 @@
                     </div>
                 </div>
                 <div class="item">
-                    <img src="{% static 'blog/img/banner2.jpg' %}" alt="banner2">
+                    <img src="{% static 'img/banner2.jpg' %}" alt="banner2">
                     <div class="carousel-caption info">
                         <div class="home_show">Jzf Blog</div>
                         <div class="word_info">欢迎阅读评论，喜欢就点个赞吧</div>
@@ -39,7 +41,7 @@
                     </div>
                 </div>
                 <div class="item">
-                    <img src="{% static 'blog/img/banner3.jpg' %}" alt="banner3">
+                    <img src="{% static 'img/banner3.jpg' %}" alt="banner3">
                     <div class="carousel-caption info">
                         <div class="home_show">Jzf Blog</div>
                         <div class="word_info">觉得有帮助，就打赏我吧</div>
@@ -47,7 +49,7 @@
                     </div>
                 </div>
                 <div class="item">
-                    <img src="{% static 'blog/img/banner4.jpg' %}" alt="banner4">
+                    <img src="{% static 'img/banner4.jpg' %}" alt="banner4">
                     <div class="carousel-caption info">
                         <div class="home_show">Jzf Blog</div>
                         <div class="word_info">欢迎来访，博主动态请查看公告</div>
@@ -55,7 +57,7 @@
                     </div>
                 </div>
                 <div class="item">
-                    <img src="{% static 'blog/img/banner5.jpg' %}" alt="banner5">
+                    <img src="{% static 'img/banner5.jpg' %}" alt="banner5">
                     <div class="carousel-caption info">
                         <div class="home_show">Jzf Blog</div>
                         <div class="word_info">欢迎阅读评论，评论需注册登录</div>
@@ -66,7 +68,6 @@
 
         </div>
     </div>
-
 
 {% endblock %}
 
@@ -136,7 +137,7 @@
 
                 <div class="contents" id="contents">
                     <div id="read-item" class="cur clearfix">
-                        <img class="wechat fl" src="{% static 'blog/img/wechat.jpg' %}" alt="微信二维码">
+                        <img class="wechat fl" src="{% static 'img/wechat.jpg' %}" alt="微信二维码">
                         <div class="fl">
                             <div class="read-item-name">代码打碟手</div>
                             <div style="margin-left: 2em">关注互联网IT技术</div>
@@ -204,7 +205,8 @@
                     <ul class="list">
                         {% for post in new_publish %}
                             <li class="light-blog">
-                                 <span class="num">{{ forloop.counter }}</span><a class="hvr-underline-from-center" href="{% url 'blog:detail' post.id %}" target="_Blank">{{ post.title }}</a>
+                                 <span class="num">{{ forloop.counter }}</span>
+                                <a class="hvr-underline-from-center" href="{% url 'blog:detail' post.id %}" target="_Blank">{{ post.title|striptags|truncatechars:30|safe }}</a>
                             </li>
                         {% empty %}
                             <span class="tint">暂无发表 !</span>
@@ -219,7 +221,7 @@
                     <ul class="list">
                         {% for post in new_recommend %}
                             <li class="light-blog">
-                                 <span class="num">{{ forloop.counter }}</span><a class="hvr-underline-from-center" href="{% url 'blog:detail' post.id %}" target="_Blank">{{ post.title }}</a>
+                                 <span class="num">{{ forloop.counter }}</span><a class="hvr-underline-from-center" href="{% url 'blog:detail' post.id %}" target="_Blank">{{ post.title|striptags|truncatechars:30|safe }}</a>
                             </li>
                         {% empty %}
                             <span class="tint">暂无推荐 !</span>
@@ -234,7 +236,7 @@
                     <ul class="list">
                         {% for post in random_recommend %}
                             <li class="light-blog">
-                                 <a class="hvr-underline-from-center" href="{% url 'blog:detail' post.id %}" target="_Blank">{{ post.title }}</a>
+                                 <span class="num">{{ forloop.counter }}</span><a class="hvr-underline-from-center" href="{% url 'blog:detail' post.id %}" target="_Blank">{{ post.title|striptags|truncatechars:30|safe }}</a>
                             </li>
                         {% empty %}
                            <span class="tint">暂无推荐 !</span>
@@ -257,7 +259,7 @@
                     <ul class="list">
                         {% for post in last_7_days_hot_data %}
                             <li class="light-blog">
-                                 <span class="num">{{ forloop.counter }}</span><a class="hvr-underline-from-center" href="{% url 'blog:detail' post.id %}" target="_Blank">{{ post.title }}</a>
+                                 <span class="num">{{ forloop.counter }}</span><a class="hvr-underline-from-center" href="{% url 'blog:detail' post.id %}" target="_Blank">{{ post.title|striptags|truncatechars:30|safe }}</a>
                             </li>
                         {% empty %}
                             <span class="tint">暂无周榜 !</span>
@@ -272,7 +274,7 @@
                     <ul class="list">
                         {% for post in last_30_days_hot_data %}
                             <li class="light-blog">
-                                 <span class="num">{{ forloop.counter }}</span><a class="hvr-underline-from-center" href="{% url 'blog:detail' post.id %}" target="_Blank">{{ post.title }}</a>
+                                 <span class="num">{{ forloop.counter }}</span><a class="hvr-underline-from-center" href="{% url 'blog:detail' post.id %}" target="_Blank">{{ post.title|striptags|truncatechars:30|safe }}</a>
                             </li>
                         {% empty %}
                             <span class="tint">暂无月榜 !</span>
@@ -287,7 +289,7 @@
                     <ul class="list">
                         {% for post in all_hot_posts %}
                             <li class="light-blog">
-                                 <span class="num">{{ forloop.counter }}</span><a class="hvr-underline-from-center" href="{% url 'blog:detail' post.id %}" target="_Blank">{{ post.title }}</a>
+                                 <span class="num">{{ forloop.counter }}</span><a class="hvr-underline-from-center" href="{% url 'blog:detail' post.id %}" target="_Blank">{{ post.title|striptags|truncatechars:30|safe }}</a>
                             </li>
                         {% empty %}
                             <span class="tint">暂无总榜 !</span>
@@ -303,7 +305,7 @@
 
 {% block script_extends %}
 
-    <!--图表显示-->
+    {# 图表显示 #}
      <script>
         // 图表配置
         var options1 = {
@@ -377,24 +379,5 @@
         var chart = Highcharts.chart('container2', options2);
 
      </script>
-
-    <!--绑定切换排行榜页面-->
-    <script>
-         $('#read-nav li').click(function(){
-
-             $(this).blur(); //消除焦点
-            {#alert($(this).index());#}
-
-             $(this).addClass('active').siblings().removeClass('active');
-
-             // $(this).index() 获取所在层级索引值
-             // alert($(this).index());
-
-             $('#contents #read-item').eq($(this).index()).addClass('cur').siblings().removeClass('cur');
-             $('html').animate({scrollTop: $('#read-nav').offset().top - 110}, 500, function () {
-                 $('#read-nav').focus()
-             });
-         });
-    </script>
 
 {% endblock %}

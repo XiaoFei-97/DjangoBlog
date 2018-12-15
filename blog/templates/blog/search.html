@@ -1,0 +1,256 @@
+{% extends 'blog/blog.html' %}
+{% load comment_tags %}
+{% load likes_tags %}
+{% load staticfiles %}
+{% load highlight %}
+{% load post_tags %}
+{#页面标题#}
+{% block title %}
+    搜索:{{ key }}
+{% endblock title %}
+
+{% block home_content %}
+
+    <div class="home_content">
+        <div id="myCarousel" class="carousel slide" data-ride="carousel" data-interval="4000">
+
+            <!-- 轮播（Carousel）项目 -->
+            <div class="carousel-inner">
+                <div class="item active">
+                    <img src="{% static 'img/banner2.jpg' %}" alt="banner2">
+                    <div class="carousel-caption info">
+                        <div class="home_show">我的博客</div>
+                        <div class="word_info">欢迎阅读评论，喜欢就点个赞吧</div>
+                        <div class="motto_name">—光说不干，事事落空</div>
+                    </div>
+                </div>
+                <div class="item">
+                    <img src="{% static 'img/banner3.jpg' %}" alt="banner1">
+                    <div class="carousel-caption info">
+                        <div class="home_show">我的博客</div>
+                        <div class="word_info">欢迎阅读评论，评论需注册登录</div>
+                        <div class="motto_name">—如果要挖井，就要挖到水出为止</div>
+                    </div>
+                </div>
+                <div class="item">
+                    <img src="{% static 'img/banner4.jpg' %}" alt="banner3">
+                    <div class="carousel-caption info">
+                        <div class="home_show">我的博客</div>
+                        <div class="word_info">觉得有帮助，就打赏我吧</div>
+                        <div class="motto_name">—重新出发，志在未来</div>
+                    </div>
+                </div>
+                <div class="item">
+                    <img src="{% static 'img/banner5.jpg' %}" alt="banner4">
+                    <div class="carousel-caption info">
+                        <div class="home_show">我的博客</div>
+                        <div class="word_info">欢迎来访，博主动态请查看公告</div>
+                        <div class="motto_name">—天行健，君子以自强不息</div>
+                    </div>
+                </div>
+                <div class="item">
+                    <img src="{% static 'img/banner1.jpg' %}" alt="banner5">
+                    <div class="carousel-caption info">
+                        <div class="home_show">我的博客</div>
+                        <div class="word_info">欢迎阅读评论，喜欢就点个赞吧</div>
+                        <div class="motto_name">—生活有度，人生添寿</div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+{% endblock %}
+
+{% block header_extend %}
+    <style>
+        span.highlighted { color: #c93756; }
+    </style>
+    <link rel="stylesheet" href="{% static 'blog/blog.css' %}">
+{% endblock %}
+{% block nav_search_active %}active_tag{% endblock %}
+
+{% block content %}
+
+    <div class="container" style="margin-top: 1em">
+        <div class="row">
+
+            <div class="col-xs-12 col-md-9">
+
+                {# post_list|length是一种过滤器,过滤的结果为post_list的长度 #}
+                {% for post in post_list %}
+                    <div class="blog-border">
+                        <div class="blog-item">
+                            {# post.id把主键传递出去,在views中就可以找到该post的body,urls中也能规则匹配 #}{# 在反向解析中,注意格式{% url 'namespace:name' para %} #}
+                            <div class="blog-title">
+                                <a class="hvr-underline-from-center" href="{% url 'blog:detail' post.id %}">
+                                    {{ post.title }}
+                                </a>
+                            </div>
+
+                            <div class="blog-describe">{{ result.object.body|cut:'&nbsp;'|striptags|truncatechars:150|safe}}</div>
+
+                                {# 文章标签 #}
+                            {% get_post_tags post as tags_list %}
+                            {% if tags_list %}
+                                <div class="blog-tags">
+                                    {% for tag in tags_list %}
+                                        <span>{{ tag }}</span>
+                                    {% endfor %}
+                                </div>
+                            {% endif %}
+
+                            <div class="properties">
+
+                                <span class="glyphicon glyphicon-time"></span>&nbsp;{{ result.object.created_time|date:"Y-m-d" }}&nbsp;&nbsp;&nbsp;
+
+                                分类：<a class="hvr-underline-from-center" href="{% url 'blog:category' post.category.id %}">
+                                </a>&nbsp;&nbsp;&nbsp;
+
+                                阅读：{{ post.get_read_num }}&nbsp;&nbsp;&nbsp;
+
+                                评论：{% get_comment_count post %}&nbsp;&nbsp;&nbsp;
+
+                                <span style="color:#c93756;">推荐：</span><a onclick="likeChange(this, '{% get_content_type post %}', {{ post.id }})">
+                                        <span class="glyphicon glyphicon-thumbs-up {% get_like_status post %}"></span>
+                                        <span class="liked-num">{% get_like_count post %}</span>
+                                     </a>
+                                <a class="read-detail" href="{% url 'blog:detail' post.id %}" target="_Blank">阅读全文</a>
+                            </div>
+                        </div>
+                    </div>
+                    {% empty %}
+                        <div class="no-find">
+                            <p>非常抱歉，没有检索到您想要的内容，换个关键词再试试 ？</p>
+                            <h4>注意：字母区分大小写</h4>
+                            <p>
+                                <a class="hvr-underline-from-center" href="{% url 'blog:home' %}">返回首页</a>
+                            </p>
+                        </div>
+                    {% endfor %}
+            <div class="paginator">
+                <ul class="pagination">
+                    <li>
+                        {# 上一页 #}
+                        {% if page.has_previous %}
+                            <a href="?q={{ query }}&page={{ page.previous_page_number }}" aria-label="Previous">
+                                <span aria-hidden="true">&laquo;</span>
+                            </a>
+                        {% else %}
+                            <span aria-hidden="true">&laquo;</span>
+                        {% endif %}
+                    </li>
+                    {# 全部页码 #}
+                    {# {% for page_num in page_of_list.paginator.page_range %}#}
+                    {# page_range在views中被处理成当前页数+-2的范围,目的是为了避免页码过于长#}
+                    {% for page_num in page_range %}
+                        {# 判断是否当前页 #}
+                        {% if page_num == page_of_list.number %}
+                            {# 如果是当前页就设置active高亮 #}
+                            <li class="active"><a href="?page={{ page_num }}">{{ page_num }}</a></li>
+                        {% else %}
+                            {% if page_num == '...' %}
+                                <li><span>{{ page_num }}</span></li>
+                            {% else %}
+                                <li><a href="?page={{ page_num }}">{{ page_num }}</a></li>
+                            {% endif %}
+                        {% endif %}
+                    {% endfor %}
+                    <li>
+                    {# 下一页 #}
+                    {% if page.has_next %}
+                        <a href="?q={{ query }}&page={{ page.next_page_number }}" aria-label="Previous">
+                            <span aria-hidden="true">&raquo;</span>
+                        </a>
+                    {% else %}
+                        <span aria-hidden="true">&raquo;</span>
+                        </li>
+                    {% endif %}
+                </ul>
+                <ul class="pagination">
+                    <li id="page_goto"><span><input type="text" value="6"></span></li>
+                    <li><a href="javascript:void(0);" onclick="page_jump();">Go</a></li>
+                </ul>
+                <p>
+                    共有{{ page.paginator.count }}篇博客,
+                    当前第{{ page.number }}页, 共{{ page.paginator.num_pages }}页
+                </p>
+            </div>
+        </div>
+
+
+            <div class="col-xs-12 col-md-3 blog-border2">
+                <div class="blog-border1 blog-border3">
+                    <div class="side-list">
+                    <h4><span class="glyphicon glyphicon-fire"></span>&nbsp;热门阅读</h4>
+                    <ul>
+                        {% for hot_data in all_hot_posts %}
+                            <div class="light-item">
+                                 <span class="num">{{ forloop.counter }}</span><a class="hvr-underline-from-center" href="{% url 'blog:detail' hot_data.id %}" target="_Blank">{{ hot_data.title|striptags|truncatechars:23|safe }}</a>
+                            </div>
+                        {% empty %}
+                            <span class="tint">暂无总榜 !</span>
+                        {% endfor %}
+                    </ul>
+                </div>
+
+                    <div class="side-list">
+                    <h4><span class="glyphicon glyphicon-random"></span>&nbsp;&nbsp;随机推荐</h4>
+                    <ul>
+                        {% for post in random_recommend %}
+                            <li class="light-item">
+                                 <span class="num">{{ forloop.counter }}</span><a class="hvr-underline-from-center" href="{% url 'blog:detail' post.id %}" target="_Blank">{{ post.title|striptags|truncatechars:23|safe }}</a>
+                            </li>
+                        {% empty %}
+                            <span class="tint">暂无推荐 !</span>
+                        {% endfor %}
+                    </ul>
+                </div>
+
+                    <div class="side-list">
+                    <h4><span class="glyphicon glyphicon-time"></span>&nbsp;最新推荐</h4>
+                    <ul>
+                        {% for post in new_recommend %}
+                            <li class="light-item">
+                                 <span class="num">{{ forloop.counter }}</span><a class="hvr-underline-from-center" href="{% url 'blog:detail' post.id %}" target="_Blank">{{ post.title|striptags|truncatechars:23|safe }}</a>
+                            </li>
+                        {% empty %}
+                            <span class="tint">暂无推荐 !</span>
+                        {% endfor %}
+                    </ul>
+                </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // 翻页
+        function page_goto(page){
+            if(page==''){
+                page = 1;
+            }
+            var reg = /page=\d{0,2}/;
+            var url = window.location.href;
+
+            //判断是否有参数
+            if(reg.test(window.location.href)){
+                url = url.replace(reg, 'page=' + page);
+            }else if(url.indexOf("?") == -1){
+                url = url + '?page=' + page;
+            }else{
+                url = url + '&page=' + page;
+            }
+            //重定向
+            window.location.href = url;
+        }
+        function page_jump(){
+            var page = $("#page_goto input[type=text]")[0].value;
+            page_goto(page);
+        }
+
+    </script>
+{% endblock %}
+
